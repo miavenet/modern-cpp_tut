@@ -161,7 +161,7 @@ Key:
 
 **Why 100 ints fit, step by step.** On the shown library, those capacities use 4 + 8 + 16 + 32 + 64 + 128 + 256 + 512 = **1020 bytes** of the 1024-byte buffer, because the old blocks are never reused. Push number 129 needs a 256-int block (1024 bytes); only 4 bytes are left, so the arena must ask upstream.
 
-The 1024-byte buffer was a lucky fit for this library's growth sequence (it doubles). Another library, or another element type, can spill earlier.
+The 1024-byte buffer was a lucky fit for this growth sequence (it doubles; libstdc++ 13 gave the same capacities and the same spill at push 129). Another library, or another element type, can spill earlier.
 
 **Two fixes.** If you know the final size, reserve it: one block, no growth waste. If this arena must never fall back upstream, use `std::pmr::null_memory_resource()`, whose `allocate` always throws `std::bad_alloc`:
 

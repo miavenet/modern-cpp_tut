@@ -2,7 +2,7 @@
 
 **Time: about 22 minutes** (reading about 7, running one program about 3, cards about 12). Stop after any card; the driver resumes there.
 
-**Hook:** one order check, a million calls, one bad order in ten thousand. The mean barely moves (1.1 ns to 1.9 ns per call). But one percentile jumps from 167 ns to about 5,800 ns, and you can say in advance which one.
+**Hook:** one order check, a million calls, one bad order in ten thousand. The mean barely moves (1.1 ns to 1.9 ns per call). But on the course Mac one percentile jumps from 167 ns to about 5,800 ns, and you can say in advance which one.
 
 **You will be able to:** say which percentile a rare error path reaches, explain why a throw costs microseconds, write the hot-path version that cannot throw, and say what that costs you.
 
@@ -16,7 +16,7 @@ Q: The same order check runs 1,000,000 times, each call timed on its own. 100 of
 Key:
 
   - p99.99. 100 bad orders in 1,000,000 are exactly the slowest 0.01%, so only p99.99 and the max can see them. p50 to p99.9 were identical for A and B in all 7 runs (0, 42 and 83 ns).
-  - About 5,800 ns per throw against under one 42 ns clock tick for a good call: thousands of times slower. A's p99.99 was 5,759 ns [5,759–5,887], B's 167 ns [85–167].
+  - On the course Mac, about 5,800 ns per throw against under one 42 ns clock tick for a good call: thousands of times slower. A's p99.99 was 5,759 ns [5,759–5,887], B's 167 ns [85–167].
 </details>
 
 ---

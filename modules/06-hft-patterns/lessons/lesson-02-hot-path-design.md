@@ -56,7 +56,7 @@ if (qty <= 0) throw BadQty();             // may allocate; unwinds
 | system calls, I/O | each one enters the kernel | hand the work to another thread |
 | blocking locks | a contended mutex can make you wait | the SPSC ring from lesson 01 |
 | `throw` | creates an exception object, runs the unwinder; may allocate | return codes, `std::expected` (C++23) |
-| virtual calls in the tightest loop | indirect call; cannot be inlined unless the compiler proves the type | templates or `std::variant`; measure |
+| virtual calls in the tightest loop | indirect call; cannot be inlined unless the compiler proves the type, or guesses it and checks (GCC with `-flto` can); look for the indirect call in the listing | templates or `std::variant`; measure |
 
 Evidence for two rows, from Apple clang 21 at `-O2` on this course's test
 machine: a function containing `throw` calls `__cxa_allocate_exception`
@@ -82,6 +82,10 @@ Output on the test Mac (16 KiB pages, so 64 MiB is 4096 pages):
 faults during first touch:  4096
 faults during second touch: 0
 ```
+
+The count depends on page size and, on Linux, huge-page settings: a Linux
+arm64 container (4 KiB pages, transparent huge pages on) counted 543. Re-count
+on your target.
 
 **The fix:** touch (write) every page of every pool at startup. This moves
 initial demand faults; it does not prevent later eviction or copy-on-write.

@@ -15,6 +15,9 @@
     },
     "lesson-05-lpa-expected-tail.md": {
       "minutes": 22
+    },
+    "lesson-06-practice-bank.md": {
+      "minutes": 10
     }
   },
   "cards": {
@@ -724,6 +727,34 @@
       "concepts": [
         "C15"
       ]
+    },
+    "M4-PB1": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "research",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "C++ working draft N5054 [hive.overview] p1, p3, p4; [hive.modifiers] p17",
+      "concepts": []
+    },
+    "M4-PB2": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "variant",
+      "objective": 2,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "C++ working draft N5054 [variant.visit] p5 (Mandates); measured in this course: variant_new_type.cpp",
+      "concepts": []
     }
   },
   "concepts": {

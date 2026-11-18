@@ -397,11 +397,11 @@
   },
   {
     "where": "M1/L4",
-    "claim": "high_resolution_clock aliases steady_clock on this libc++ toolchain; other implementations may choose differently",
+    "claim": "high_resolution_clock aliases steady_clock on this libc++ toolchain and system_clock on libstdc++ 13; other implementations may choose differently",
     "source_urls": [
       "https://en.cppreference.com/w/cpp/chrono/high_resolution_clock"
     ],
-    "verification": "Current toolchain checked; portable rule from https://en.cppreference.com/cpp/chrono/high_resolution_clock.",
+    "verification": "Current toolchain checked; portable rule from https://en.cppreference.com/cpp/chrono/high_resolution_clock.; content pass, 2026-11-17: is_same<high_resolution_clock, system_clock> = 1 and is_steady = 0 with GCC 13 and clang 18 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13); libc++ here: steady 1",
     "lesson": "M1/L4"
   },
   {
@@ -571,9 +571,9 @@
   },
   {
     "where": "M5/L5",
-    "claim": "pmr::list<Order> requests 40 bytes, alignment 8 on libc++; sizeof(Order)=24",
+    "claim": "pmr::list<Order> requests 40 bytes, alignment 8 on libc++ and on libstdc++ 13; sizeof(Order)=24",
     "source_urls": [],
-    "verification": "lab program output",
+    "verification": "lab program output; content pass, 2026-11-17: spy resource on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13): node request 40 align 8 with GCC 13 and clang 18, sizeof(Order)=24",
     "lesson": "M5/L5"
   },
   {
@@ -601,7 +601,7 @@
     "where": "M6/L1",
     "claim": "seq_cst store: stlr (arm64) vs xchg (x86-64); release store stlr/mov; acquire load ldapr/mov; seq_cst load ldar/mov",
     "source_urls": [],
-    "verification": "clang++ -O2 -S, native and --target=x86_64-apple-macos13",
+    "verification": "clang++ -O2 -S, native and --target=x86_64-apple-macos13; content pass, 2026-11-17: GCC 13 and clang 18 at -O2 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13): seq_cst store stlr, release store stlr, acquire and seq_cst loads both ldar",
     "lesson": "M6/L1"
   },
   {
@@ -613,9 +613,9 @@
   },
   {
     "where": "M6/L2",
-    "claim": "64 MiB first touch = 4096 minor faults (16 KiB pages), second touch 0",
+    "claim": "64 MiB first touch = 4096 minor faults (16 KiB pages), second touch 0; on a Linux arm64 container (4 KiB pages, THP always) 543; the count depends on page size and huge-page settings",
     "source_urls": [],
-    "verification": "lab/hotpath/first_touch.cpp run; pagesize=16384",
+    "verification": "lab/hotpath/first_touch.cpp run; pagesize=16384; content pass, 2026-11-17: the original program printed 0/543 (GCC 13) and 0/0 (clang 18) on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13) because the compiler dropped or merged the first memset; an empty asm barrier after each memset was added; Mac still 4096/0 (2 runs), Linux 543/0 with both compilers (2 runs each), /sys/kernel/mm/transparent_hugepage/enabled = [always], getconf PAGESIZE 4096",
     "lesson": "M6/L2"
   },
   {
@@ -795,9 +795,9 @@
   },
   {
     "where": "M7/L2",
-    "claim": "MSan supported on Linux, NetBSD, FreeBSD; needs all code instrumented",
+    "claim": "MSan is clang only, supported on Linux, NetBSD, FreeBSD; needs all code instrumented",
     "source_urls": [],
-    "verification": "clang.llvm.org/docs/MemorySanitizer.html",
+    "verification": "clang.llvm.org/docs/MemorySanitizer.html; content pass, 2026-11-17: g++ 13 -fsanitize=memory: \"unrecognized argument to '-fsanitize=' option: 'memory'\"; clang++ 18 accepts it on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13)",
     "lesson": "M7/L2"
   },
   {
@@ -839,14 +839,14 @@
     "where": "M7/L3",
     "claim": "flat_map defaults vector<Key>/vector<T> (libc++ header), keys sorted, single insert/erase linear; libc++ map uses __tree",
     "source_urls": [],
-    "verification": "eel.is/c++draft/flat.map.overview; libc++ headers",
+    "verification": "eel.is/c++draft/flat.map.overview; libc++ headers; content pass, 2026-11-17: lesson now says libstdc++ 13 has no <flat_map>: fatal error 'flat_map' not found with GCC 13 and clang 18 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13); __has_include(<flat_map>) 1 on libc++ here",
     "lesson": "M7/L3"
   },
   {
     "where": "M7/L3",
     "claim": "deducing this: Self=Derived& / Base&; fixed(this Base&) binds Derived",
     "source_urls": [],
-    "verification": "ran lab/cpp23/deducing_this.cpp (-std=c++23)",
+    "verification": "ran lab/cpp23/deducing_this.cpp (-std=c++23); content pass, 2026-11-17: lesson now says GCC 13 rejects it: lab/cpp23/deducing_this.cpp gives \"expected identifier before 'this'\" with GCC 13; clang 18 compiles it on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13); Apple clang 21 compiles it",
     "lesson": "M7/L3"
   },
   {
@@ -965,7 +965,7 @@
     "where": "M3/L2",
     "claim": "clang -O2 codegen: arm64 str/stlr/stlr, ldr/ldapr/ldar; x86-64 mov/mov/xchg, mov/mov/mov for relaxed/release(acquire)/seq_cst store/load",
     "source_urls": [],
-    "verification": "clang++ -O2 -S, -target arm64-apple-macos and x86_64-apple-macos (x86 not executed)",
+    "verification": "clang++ -O2 -S, -target arm64-apple-macos and x86_64-apple-macos (x86 not executed); content pass, 2026-11-17: GCC 13 and clang 18 at -O2 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13) default to ldar for acquire load and seq_cst load; -march=armv8.3-a gives ldapr",
     "lesson": "M3/L2"
   },
   {
@@ -979,7 +979,7 @@
     "where": "M3/L2",
     "claim": "ARMv8.0 (-mcpu=generic -march=armv8-a): weak = one ldaxr/stlxr try, strong adds a cbnz retry; default Apple CPU: both casal",
     "source_urls": [],
-    "verification": "clang++ -O2 -S",
+    "verification": "clang++ -O2 -S; content pass, 2026-11-17: GCC 13 and clang 18 at -O2 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13): strong and weak acq_rel CAS call __aarch64_cas8_acq_rel by default; -march=armv8.1-a gives casal",
     "lesson": "M3/L2"
   },
   {
@@ -2693,7 +2693,7 @@
     "source_urls": [
       "https://en.cppreference.com/w/cpp/language/constinit"
     ],
-    "verification": "compiled: clang++ -std=c++20 -O2 -S ingest/lpa/evidence/constinit_guard.cpp; assembly kept in ingest/lpa/evidence/m2-constinit-guard-20261114-223139.txt; no timing claim"
+    "verification": "compiled: clang++ -std=c++20 -O2 -S ingest/lpa/evidence/constinit_guard.cpp; assembly kept in ingest/lpa/evidence/m2-constinit-guard-20261114-223139.txt; no timing claim; content pass, 2026-11-17: GCC 13 and clang 18 at -O2 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13): function-local static with run-time initialiser has 1 __cxa_guard_acquire, constinit thread_local namespace-scope counter none"
   },
   {
     "lesson": "M3/L5",
@@ -2778,5 +2778,316 @@
       "https://en.cppreference.com/w/cpp/language/constinit"
     ],
     "verification": "compiled and run: modules/02-type-system/lab/starter and lab/solution constinit_guard.cpp (starter: guard count 1, thread B starts at 4, RESULT: TODO; solution: guard count 0, both threads 1..3, RESULT: PASS); checks/constinit_lab.check.sh and checks/m2-lpa2.check.sh; counts only, no timing claim"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB1",
+    "claim": "steady_clock ticks in 41.67 ns steps here; single-shot timing of a ~15 ns function reads 0 ns in more than half of 200000 samples in every run (the share varies with load), each now() read costs about 20 ns, and a batch of 20 million calls gives about 15 ns per call",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/01-foundations/lab/practice/clock_res.cpp, 8 runs at load average 2.4-4.2: mach_timebase 125/3, zero share 71.1/80.5/82.1/82.4/84.3/84.9/85.2/85.2% of 200000, rest 41 or 42 ns; wall/read 19.7-19.9 ns; batched 14.98-15.01 ns per call; fix round 2, 2026-11-15, 3 more runs at load average 7-21 (another job running): zero share 84.3/84.1/58.8%, wall/read 19.7 ns, batched 14.96-14.97 ns; with both review rounds (82.1-85.2%, 79.7-84.6%; batched 14.97-14.99) the share ranged 58.8-85.2% over 14 runs, so only 'more than half' and 'about 15 ns' are claimed"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB2",
+    "claim": "P and DF are passed in a register (tail jump); D and OD are stored to the caller stack and passed by address on arm64 and x86-64; DL passes in a register on this clang although the rules do not grant it",
+    "source_urls": [
+      "https://itanium-cxx-abi.github.io/cxx-abi/abi.html"
+    ],
+    "verification": "compiled here with -S for arm64-apple-macos and x86_64-linux-gnu: modules/01-foundations/lab/practice/trivial_pass.cpp; b __Z5sinkP1P, str x0,[sp,#8]/add x0,sp,#8 for D and OD, movq %rdi,(%rsp)/movq %rsp,%rdi for OD on x86-64; citations as in source; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): trivial_pass.cpp -S: GCC 13 arm64 callDL str x2,[sp] / mov x0,sp / bl _Z6sinkDL2DL; clang 18 arm64 str x0,[sp,#8] / add x0,sp,#8; clang 18 x86_64-linux-gnu movq %rdi,(%rsp) / movq %rsp,%rdi, so DL went by address on all three"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB3",
+    "claim": "Without [[clang::trivial_abi]] the by-value parameter is destroyed after the rest of the full-expression; with it the callee destroys it before returning",
+    "source_urls": [
+      "https://clang.llvm.org/docs/AttributeReference.html"
+    ],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/01-foundations/lab/practice/trivial_abi_order.cpp, both builds, order as stated; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): trivial_abi_order.cpp: GCC 13 warns 'clang::trivial_abi' scoped attribute directive ignored, ~Owner after the rest of the full-expression in both builds; clang 18 matches Apple clang 21"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB4",
+    "claim": "CLOCK_REALTIME jumps and is NTP-adjusted (time of day); CLOCK_MONOTONIC does not jump but is frequency-adjusted; CLOCK_MONOTONIC_RAW is not frequency-adjusted (Linux); macOS has the same three names plus others such as CLOCK_UPTIME_RAW, and its CLOCK_MONOTONIC keeps counting during sleep",
+    "source_urls": [
+      "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    ],
+    "verification": "citation: clock_gettime(2) Linux man page; macOS man 3 clock_gettime read here 2026-11-15 (CLOCK_MONOTONIC \"will continue to increment while the system is asleep\"; CLOCK_MONOTONIC_RAW and CLOCK_UPTIME_RAW listed)"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB1",
+    "claim": "CAS: the memory order changes the instruction on every AArch64 target (ldxr/stxr vs ldaxr/stlxr, or cas vs casal); loads: acquire and seq_cst are both ldar on ARMv8.0, ARMv8.1 and -mcpu=apple-a7, and only the native apple-m1 target gives acquire ldapr; x86-64 uses movq and lock cmpxchgq for every order; -march=armv8-a leaves the native target at apple-m1",
+    "source_urls": [],
+    "verification": "compiled here with -S, 2026-11-15, Apple clang 21: modules/03-concurrency/lab/practice/atomic_probes_builtin.c for x86_64-linux-gnu (movq/movq, lock cmpxchgq x2), aarch64-linux-gnu -march=armv8-a (ldar/ldar, ldxr+stxr / ldaxr+stlxr), -march=armv8.1-a (ldar/ldar, cas/casal); atomic_probes.cpp native and -march=armv8-a (ldapr/ldar/cas/casal), -mcpu=apple-a7 (ldar/ldar, retry loops); -### shows \"-target-cpu\" \"apple-m1\"; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): atomic_probes.cpp -O2 -S: GCC 13 and clang 18 loads ldar/ldar, CAS bl __aarch64_cas8_relax / bl __aarch64_cas8_acq_rel (-moutline-atomics [enabled]; clang -### -target-cpu generic, +outline-atomics); GCC -march=armv8.1-a gives cas/casal"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB2",
+    "claim": "A failed C++ compare-exchange is an atomic load; on x86 CMPXCHG the destination receives a write cycle regardless of the comparison",
+    "source_urls": [],
+    "verification": "citation: draft sections in source; Intel SDM 325462-093, CMPXCHG Description"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB3",
+    "claim": "At a 2 us gap the atomic waiter's CPU per ring is the whole gap and it wakes for nearly every ring, while the cv waiter wakes for under half (batching); at 20 and 200 us both wake for most rings (over 90% on the Mac) and the atomic waiter uses at least 1.7x the CPU per ring of cv in every round; which primitive wakes sooner changed between rounds, so no wake-delay comparison is claimed (one machine)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/doorbell.cpp, gaps 2/20/200 us with 166666/66666/9523 rings, 3 rounds at load average 2.7-3.3 plus 3 earlier rounds the same day at 2.4-4.1: 2 us atomic wakes 164679-166032, 1.99-2.00 us/ring, p50 125 ns; cv wakes 62719-76814 (incl. the first authoring runs), 0.68-0.72 us/ring; 20 us wakes 63422-64504 for both, atomic 5.1-5.9 vs cv 2.3-3.0 us/ring, p50 2.5-7.5 us; 200 us wakes 9392-9523, atomic 7.1-7.8 vs cv 3.2-4.0 us/ring, p50 10.7-18.8 us, neither primitive lower in every round; review round 2 (7 rounds at 20 us, load 3.7-4.1): atomic p50 lower than cv in 7 of 7, contradicting 'neither lower'; fix round 2, 2026-11-15, 3 full sweeps at load average 12-15: 2 us atomic wakes 166126-166288, 2.00 us/ring, cv wakes 72780-74735 (44-45%), 0.73-0.74 us/ring; 20 us wakes 62488-65603, atomic 5.95-6.13 vs cv 2.52-2.69 us/ring, p50 atomic 7709/9250/9250 vs cv 6625/9416/9417 ns (cv lower in one round); 200 us wakes 9501-9523, atomic 6.87-7.04 vs cv 3.14-3.27 us/ring. Over all recorded rounds: atomic/cv CPU per ring at least 1.7x at 20 and 200 us; 20 us wakes 90.5-98%; wake-delay order not stable, so dropped; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): doorbell.cpp with GCC 13 / libstdc++, 3 rounds, virtual machine on a busy host: 2 us atomic 1.99 us/ring (99%), cv wakes 41946-44741 of 166666; 20 us atomic 5.90-6.02 vs cv 2.79-2.92 us/ring, wakes 45928-56395 of 66666 (69-85%); 200 us atomic 9.70-10.38 vs cv 4.76-5.19 us/ring, wakes 9446-9522 of 9523"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB4",
+    "claim": "atomic wait is not guaranteed to observe transient values (A-B-A), so a waiter can keep blocking",
+    "source_urls": [],
+    "verification": "citation: N4950 [atomics.wait] Note 1; [atomics.types.operations] wait Effects (N4950 33.5.8.2 p30, N5054 32.5.8.2 p31), checked 2026-11-15"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB5",
+    "claim": "libc++ atomic wait polls 64 times, then polls until more than 4 us, then parks on futex (Linux) or os_sync_wait_on_address / __ulock_wait (Apple); the sleeping timed backoff policy is used only in fallback paths and by timed waits when the new sync ABI is unavailable",
+    "source_urls": [
+      "https://github.com/llvm/llvm-project/blob/main/libcxx/src/atomic.cpp"
+    ],
+    "verification": "citation: shipped headers (poll_with_backoff.h, atomic_sync.h; atomic_sync_timed.h:133 uses __libcpp_timed_backoff_policy in the branch without _LIBCPP_AVAILABILITY_HAS_NEW_SYNC) and upstream atomic.cpp as read on 2026-11-15; the compiled Apple library was not inspected; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): read /usr/include/c++/13/bits/atomic_wait.h: __atomic_spin_count = 16, __atomic_spin_count_relax = 12, __thread_relax is __builtin_ia32_pause() only on __i386__/__x86_64__, else __thread_yield(); then futex via syscall(SYS_futex)"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB1",
+    "claim": "hive erase keeps other pointers valid and does not relocate elements; slot reuse is permitted, not promised; the skip technique is unspecified and block growth implementation-defined",
+    "source_urls": [],
+    "verification": "citation: draft sections in source"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB2",
+    "claim": "Adding a variant alternative makes a non-exhaustive std::visit fail to compile; a catch-all lambda makes it compile and silently return 0.0",
+    "source_urls": [],
+    "verification": "compiled here, 2026-11-15, Apple clang 21: modules/04-stl-modern/lab/practice/variant_new_type.cpp -fsyntax-only exit 0 / exit 1 (\"`std::visit` requires the visitor to be exhaustive\") / exit 0; built with -DADD_TYPE -DCATCH_ALL -DRUN and run: area(Rect{3,4})=12, area(Triangle{3,4})=0"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB1",
+    "claim": "A false [[assume]] is UB: lookup(9) prints 2 at -O0 and 0 at -O1/-O2, and the and-with-7 is gone from the -O2 assembly",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/assume_mask.cpp at -O0/-O1/-O2 printed lookup(3)=4 and lookup(9)=2/0/0; -O2 listing of lookup has no and; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): assume_mask.cpp: GCC 13 lookup(9)=2 at -O0, 0 at -O1/-O2, -O2 lookup is one ldr (no and); clang 18 warning: unknown attribute 'assume' ignored, and w8,w0,#0x7 kept, lookup(9)=2 at all levels"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB2",
+    "claim": "monotonic_buffer_resource deallocate does nothing, so an alloc/free loop grows upstream memory (about 8.4, 16.8, 33.6 MB after 100k, 200k, 300k pairs here)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/pmr_monotonic.cpp printed upstream bytes 8386944, 16775584, 33552832; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): pmr_monotonic.cpp printed upstream bytes 6809152, 15321792, 22983104 (calls 20, 22, 23), both compilers"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB3",
+    "claim": "x % 1024 and x & 1023 compile to the same and for unsigned x; signed x % 1024 is 4 instructions and differs from the mask for negative x (-5 vs 1019); runtime n gives udiv/sdiv + msub vs sub + and; adjacent fields give one ldp",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/modmask.cpp listing as stated; modmask_neg printed mod_s_const=-5 mask_s_const=1019 mod_s_rt=-5 mask_s_rt=1019; layout_ldp: slot_a ldp, slot_b two ldr; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): GCC 13 -O2 -S: and x0,x0,1023 for both unsigned; negs/and/and/csneg for signed %; udiv+msub / sdiv+msub vs sub+and; modmask_neg -5 / 1019; layout_ldp ldp vs two ldr"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB4",
+    "claim": "sizeof(Rec{uint32_t,uint64_t}) is 16; requested bytes per element: list 32, set 48, deque 16.04-16.42, reserved vector 16.00, unreserved vector 16.38/20.97/16.78",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/bytes_per_elem.cpp, numbers as stated; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): an unshipped port of bytes_per_elem.cpp (malloc_usable_size), both compilers identical: list 32 requested / 40 granted, set 48 / 56, deque 17.01/16.41/16.66 requested, vector no reserve 16.38/20.97/16.78, after reserve 16.00; fix pass 3, 2026-11-15: the port is now shipped as modules/05-memory-perf/lab/practice/bytes_per_elem_glibc.cpp (the macOS file with <malloc.h> and malloc_usable_size); run in the same Ubuntu image with g++ 13.3 and clang 18.1.3: identical output (list 32/40, set 48/56, deque requested 17.01/16.41/16.66, vector no reserve 16.38/20.97/16.78, after reserve 16.00), two g++ runs byte-identical; bytes_per_elem.cpp re-run here, numbers as stated"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB5",
+    "claim": "list node for a 40-byte value requests 56 bytes (malloc_size 64); map<int,40-byte> node 80 (80); list<uint64_t> node 24 (32)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/node_bytes.cpp, numbers as stated; fix round 2: command moved into the question; re-run 2026-11-15: 56->64, 80->80, 24->32, libc++ 220106; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): an unshipped port of node_bytes.cpp requested 56/80/24, malloc_usable_size 56/88/24; a separate scratch program gave a consecutive-block address step of 32 for a 24-byte request (99998 of 100000), so the usable size leaves out the 8-byte header; fix pass 3, 2026-11-15: shipped as modules/05-memory-perf/lab/practice/node_bytes_glibc.cpp (node_bytes.cpp with malloc_usable_size, plus the address-step check); run in the same Ubuntu image with g++ 13.3 and clang 18.1.3: requested 56/80/24, malloc_usable_size 56/88/24, most common address step 64/96/32 (24-byte request: 99999 of 100000), libstdc++ 20240904; node_bytes.cpp re-run here: 56->64, 80->80, 24->32, libc++ 220106"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB6",
+    "claim": "4K aliasing: a load after a store whose address bits 5-11 match; may have a five-cycle penalty; counted by LD_BLOCKS_PARTIAL.ADDRESS_ALIAS",
+    "source_urls": [],
+    "verification": "citation: Intel optimization manual 248966-051 section 15.8, in the AVX optimization chapter (Haswell-era wording)"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB7",
+    "claim": "hardware_destructive_interference_size is 256, constructive 64, and sysctl hw.cachelinesize 128 here; the standard does not define it as the line size",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/line_size.cpp printed 256 and 64; sysctl hw.cachelinesize: 128; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): line_size.cpp: GCC 13 destructive 256, constructive 64; clang 18 with libstdc++: __cpp_lib_hardware_interference_size not defined"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB1",
+    "claim": "The page is 16384 bytes on this M1 Max, so 48 MB of first touch costs 2930 faults; a 4 KiB page without huge pages would need about four times as many",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: getconf PAGESIZE = 16384; modules/06-hft-patterns/lab/practice/vec_growth.cpp reserve printed minor faults in loop=2930; 4 KiB figure is arithmetic; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): vec_growth.cpp reserve, page 4096, 3 runs each: minor faults in loop 477 with THP always, 11719 with THP disabled (prctl PR_SET_THP_DISABLE)"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB4",
+    "claim": "mprotect at base+4096 fails with EINVAL on a 16 KiB-page Mac; a one-page guard works and a write past the end kills the child with signal 10 (SIGBUS)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/guard_page.cpp printed page size 16384, Invalid argument for 4096, ok for 16384, killed by signal 10; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): guard_page.cpp: page size 4096, mprotect ok for both sizes, child killed by signal 11 (Segmentation fault)"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB5",
+    "claim": "Back-to-back steady_clock differences have median 0 (one tick under heavy load) and smallest non-zero step 41 ns; the counter runs at 24 MHz (one machine, varies with load)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/clock_hist.cpp, 5 runs: steady_clock p50=0, min_nonzero=41, cntfrq_el0 = 24000000 Hz, timebase 125/3; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): clock_hist.cpp port: cntfrq_el0 = 24000000 Hz, clock_getres 1 ns for MONOTONIC, MONOTONIC_RAW and REALTIME, min_nonzero 41 ns in 5/5 runs; fix pass 3, 2026-11-15, here, during a Time Machine backup: quiet 5/5 runs p50=0; with 14 busy shell loops, 3 process runs x 5: p50=0 in 14 runs and p50=41 in 1 run, min_nonzero 41 in all 15 (so one tick under load is possible, not typical); the shipped clock_hist.cpp is macOS-only and the Linux port was not shipped"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB6",
+    "claim": "With N = 50,000 and nearest-rank, p99.9 shows the slow path only from k = 51 and p99 from k = 501",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/pctl_log.cpp printed k=50 p99.9=1 ms, k=51 9 ms, k=500 p99=1 ms, k=501 9 ms"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB7",
+    "claim": "CPUID and XSETBV always cause VM exits; RDTSC, RDTSCP and PAUSE exit only when a VM-execution control is set",
+    "source_urls": [],
+    "verification": "citation: Intel SDM 325462-093, sections 28.1.2 and 28.1.3"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB1",
+    "claim": "__text grows about 5614 B per extra instantiation in object files but about 494 B in the default-linked binary (deduplication); without dedup it is back at about 5614 B/type (macOS ld64 and Mach-O size)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/tsize.cpp at NTYPES 1..16: objects 5752..89956 B, default link 5772..13176 B, -no_deduplicate 5772..89976 B; __gcc_except_tab 40..400; __unwind_info 176..360 (176..720 no dedup); binaries returned NTYPES; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): tsize.cpp NTYPES 1->16 (size -A): object sum(.text*) 2360->38024 B (clang 18), 2288->36884 B (GCC 13); GNU ld (bfd) binary .text 2660->38324 / 2664->37560 B; gold --icf=all 2660->2984 / 2664->3000 B; plain .text in the object about 0 (COMDAT .text.* sections); linker version not recorded"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB2",
+    "claim": "A lower_bound rank function matches a prefix-count reference checksum; an upper_bound one fails",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/rank_check.cpp printed reference 8759147c456b17e0, fast PASS, buggy f9523c1a35e701a0 FAIL"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB3",
+    "claim": "Every contestant must match a reference checksum; a 50/50 mixed number can tie two implementations with opposite per-operation costs",
+    "source_urls": [],
+    "verification": "method; (10 + 30) / 2 = 20 = (20 + 20) / 2; correctness check as in M7-PB2"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB4",
+    "claim": "This libc++ (220106) with -std=c++2c does not define __cpp_lib_hive and has no <hive>",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/hive_check.cpp printed libc++ _LIBCPP_VERSION=220106, __cplusplus=202400, __cpp_lib_hive not defined, __has_include(<hive>)=0; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): hive_check.cpp with clang 18 -std=c++2c: libstdc++ __GLIBCXX__=20240904, __cpp_lib_hive not defined, __has_include(<hive>)=0; GCC 13 rejects -std=c++2c, -std=c++23 printed the same"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB5",
+    "claim": "With both buffers pre-faulted, in 15 reps over 3 runs on a quiet machine every 1 MiB random chase was slower after streaming 256 MiB than right after setup (107-119 us vs 214-612 us in those runs; under heavy load both rise, e.g. 147.5 us and 792.8 us seen during a backup)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/cache_warm.cpp, 5 reps: warm 110.1-114.5 us, after eviction 251.6-465.6 us, faults 0; re-run 2026-11-15, here: 15 reps over 3 process runs: warm 107.1-110.4 us, after eviction 238.0-576.4 us, faults 0; fix pass 3, 2026-11-15, here, during a Time Machine backup (load average up to 82): 30 reps over 6 process runs: warm 107.0-118.5 us except one first rep at 147.5 us, after eviction 227.2-792.8 us, faults 0, after eviction slower than warm in every rep (the upper ends exceed the Key's range under that load)"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB6",
+    "claim": "A ts/1e6 hash on 2^19 keys 1.5 us apart fills 787 of 823,117 buckets with a largest bucket of 667 (std::hash: 388,181 and 7); in every run the custom hash's lookup median was over 30x and its insert median over 4x the std::hash ones (one machine; the ms vary with load)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/hashq.cpp, 3 runs at load average about 4: non_empty=787 max_bucket=667 and non_empty=388181 max_bucket=7 every run; lookup med 350.0-378.8 vs 7.8-8.5 ms, insert med 260.7-262.8 vs 36.1-38.9 ms; review round 1: lookup 360.7-387.2 vs 8.0-10.2 ms, insert 261.3-261.8 vs 38.2-58.0; review round 2: lookup 354-375 vs 7.9-8.3, insert 260.8-262.6 vs 36.2-42.3; fix round 2, 2026-11-15, 3 runs at load average 8.6-9.4: lookup med 344.8/358.6/369.1 vs 8.3/8.4/8.6 ms, insert med 260.5-261.4 vs 39.7-42.8 ms, counts identical. Ranges did not hold across rounds, so only the >30x and >4x bounds are claimed; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): hashq.cpp, both compilers: buckets=712697; ms_hash non_empty=787 max_bucket=667; std::hash non_empty=371361 max_bucket=7"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB7",
+    "claim": "Counts and checksum of hashq are identical in every run, solo or with a second copy running; the timings change with a second copy by an amount that differs from round to round (some rounds barely, some a lot), so one run per side cannot show whether a 1.5x difference is real (one machine)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/hashq.cpp, 3 solo runs at load average about 4 (spreads 1.01-1.34x; std::hash insert med 36.1-38.9 ms, lookup 7.8-8.5 ms) and 3 rounds of two copies at once (std::hash insert med 51.7-60.7 ms, lookup 11.0-11.4 ms; counts unchanged); review round 2, 5 pair rounds: std::hash insert medians 40.8/34.8, 45.1/36.9, 55.0/58.4, 56.0/53.5, 44.6/38.0 ms (solo 36.2-42.3), so the 1.3-1.7x shift reproduced in 2 of 5; fix round 2, 2026-11-15, 3 solo runs (insert med 39.7-42.8 ms, max 46.0-53.5) and 3 pair rounds (insert med 74.4/73.7, 68.9/64.2, 56.4/52.6 ms; lookup 10.2-12.1 ms), load average 8-9; counts and chk identical in all runs. No size of the shift is claimed"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB8",
+    "claim": "No LTO: sum_iface blr, sum_leaf direct bl (final); without final sum_leaf uses blr; -flto alone leaves four blr (clang); whole-program vtables with hidden visibility remove every blr and fold the two functions",
+    "source_urls": [
+      "https://clang.llvm.org/docs/LTOVisibility.html"
+    ],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/devirt builds A-D: A one blr (ltmp0 = sum_iface at 0) and bl in sum_leaf; B 4 blr in sum_iface; C 0 blr, main calls sum_iface twice; D 2 blr; Linux re-check, 2026-11-15, Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++ 13 / glibc 2.39): GCC 13 -O2 -flto: sum_iface compares the vtable slot with Square::area (ldr x2,[x0,#16]; cmp x2,x22; b.eq), inlined body on match, blr x2 otherwise; -fopt-info: speculatively devirtualizing call in sum_iface/0 to area/10; -fno-devirtualize-speculatively leaves only blr"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB9",
+    "claim": "A branchy filter over a 1000-period repeated input runs over 3x faster per element than over non-repeating input with the same pass rate in every run, a 10^4 period is at least as fast as period 1000, a 10^5 period lands between and varies; a branch-free control runs at the same speed on both inputs (one machine)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-15, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/filter.cpp printed realized 0.7940/0.8000, branchy 0.445 vs 1.623 ns/elem, branchless 0.425/0.427, all OK; listing of branchy has cmp + b.ls; review round 1: branchy 0.440-0.445 vs 1.601-1.668, 10^4 0.425-0.429, 10^5 1.209-1.263, branchless 0.423-0.432; review round 2: 0.442-0.445 vs 1.632-1.641, 10^4 0.422-0.424, 10^5 1.011-1.283, branchless 0.424-0.429; fix round 2, 2026-11-15, 3 runs at load average about 7: 0.440-0.455 vs 1.636-1.659, 10^4 0.425-0.433, 10^5 1.181-1.237, branchless 0.425-0.430. Ranges did not hold across rounds, so only directions and the >3x bound are claimed"
+  },
+  {
+    "lesson": "M1/L5",
+    "where": "M1/L5 C17, M1-LPA3",
+    "claim": "push_back growth doubles capacity on libc++ and libstdc++ (1, 2, 4, ... 2048); the standard fixes no growth factor; page size 16 KB on this Mac, 4 KB in a Linux arm64 container",
+    "source_urls": [],
+    "verification": "compiled and run here, content pass, 2026-11-17: capacity sequence 1 2 4 8 ... 2048 with Apple clang 21 / libc++, M1 Max, macOS, and with GCC 13 and clang 18 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13); N4950 [vector.modifiers] (page 945) states complexity and reallocation only; getconf PAGESIZE 16384 / 4096"
+  },
+  {
+    "lesson": "M5/L2",
+    "where": "M5-P2",
+    "claim": "A max-of-doubles scan stays scalar at -O2 on Apple clang 21, GCC 13 and clang 18; contiguous storage can let the compiler vectorise some loops",
+    "source_urls": [],
+    "verification": "compiled here, content pass, 2026-11-17: clang -Rpass-missed=loop-vectorize 'loop not vectorized' (Apple clang 21, clang 18); GCC 13 -O2 -fopt-info-vec-all 'not vectorized: unsupported use in stmt', -O3 -fopt-info-vec no vectorized loop; Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13)"
+  },
+  {
+    "lesson": "M5/L2",
+    "where": "M5/L2 C5",
+    "claim": "clang 18 with libstdc++ 13 does not define __cpp_lib_hardware_interference_size; GCC 13 and Apple clang 21 give 256/64",
+    "source_urls": [],
+    "verification": "compiled and run here, content pass, 2026-11-17: Apple clang 21 / libc++, M1 Max, macOS macro 201703 destructive 256 constructive 64; GCC 13 same; clang 18 'no __cpp_lib_hardware_interference_size' on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13)"
+  },
+  {
+    "lesson": "M5/L4",
+    "where": "M5/L4 C9",
+    "claim": "With -fexperimental-library Apple clang 21's libc++ accepts std::sort(par) and reduce(unseq) but has no matching std::copy_if(par) overload; GCC 13's libstdc++ accepts all three",
+    "source_urls": [],
+    "verification": "compiled here, content pass, 2026-11-17: Apple clang 21 / libc++, M1 Max, macOS: without the flag 'no member named par'; with it SORT and RED build, COPYIF 'no matching function for call to copy_if'; GCC 13 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13) built and ran all three"
+  },
+  {
+    "lesson": "M6/L2",
+    "where": "M6/L2 C3 contract table",
+    "claim": "GCC with -flto can guess the dynamic type of a virtual call, compare and inline it, keeping the indirect call as a fallback",
+    "source_urls": [],
+    "verification": "compiled here, content pass, 2026-11-17: modules/07-architecture/lab/practice/devirt with GCC 13 -O2 -flto -fopt-info-optimized-ipa on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13): 'speculatively devirtualizing call in sum_iface/41 to area/0'"
+  },
+  {
+    "lesson": "M6/L3",
+    "where": "M6/L3 C8, M6-G7",
+    "claim": "PGO flags -fprofile-instr-generate/-use are clang's; GCC spells them -fprofile-generate/-fprofile-use; a short source if can compile to csel (arm64) or cmov (x86-64) with no conditional branch",
+    "source_urls": [],
+    "verification": "compiled and run here, content pass, 2026-11-17: GCC 13 -fprofile-generate run wrote .gcda, -fprofile-use rebuilt and ran on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13); two short ifs gave csel and no conditional branch with Apple clang 21, GCC 13 and clang 18 arm64, cmovg with Apple clang -target x86_64-apple-macos13"
+  },
+  {
+    "lesson": "M6/L3",
+    "where": "M6/L3 C11",
+    "claim": "steady_clock::period says 1 ns and clock_getres(CLOCK_MONOTONIC) says 1000 ns and clock_getres(CLOCK_UPTIME_RAW) 42 ns on this Mac (1 ns in the Linux container), but the smallest non-zero step between two steady_clock reads is 41 ns",
+    "source_urls": [],
+    "verification": "compiled and run here, content pass, 2026-11-17: Apple clang 21 / libc++, M1 Max, macOS two runs clock_getres=1000 ns, period 1/1000000000, smallest step 41 ns over 1e6 pairs; GCC 13 in the Linux container on this Mac clock_getres=1 ns, step 41 ns"
+  },
+  {
+    "lesson": "M3/L2",
+    "where": "M3/L2 C6",
+    "claim": "On x86 CMPXCHG's destination receives a write cycle whatever the comparison result, so test with a plain load before trying the exchange",
+    "source_urls": [],
+    "verification": "Intel SDM combined Vol. 1-4 (325462), Vol. 2A 3-194 CMPXCHG description (PDF page 898): 'the destination operand receives a write cycle without regard to the result of the comparison'; content pass, 2026-11-17"
+  },
+  {
+    "lesson": "M3/L5",
+    "where": "M3/L5 C14",
+    "claim": "libstdc++ 13 atomic wait makes 16 quick checks (12 relax, then yields; relax is pause on x86, sched_yield elsewhere) before it waits",
+    "source_urls": [],
+    "verification": "read here, content pass, 2026-11-17: /usr/include/c++/13/bits/atomic_wait.h in Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13): __atomic_spin_count_relax = 12, __atomic_spin_count = 16, __thread_relax uses __builtin_ia32_pause on x86 else __thread_yield, futex wait under _GLIBCXX_HAVE_LINUX_FUTEX"
+  },
+  {
+    "lesson": "M5/L1",
+    "where": "M5/L1 C2",
+    "claim": "pmr::vector<int> on a 1024-byte monotonic buffer grows 1, 2, ... 128 without upstream calls and spills at push 129, on libstdc++ 13 as on libc++",
+    "source_urls": [],
+    "verification": "compiled and run here, content pass, 2026-11-17: counting upstream resource, GCC 13 and clang 18 on Linux arm64 container on this Mac (Ubuntu 24.04, GCC 13.3 / clang 18.1.3, libstdc++ 13): capacities 1..256, first upstream call at push 129 (cap 256)"
+  },
+  {
+    "lesson": "M1/L5",
+    "where": "M1/L5 hook, M4/L5 hook and M4-LPA1",
+    "claim": "Hook and key timing figures (43 ms, 5,800 ns) are from the course Mac",
+    "source_urls": [],
+    "verification": "checked against each lesson's own table ('Median of 7 runs on the course Mac' / course-Mac table), content pass, 2026-11-17; no new timing"
   }
 ]

@@ -230,7 +230,8 @@ Key:
     ring stays correct; it is just stronger than this design needs.
   - (b) x86-64: the seq_cst store becomes `xchg` instead of a plain `mov`.
     On arm64 the store is `stlr` either way (the loads differ: `ldar` vs
-    `ldapr`). Whether any of this costs measurable time depends on the CPU and
+    `ldapr`; on Linux arm64 GCC 13 and clang 18 default to `ldar` for
+    both). Whether any of this costs measurable time depends on the CPU and
     workload; measure before and after.
 </details>
 

@@ -57,7 +57,7 @@ std::sort(std::execution::par, v.begin(), v.end());  // C++17: library may paral
 clang++ -std=c++20 -O2 -fexperimental-library par.cpp && ./a.out
 ```
 
-The link may print an `ld: warning` about the `libc++experimental.a` archive being built for a newer macOS; the program still ran correctly here. The archive's object name (`libdispatch.cpp.o`) shows which thread backend this library uses.
+The link may print an `ld: warning` about the `libc++experimental.a` archive being built for a newer macOS; the program still ran correctly here. The archive's object name (`libdispatch.cpp.o`) shows which thread backend this library uses. Coverage differs by library: with the same flag, `std::copy_if(std::execution::par, ...)` still found no matching overload here, while GCC 13's libstdc++ accepted it. Compile the exact call you need.
 
 **See it yourself:**
 

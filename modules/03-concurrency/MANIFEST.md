@@ -25,6 +25,10 @@ Apple clang 21 on macOS arm64.
   pretest, 1.5 per completion card, 2 per question and 4 per synthesis card,
   plus about 1 minute per lab program you build. 40 cards: 6 pretests,
   6 completions, 12 questions, 10 gotchas, 4 judgement cards, 2 synthesis.
+- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 48 minutes,
+  5 self-graded cards on measurement, research and C++ techniques and on how
+  results expire. It is optional and not counted in the first pass above; its
+  runnable programs are in `lab/practice/`.
 - **Reviews:** the driver schedules misses for the next day and uninterrupted hits about
   2, 9, 30, 51 and 72 days after the first attempt; each sitting is capped by the driver.
 - **Interruptible:** yes; progress is saved after every card.

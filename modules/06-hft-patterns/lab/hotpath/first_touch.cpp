@@ -17,8 +17,10 @@ int main() {
     std::unique_ptr<char[]> pool(new char[kBytes]);            // allocated, not touched
     long before = minor_faults();
     std::memset(pool.get(), 1, kBytes);                        // first touch
+    asm volatile("" : : "r"(pool.get()) : "memory");           // keep both writes (GCC/clang)
     long after_first = minor_faults();
     std::memset(pool.get(), 2, kBytes);                        // second touch
+    asm volatile("" : : "r"(pool.get()) : "memory");           // keep both writes (GCC/clang)
     long after_second = minor_faults();
     std::printf("faults during first touch:  %ld\n", after_first - before);
     std::printf("faults during second touch: %ld\n", after_second - after_first);

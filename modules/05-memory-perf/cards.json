@@ -18,6 +18,9 @@
     },
     "lesson-06-lpa-pool-tail.md": {
       "minutes": 28
+    },
+    "lesson-07-practice-bank.md": {
+      "minutes": 50
     }
   },
   "cards": {
@@ -808,6 +811,104 @@
         "C16",
         "C17"
       ]
+    },
+    "M5-PB1": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "assume-ub",
+      "objective": 5,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "C++ working draft N5054 [dcl.attr.assume] p1; measured in this course: assume_mask.cpp; re-checked on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M5-PB2": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "C++ working draft N4950 [mem.res.monotonic.buffer.mem] p7-p9; measured in this course: pmr_monotonic.cpp; re-checked on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M5-PB3": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "research",
+      "objective": 5,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: modmask.cpp, modmask_neg.cpp and layout_ldp.cpp (Apple clang 21 -O2 -S, arm64); re-checked on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M5-PB4": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: bytes_per_elem.cpp on macOS (libc++ list and __tree node fields); re-checked with bytes_per_elem_glibc.cpp on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M5-PB5": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 1,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: node_bytes.cpp on macOS (counting allocator + malloc_size); re-checked with node_bytes_glibc.cpp on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M5-PB6": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "recall",
+      "topic": "research",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Intel 64 and IA-32 Architectures Optimization Reference Manual, Vol. 1 (document 248966-051), section 15.8 (4K Aliasing), in the AVX optimization chapter",
+      "concepts": []
+    },
+    "M5-PB7": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "interference-size",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "C++ working draft N5054 [hardware.interference] p1; measured in this course: line_size.cpp; re-checked on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
     }
   },
   "concepts": {

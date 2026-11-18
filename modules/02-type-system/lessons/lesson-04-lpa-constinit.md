@@ -36,7 +36,8 @@ The *Latency Prioritized Approach* (LPA, used across this course) judges a hot p
   (or `static constexpr` for a read-only table).
 - **Why (mechanism):** a function-local static with a run-time initialiser
   gets a hidden guard: every call checks a flag, and the *first* call takes
-  a lock (`__cxa_guard_acquire`) and runs the whole initialiser, inside
+  a lock (`__cxa_guard_acquire`, the name GCC and clang use; count it on
+  your compiler) and runs the whole initialiser, inside
   whatever request happened to come first. Compiled with `-O2`, the run-time
   version contained one `__cxa_guard_acquire` call; the constant `static
   constexpr` local and the `constinit` global contained none (assembly

@@ -207,7 +207,8 @@ timeout 1 ms
 **Clocks.** `steady_clock::now()` gives a time point that never goes backwards,
 so `end - start` measures an interval on that clock. `system_clock` follows
 the wall clock, which can be adjusted. `high_resolution_clock` may be an alias
-for either; on this toolchain (libc++) it is `steady_clock`.
+for either; on this toolchain (libc++) it is `steady_clock`, while on
+libstdc++ 13 (GCC 13, Linux) it is `system_clock`.
 
 **The trap.** "Durations make unit bugs impossible" is too strong:
 `duration_cast` truncates, very large counts can overflow, and once you call

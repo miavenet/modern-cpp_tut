@@ -2,7 +2,7 @@
 
 **Time: about 26 minutes** (reading about 7, the hands-on lab about 10, cards about 9). The lab is resumable: your work file stays where you left it.
 
-**Hook:** two million `push_back`s into a `std::vector`. The median batch takes one clock tick in every run. The slowest batch takes 43 *milliseconds*: a million times the median, inside one call to `push_back`. One keyword cuts that by 5x. One more line cuts it by about 1,000x.
+**Hook:** two million `push_back`s into a `std::vector`. The median batch takes one clock tick in every run. On the course Mac, the slowest batch takes 43 *milliseconds*: a million times the median, inside one call to `push_back`. One keyword cuts that by 5x. One more line cuts it by about 1,000x.
 
 **You will be able to:** read a latency histogram for its tail, explain which growth step lands there and why `noexcept` changes its size, move the growth out of the timed path, and say what that costs you.
 
@@ -29,7 +29,7 @@ Key:
 The *Latency Prioritized Approach* (LPA) aims for the lowest latency together with high throughput, and judges by the far tail (p99.99), not the mean. Every LPA choice answers three questions:
 
 - **Default does / LPA does:** the default lets the vector grow as orders arrive. LPA marks the element's move `noexcept` *and* reserves (and touches) the peak's worth of capacity at start-up.
-- **Why (mechanism):** when the buffer is full, one `push_back` allocates a buffer twice as big and relocates every old element. That is O(n) work inside one O(1)-on-average call. Without `noexcept` the vector *copies* (lesson 01, C2), and here every copy allocates a string. Even after `reserve`, the first write to each fresh 16 KB page of the new buffer takes a *page fault*: the OS maps the page before the write can finish.
+- **Why (mechanism):** when the buffer is full, one `push_back` allocates a buffer twice as big (libc++ and libstdc++ double; the standard does not fix the factor) and relocates every old element. That is O(n) work inside one O(1)-on-average call. Without `noexcept` the vector *copies* (lesson 01, C2), and here every copy allocates a string. Even after `reserve`, the first write to each fresh page of the new buffer (16 KB on this Mac, 4 KB in a Linux arm64 container) takes a *page fault*: the OS maps the page before the write can finish.
 - **Gives up:** memory for the worst case, held from start-up even in quiet hours; start-up time; and you must know the peak (past it, the vector grows again).
 
 **What we measured.** `lab/solution/push_tail.cpp`. Course Mac: Apple M1 Max, macOS 27, Apple clang 21, `-O2`, one thread, no core pinning, shared machine (load average about 11). 125,000 samples per run, each one batch of 16 `push_back`s. Median [lowest–highest] of 7 runs, ns. Copies and heap calls were identical in every run; minor page faults varied by at most 2 (copy-growth 14,647–14,649, move-growth 10,014–10,015; the other two rows did not vary). The table shows the median.
@@ -87,7 +87,7 @@ Q: In the move-growth run, p50 stayed at one clock tick while the max was about 
 <details><summary>Answer</summary>
 Key:
 
-  - Mechanism: a growth step. One `push_back` found the buffer full, allocated one twice as big, and moved every old element (about a million) into it.
+  - Mechanism: a growth step. One `push_back` found the buffer full, allocated a bigger one (twice as big on libc++ and libstdc++), and moved every old element (about a million) into it.
   - Counters: copies while timed (2,097,151 without `noexcept`, 0 with it) and heap calls while timed (22 growth steps with `noexcept` alone, 0 after `reserve`).
 </details>
 

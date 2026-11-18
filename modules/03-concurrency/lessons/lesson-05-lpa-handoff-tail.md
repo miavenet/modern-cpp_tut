@@ -46,7 +46,7 @@ What to read off it:
 
 - *Spinning wins big from p50 to p99.9* (46x, 84x and 18x). The wake-up is gone.
 - *At p99.99 the win shrinks to about 3.5x and the ranges overlap.* Those samples are the OS preempting a thread, and that happens to spinners too. On Linux you would isolate cores for the spinner; macOS has no way to do that.
-- *`atomic::wait` was no faster than the condition variable here.* With a 20 µs gap it really sleeps (1.17 cores busy). In a variant without gaps (5 runs) it never slept: p50 125 ns and p99.99 335 ns, as fast as the spin, with 2 cores busy. libc++ polls for a short while before it sleeps. Measure your own rate before choosing it.
+- *`atomic::wait` was no faster than the condition variable here.* With a 20 µs gap it really sleeps (1.17 cores busy). In a variant without gaps (5 runs) it never slept: p50 125 ns and p99.99 335 ns, as fast as the spin, with 2 cores busy. libc++ polls for a short while before it sleeps; libstdc++ 13 makes 16 quick checks first, so read your library's header. Measure your own rate before choosing it.
 - *The efficiency-core caveat.* The E-core row asked macOS for background quality of service (QoS) for the responder. macOS steers background-QoS threads toward the two efficiency cores and gives them low priority (we can see the effect, not the placement: macOS reports no core number). Its median more than tripled, its p99.99 was about 23x the plain spin, and one run's max was 7.1 s.
 
 Trust the ratios more than the exact nanoseconds; the far tail moved by 10x or more between runs on a busy machine.

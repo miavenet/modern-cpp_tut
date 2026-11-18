@@ -65,7 +65,7 @@ to the operation that caused them; it also works with C++98 code.
 | `-fsanitize=address` | ASan | out-of-bounds, use-after-free, double free, ... |
 | `-fsanitize=thread` | TSan | data races |
 | `-fsanitize=undefined` | UBSan | undefined behaviour such as signed overflow |
-| `-fsanitize=memory` | MSan | reads of uninitialised memory (Linux, NetBSD, FreeBSD only) |
+| `-fsanitize=memory` | MSan | reads of uninitialised memory (clang only, on Linux, NetBSD, FreeBSD) |
 
 **See it yourself.** Files are in `modules/07-architecture/lab/sanitizers/`;
 each file's first lines hold its command. Use after free (`uaf.cpp` reads
@@ -163,7 +163,7 @@ Key:
   - UndefinedBehaviorSanitizer (`-fsanitize=undefined`): undefined behaviour
     such as signed integer overflow.
   - Also correct as one of the three: MemorySanitizer (`-fsanitize=memory`):
-    reads of uninitialised memory (not available on macOS).
+    reads of uninitialised memory (clang only; not available on macOS).
 </details>
 
 ### Card M7-G4 · Spot the trap
@@ -176,7 +176,7 @@ Q: Your tests pass cleanly under ASan, yet production hits a bug caused by
 Key:
   - (a) ASan checks whether memory may be accessed—in bounds and not freed—not
     whether its contents were initialised.
-  - (b) MemorySanitizer (`-fsanitize=memory`), on Linux, NetBSD or FreeBSD;
+  - (b) MemorySanitizer (`-fsanitize=memory`), clang only, on Linux, NetBSD or FreeBSD;
     the Clang docs say it requires all program code, including libraries, to
     be instrumented. Apple clang on macOS rejects the flag.
 </details>

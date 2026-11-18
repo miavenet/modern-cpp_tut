@@ -191,7 +191,9 @@ the 24 MHz system counter: about 41.7 ns. Timing *nothing* 1,000,000 times
 (`lab/measure/clock_tail.cpp`, 7 runs) gave p50 = 0, p99 = 42, p99.99 = 85
 [85–167] ns. Anything shorter than a tick reads as 0 or 42. So time a *batch*
 of operations per sample (the module 05 lab used 16 `push_back`s), and read
-the result as batch latency. The header prints the floor next to every
+the result as batch latency. Do not trust a reported resolution: here `steady_clock::period`
+says 1 ns and `clock_getres(CLOCK_MONOTONIC)` says 1000 ns (`CLOCK_UPTIME_RAW` says 42 ns), yet the smallest non-zero step
+between two reads is 41 ns. Measure the step. The header prints the floor next to every
 histogram.
 
 **3. The median cannot see a rare cost, and a short run cannot see the OS.**
@@ -345,7 +347,10 @@ which branch is common under your real traffic. A hint supplies a guess;
 profile data supplies observed frequencies from a particular run.
 
 **The idea.** In compiled code, one side of an `if` *falls through* (runs
-straight on) and the other is a jump. C++20 added `[[likely]]` and
+straight on) and the other is a jump. A source `if` is not always a branch:
+a compiler can turn a short one into a conditional select (`csel` on arm64,
+`cmov` on x86-64), so count the conditional branches in the listing first.
+C++20 added `[[likely]]` and
 `[[unlikely]]`; the standard says they are "intended to allow implementations
 to optimize" and notes that excessive use "is liable to result in performance
 degradation". The C++98-era equivalent was the GCC extension
@@ -372,7 +377,8 @@ LBB0_2: b price_fast             LBB0_2: ... call on_halt
 instrumented binary, run it on representative input, and rebuild with the
 recorded counts. `lab/measure/pgo.cpp` has the exact commands
 (`-fprofile-instr-generate`, `llvm-profdata merge`,
-`-fprofile-instr-use`). On the test Mac the profile alone, with no
+`-fprofile-instr-use`; clang's spelling, GCC uses `-fprofile-generate` /
+`-fprofile-use`). On the test Mac the profile alone, with no
 attribute, produced the same layout as `[[unlikely]]`. A profile is only as
 good as its input: an unrepresentative or stale profile can steer the
 compiler wrong.
@@ -412,7 +418,8 @@ Key:
     no compiler warning reports that.
   - (b) Profile-guided optimisation: build with `-fprofile-instr-generate`,
     run representative traffic, merge with `llvm-profdata`, rebuild with
-    `-fprofile-instr-use` (and re-profile when traffic changes).
+    `-fprofile-instr-use` (and re-profile when traffic changes). GCC
+    spells them `-fprofile-generate` / `-fprofile-use`.
 </details>
 
 ---

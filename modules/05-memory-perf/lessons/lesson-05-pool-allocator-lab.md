@@ -15,7 +15,7 @@ Q: `struct Order { std::uint64_t id; double px; std::uint32_t qty; char side; };
 <details><summary>Answer</summary>
 Key:
 
-  - No. The list asks for *nodes*: the `Order` plus two link pointers. In this lab's run on libc++ every request was 40 bytes with alignment 8; other libraries may differ.
+  - No. The list asks for *nodes*: the `Order` plus two link pointers. In this lab's run on libc++ every request was 40 bytes with alignment 8 (libstdc++ 13 also asked for 40); other libraries may differ.
   - So a pool must be sized by what the container actually requests, not by `sizeof` of your element.
 </details>
 

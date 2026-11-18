@@ -15,6 +15,9 @@
     },
     "lesson-05-lpa-push-back-tail.md": {
       "minutes": 26
+    },
+    "lesson-06-practice-bank.md": {
+      "minutes": 30
     }
   },
   "cards": {
@@ -747,6 +750,62 @@
       "concepts": [
         "C17"
       ]
+    },
+    "M1-PB1": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 6,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: clock_res.cpp",
+      "concepts": []
+    },
+    "M1-PB2": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "abi-pass-by-value",
+      "objective": 1,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Itanium C++ ABI 1.1 and 3.1.2.3; C++ working draft N4950 [class.temporary]/3, [special]/6, [dcl.fct.def.default]/5; measured in this course: trivial_pass.cpp; re-checked on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M1-PB3": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "trivial-abi",
+      "objective": 2,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "clang attribute reference (trivial_abi); C++ working draft N4950 [expr.call]; measured in this course: trivial_abi_order.cpp; re-checked on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M1-PB4": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "expiry",
+      "objective": 5,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "clock_gettime(2) Linux man page; macOS clock_gettime(3) man page (CLOCK_MONOTONIC continues while asleep)",
+      "concepts": []
     }
   },
   "concepts": {

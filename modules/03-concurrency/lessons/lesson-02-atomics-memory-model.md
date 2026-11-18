@@ -302,6 +302,9 @@ memory is a locked instruction that also acts as a full barrier, usually
 dearer than a plain `mov`. On arm64 the release and `seq_cst` stores are
 the same instruction. Reproduce the table yourself with the `-S` flag, and
 measure before you claim a speed-up.
+Holds for this Mac's default CPU: GCC 13 and clang 18 on Linux arm64 target
+ARMv8.0 by default and emit `ldar` for the acquire load (`-march=armv8.3-a`
+gives `ldapr`). Re-check with `-S` for your target.
 
 **The trap.** "`seq_cst` is always slow, so avoid it." It is the safe
 default; weaken an order only when you can say which happens-before edge
@@ -381,7 +384,15 @@ A's fails, and `cur` becomes 9. A re-checks `9 < 7`: false, so it stops.
 
 **What clang emits.** For a plain ARMv8.0 target, the weak form is one
 `ldaxr`/`stlxr` attempt and the strong form adds a retry branch. On this
-Mac's default CPU both become a single `casal` instruction.
+Mac's default CPU both become a single `casal` instruction. GCC 13 and clang
+18 on Linux arm64 instead call a helper (`__aarch64_cas8_acq_rel`) by default;
+`-march=armv8.1-a` gives `casal`.
+
+**Check with `load` first.** Test the condition with a plain `load` and try
+the exchange only when an update is needed, as the worked example does with
+`cur < v`. A failed compare-exchange is still a write attempt: on x86,
+Intel's SDM says CMPXCHG's destination "receives a write cycle without regard
+to the result of the comparison" (Vol. 2A, CMPXCHG).
 
 **The trap.** "Weak fails because of cache-line bouncing." The standard
 names no cause; just treat failure as possible at any time.

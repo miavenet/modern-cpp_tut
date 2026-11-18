@@ -222,6 +222,8 @@ node-based tree (`__tree`), each element in its own node.
 **Modern way.** `std::flat_map` (C++23, header `<flat_map>`) is an adaptor
 over two containers, by default `std::vector<Key>` and `std::vector<T>`, with
 "the keys ... sorted". Lookup is a binary search over contiguous keys.
+It needs a library that ships it (libc++ here does; libstdc++ 13 does not), so
+check `__has_include(<flat_map>)`.
 `lab/cpp23/flat_map.cpp` (build: `clang++ -std=c++23 ...`, command in the file):
 
 ```cpp
@@ -272,6 +274,8 @@ member body.
 explicit first parameter, `this Self&& self`. With a template parameter,
 `Self` is deduced from the call expression. When called through a `Derived`
 expression, the base-class template can deduce `Derived` without CRTP.
+It needs a compiler that ships it: Apple clang 21 and clang 18 accept it, GCC 13
+does not.
 `lab/cpp23/deducing_this.cpp`
 prints, for `Derived d; Base b; d.who(); b.who(); d.fixed();`:
 

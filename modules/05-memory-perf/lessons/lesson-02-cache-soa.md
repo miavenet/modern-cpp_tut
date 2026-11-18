@@ -16,7 +16,7 @@ Q: You have 10,000 `Order` objects of 120 bytes each, and a loop that reads only
 Key:
 
   - The loop touches far fewer bytes: about 80 KB of prices instead of about 1.2 MB of whole orders, because memory moves in whole cache lines and the old layout dragged the unused 112 bytes of each order along.
-  - Usually that makes the scan faster, and contiguous doubles also let the compiler vectorise; how much faster is a measurement on your machine, not a rule.
+  - Usually that makes the scan faster; how much faster is a measurement on your machine, not a rule. Contiguous doubles can let the compiler vectorise some loops, but this max scan stayed scalar at `-O2` on Apple clang 21, GCC 13 and clang 18: ask for the vectoriser report (`-Rpass=loop-vectorize`, `-fopt-info-vec`).
 </details>
 
 ---
@@ -178,7 +178,7 @@ On a 128-byte-line target, aligning the whole object to 128 bytes makes the 8-by
 
 **Packed flags are the exception.** For standard containers, writes to *different* elements do not race. `std::vector<bool>` is excluded: its flags share words, so the standard says `y[0] = true` can race with `y[1] = true`.
 
-**Which number to pad to?** C++17 added `std::hardware_destructive_interference_size` in `<new>`: the implementation's minimum recommended separation for concurrently accessed objects. It is a compile-time constant, not a measurement of your CPU. If it recommends 256 while your target has 128-byte lines, that may spend extra space; measure before reducing it.
+**Which number to pad to?** C++17 added `std::hardware_destructive_interference_size` in `<new>`: the implementation's minimum recommended separation for concurrently accessed objects. It is a compile-time constant, not a measurement of your CPU. Some toolchains do not define it (clang 18 with libstdc++ 13 does not); test `__cpp_lib_hardware_interference_size` first. If it recommends 256 while your target has 128-byte lines, that may spend extra space; measure before reducing it.
 
 | Choice | Cost and guarantee | Good fit | Wrong-choice smell |
 |---|---|---|---|
