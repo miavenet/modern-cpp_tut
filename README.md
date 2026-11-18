@@ -67,7 +67,7 @@ lab; their lessons are core here.
 | 06 | 01–02: about 70 min | 03 measurement, 04 prefetch, 05 tail-budget capstone: about 113 min |
 | 07 | 02 and 04: about 70 min | 01 modules, 03 benchmarking, 05 benchmarks as distributions: about 105 min |
 
-Optional practice banks, not counted above, are the last lesson of modules 01, 03, 04, 05, 06 and 07 (about 30, 48, 10, 50, 39 and 89 min); the driver offers their cards after the module's other lessons. `:skip` on a card records “don't know”, so it returns the next day; `:quit` when a bank card appears to leave the bank for later.
+Optional practice banks, not counted above, are the last lesson of modules 01 to 07 (about 58, 65, 135, 10, 185, 193 and 220 min); the driver offers their cards after the module's other lessons. `:skip` on a card records “don't know”, so it returns the next day; `:quit` when a bank card appears to leave the bank for later.
 
 ## Other ways to use it
 

@@ -17,7 +17,7 @@
       "minutes": 27
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 48
+      "minutes": 135
     }
   },
   "cards": {
@@ -731,6 +731,132 @@
         "mode": "self"
       },
       "source": "libc++ sources: __thread/poll_with_backoff.h, __atomic/atomic_sync.h and __atomic/atomic_sync_timed.h as shipped with Apple clang 21 (_LIBCPP_VERSION 220106); libcxx/src/atomic.cpp (llvm-project main); libstdc++ bits/atomic_wait.h (GCC 13.3, Ubuntu 24.04 on arm64 in a virtual machine)",
+      "concepts": []
+    },
+    "M3-PB6": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "memory-order",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Intel 64 and IA-32 Architectures Software Developer's Manual, XCHG (locking protocol applied regardless of LOCK prefix); measured in this course: xchg_orders.cpp; GCC 13.3 x86-64 on Compiler Explorer",
+      "concepts": []
+    },
+    "M3-PB7": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "memory-order",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: ttas_lock.cpp (plain runs and ThreadSanitizer)",
+      "concepts": []
+    },
+    "M3-PB8": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "atomics",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[atomics.types.operations] p4, p5 and Note 3 (C++23 draft N4950); measured in this course: wide_cas.cpp",
+      "concepts": []
+    },
+    "M3-PB9": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "atomics",
+      "objective": 2,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[atomics.ref.generic] p3 (C++23 draft N4950); measured in this course: atomic_copies.cpp; x86-64 GCC 13.3 and clang 18.1 on Compiler Explorer",
+      "concepts": []
+    },
+    "M3-PB10": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "data-race",
+      "objective": 2,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[intro.races] p21 (C++23 draft N4950); measured in this course: volatile_flag.cpp under ThreadSanitizer",
+      "concepts": []
+    },
+    "M3-PB11": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "contention",
+      "objective": 4,
+      "minutes": 15,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: rmw_scale.cpp",
+      "concepts": []
+    },
+    "M3-PB12": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "research",
+      "objective": 4,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "libc++ src/shared_mutex.cpp (llvmorg-22.1.6); glibc 2.39 nptl/pthread_rwlock_common.c; measured in this course: reader_lock.cpp",
+      "concepts": []
+    },
+    "M3-PB13": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "threads",
+      "objective": 1,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[thread.thread.static] p1 (C++23 draft N4950); measured in this course: pool_size.cpp (Ubuntu 24.04 aarch64 container, GCC 13.3 and clang 18.1.3)",
+      "concepts": []
+    },
+    "M3-PB14": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "expiry",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "kernel.org admin-guide/cputopology (/sys/devices/system/cpu/cpuX/topology/); sysctl hw.physicalcpu / hw.logicalcpu on macOS",
       "concepts": []
     }
   },

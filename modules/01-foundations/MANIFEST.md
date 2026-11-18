@@ -22,8 +22,8 @@ how a lesson works, and how to compile the samples.
 - **First pass:** about 169 minutes over five lessons (34 + 29 + 45 + 35 + 26 min):
   7 pretests, 6 completion cards, 32 recall, apply, gotcha and synthesis
   cards and one lab (46 in all). At about 20 minutes a sitting that is about nine sittings.
-- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 30 minutes,
-  4 self-graded cards on measurement, research and C++ techniques and on how
+- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 58 minutes,
+  8 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.
 - **Reviews:** a missed card returns the next day; after hits a card returns

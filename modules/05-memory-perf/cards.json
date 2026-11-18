@@ -20,7 +20,7 @@
       "minutes": 28
     },
     "lesson-07-practice-bank.md": {
-      "minutes": 50
+      "minutes": 185
     }
   },
   "cards": {
@@ -908,6 +908,230 @@
         "mode": "self"
       },
       "source": "C++ working draft N5054 [hardware.interference] p1; measured in this course: line_size.cpp; re-checked on Ubuntu 24.04 on arm64 in a virtual machine (GCC 13.3 / clang 18.1.3, libstdc++/glibc)",
+      "concepts": []
+    },
+    "M5-PB8": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "false-sharing",
+      "objective": 4,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[support.types.layout] p1 (C++23 draft N4950); measured in this course: layout.cpp (clang -fdump-record-layouts)",
+      "concepts": []
+    },
+    "M5-PB9": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "false-sharing",
+      "objective": 4,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[support.types.layout] p1 (C++23 draft N4950); measured in this course: layout_guard.cpp",
+      "concepts": []
+    },
+    "M5-PB10": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "interference-size",
+      "objective": 4,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[hardware.interference] and [version.syn] (C++23 draft N4950); measured in this course: hdis.cpp, use_hdr.cpp",
+      "concepts": []
+    },
+    "M5-PB11": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "recall",
+      "topic": "interference-size",
+      "objective": 4,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: line_consts.cpp; sysctl hw.cachelinesize (macOS), getconf LEVEL1_DCACHE_LINESIZE (Linux)",
+      "concepts": []
+    },
+    "M5-PB12": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "expiry",
+      "objective": 4,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "sysctl hw.perflevel0.* / hw.perflevel1.* / hw.cachelinesize (macOS); /sys/devices/system/cpu/cpu0/cache/index*/shared_cpu_list and lscpu (Linux)",
+      "concepts": []
+    },
+    "M5-PB13": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: chase_sizes.cpp; sysctl hw.perflevel0.l1dcachesize / l2cachesize",
+      "concepts": []
+    },
+    "M5-PB14": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "aos-soa",
+      "objective": 3,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[dcl.array] p6, [vector.overview] p2 (C++23 draft N4950); measured in this course: telemetry.cpp",
+      "concepts": []
+    },
+    "M5-PB15": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "alignment",
+      "objective": 4,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[expr.new] p14 and [basic.align] (C++17 draft N4659); measured in this course: overaligned_new.cpp",
+      "concepts": []
+    },
+    "M5-PB16": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "alignment",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: packed_ref.cpp (Apple clang 21; GCC 13.3 and clang 18.1.3 on Ubuntu 24.04 aarch64)",
+      "concepts": []
+    },
+    "M5-PB17": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "vectorization",
+      "objective": 6,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[intro.races] Note 22 (C++23 draft N4950); measured in this course: clamp.cpp, clamp_sve.sh, clamp_census.sh, clamp_reader.cpp",
+      "concepts": []
+    },
+    "M5-PB18": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "vectorization",
+      "objective": 6,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: calib.cpp, calib_main.cpp, calib_report.sh, calib_alias.cpp (AddressSanitizer)",
+      "concepts": []
+    },
+    "M5-PB19": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "branch-free",
+      "objective": 5,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: slack.cpp (AddressSanitizer)",
+      "concepts": []
+    },
+    "M5-PB20": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[accumulate] p2 and [reduce] p7 (C++20 draft N4861); measured in this course: fsum.cpp, fadd_kinds.sh",
+      "concepts": []
+    },
+    "M5-PB21": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "recall",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[algorithms.parallel.exec] p5 and p8 note, [algorithms.parallel.defns] p4, [thread.mutex.requirements.mutex] p11 (C++20 draft N4861); C++17 draft N4659",
+      "concepts": []
+    },
+    "M5-PB22": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "expiry",
+      "objective": 5,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: fill_optout.cpp (Apple clang 21 -std=c++2c; GCC 13.3 -std=c++23 with and without -fno-ipa-icf)",
+      "concepts": []
+    },
+    "M5-PB23": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "llvm-mca (LLVM 22.1.6) apple-m1 model; measured in this course: mca/acc1.s ... acc10.s",
       "concepts": []
     }
   },

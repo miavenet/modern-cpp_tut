@@ -3089,5 +3089,516 @@
     "claim": "Hook and key timing figures (43 ms, 5,800 ns) are from the course Mac",
     "source_urls": [],
     "verification": "checked against each lesson's own table ('Median of 7 runs on the course Mac' / course-Mac table), content pass, 2026-11-17; no new timing"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB5",
+    "claim": "std::function<int(int)> is 32 bytes on libc++ and libstdc++; 8- and 16-byte captures cost 0 allocations, 24 bytes and more 1; an alignas(16) 16-byte capture allocates; libc++ allocates 0/0/1 for throwing move / noexcept move / throwing copy 8-byte captures, libstdc++ 1/1/1",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/01-foundations/lab/practice/function_sbo.cpp printed sizeof 32, 8->0 16->0 24..64->1, alignof-16 capture 1, throwing move 0, noexcept move 0, throwing copy 1; libstdc++ values from the cleared question's runs (GCC 13.3, clang 18.1.3, Ubuntu 24.04 aarch64 container)"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB6",
+    "claim": "with a 32-byte capture: push_back of a copy into reserved space allocates 1, of a move 0; reserve(64) reallocating 4 handlers allocates 1 (the buffer) because the move constructor is noexcept",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21: function_vec.cpp printed (1) 1, (2) 0, (3) 1; function_sbo.cpp printed \"large target: copy 1, move 0\" and \"move ctor noexcept: 1\"; libstdc++ 13 same per the cleared question; noexcept declaration in [func.wrap.func.con], N4950"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB7",
+    "claim": "the standard only recommends avoiding dynamic allocation for small callables; construction is no-throw only for reference_wrapper and function-pointer targets",
+    "source_urls": [],
+    "verification": "citation re-read in the cleared question: N4950 [func.wrap.func.con] p4 (\"Throws: Nothing if f's target is a specialization of reference_wrapper or a function pointer. Otherwise, may throw bad_alloc\"), p5 (Recommended practice); N3337 \"encouraged to avoid\""
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB8",
+    "claim": "the closure has members int step and int& total and a const operator(); sizeof is 16 on Apple clang 21 arm64; total=18 because the by-value capture is a snapshot; ++step in a non-mutable lambda is an error",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21: lambda_snapshot.cpp printed sizeof(apply)=16, total=18; -DBUMP gave \"cannot assign to a variable captured by copy in a non-mutable lambda\"; -DBUMP -DMUTABLE compiles; C++ Insights class from the cleared question's saved API response"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB1",
+    "claim": "if constexpr on a function parameter does not compile; a bool template parameter fixes it (scale<true>(3) returns 300)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/02-type-system/lab/practice/ifc.cpp: \"constexpr if condition is not a constant expression\", note \"function parameter 'big' with unknown value\"; ifc_fix.cpp exit 0; GCC 13.3 \"'big' is not a constant expression\" per the cleared question (Ubuntu 24.04 aarch64)"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB2",
+    "claim": "a discarded if constexpr branch is skipped only for template-dependent operands at instantiation; key_nt in a plain function fails, key_t<Plain> prints 7, if constexpr(false) on a dependent operand compiles, on a non-dependent one fails",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/02-type-system/lab/practice/discard.cpp: \"no member named 'key' in 'Plain'\" for key_nt; -DSKIP_NT prints key_t=7; fixed_false.cpp prints fixed_false=7; fixed_false_nondep.cpp: \"no member named 'key' in 'Plain'\"; GCC 13.3 wording per the cleared question"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB3",
+    "claim": "a double non-type template parameter is rejected in C++17 and accepted in C++20 (prints 1.50 3.00)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/02-type-system/lab/practice/nttp.cpp: -std=c++17 \"a non-type template parameter cannot have type 'double' before C++20\"; -std=c++20 prints \"1.50 3.00\"; clang 18.1.3 and GCC 13.3 per the cleared question"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB4",
+    "claim": "static_assert on unsigned wrap compiles; the signed version is rejected because overflow is UB and not a core constant expression",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/02-type-system/lab/practice/wrap_constexpr.cpp compiles; -DSIGNED: \"static assertion expression is not an integral constant expression\", note \"value 2147483648 is outside the range of representable values of type 'int'\"; GCC 13.3 \"overflow in constant expression\" per the cleared question"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB5",
+    "claim": "a constexpr-built 256-entry table leaves one indexed load; 30 of 256 answers are stale after the limits change and 0 after a rebuild; a table entry as a local array bound is not a proof of constant evaluation on Clang",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: tier_listing.sh: disagree 0, stale 30, after rebuild 0; by_table = ldrb w0,[x1,w0,uxtw] + ret; by_rule 3 cmp + 3 csel; tier_vla.cpp with argument 5 printed \"array bytes=20\" with only a -Wvla-cxx-extension warning, and -Werror=vla-cxx-extension made it an error; clang 18.1.3 and GCC 13.3 listings per the cleared question"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB6",
+    "claim": "a broken static_assert on the constexpr table stops the build; the run prints other 1 digit 5 sign 2 dot 1 space 1; classify stays one byte load",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/02-type-system/lab/practice/cls_bad.cpp: \"static assertion failed due to requirement 'kCls['7'] == Other'\"; cls.cpp printed \"other 1 digit 5 sign 2 dot 1 space 1\"; classify = adrp/add + ldrb w0,[x8,w0,uxtw] + ret; GCC 13.3 and x86-64 GCC 14.3 / clang 19.1 (Compiler Explorer) per the cleared question"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB7",
+    "claim": "reading an uninitialized local is erroneous behaviour in the C++26 draft; [[indeterminate]] locals and new int give UB; erroneous behaviour may be diagnosed and may terminate",
+    "source_urls": [],
+    "verification": "citations re-read in the cleared question (N5054 6.8.5 [basic.indet]/1-2, 9.13.6 [dcl.attr.indet] example, 3.21 [defns.erroneous], 4.1.2 [intro.abstract])"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB8",
+    "claim": "int->float->long: 16777217 -> 16777216, 16777219 -> 16777220, 1073741825 -> 1073741824; gap 2 above 2^24 and 128 above 2^30; float digits 24",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/02-type-system/lab/practice/float_rows.cpp printed errors +0, +0, -1, +1, -1, gaps 2 and 128, digits float 24"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB9",
+    "claim": "double->u64 is one fcvtzu on arm64, a 7-instruction sequence on baseline x86-64 clang, one vcvttsd2usi with -mavx512f; signed is one instruction everywhere",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/02-type-system/lab/practice/to_unsigned.cpp -S: arm64 fcvtzu / fcvtzs; x86_64-linux-gnu cvttsd2si, movq, subsd, cvttsd2si, sarq $63, andq, orq (7) and cvttsd2si; -mavx512f vcvttsd2usi / vcvttsd2si; GCC shape from the cleared question's Compiler Explorer listings"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB6",
+    "claim": "arm64 LSE: swpb/swpab/swpalb, both stores stlrb; -mcpu=generic: ldxrb/ldaxrb/stlxrb loops; x86-64: every exchange xchgb, release store movb, seq_cst store xchgb",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/xchg_orders.cpp -S on arm64, -mcpu=generic and --target=x86_64-apple-macos gave exactly these instructions; GCC aarch64 helper call and Compiler Explorer GCC 13.3 per the cleared question"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB7",
+    "claim": "correct orders: PASS in 5 of 5 runs and no TSan report; all-relaxed: some plain runs FAIL, TSan reports a race on counter in 3 of 3 runs",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/ttas_lock.cpp: -DOK 5/5 PASS, TSan 0 races in 3/3; -DRELAXED 1 FAIL 4 PASS in 5 runs (earlier round: 3 FAIL 2 PASS), TSan \"data race\" in 3/3, exit 134"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB8",
+    "claim": "16-byte atomic: Apple clang arm64 1/1 and caspal; x86-64 target lock cmpxchg16b, -march=x86-64 a ___atomic_compare_exchange_16 call, -mcx16 back to cmpxchg16b; GCC 13.3 aarch64 0/0 and a libatomic call; clang 18 + libstdc++ 1/0",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/wide_cas.cpp -DMAIN printed is_always_lock_free(16B)=1 is_lock_free()=1; -S: caspal; --target=x86_64-apple-macos13: lock cmpxchg16b; -march=x86-64: callq ___atomic_compare_exchange_16; -mcx16: lock cmpxchg16b; Linux GCC 13.3 / clang 18.1.3 values per the cleared question"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB9",
+    "claim": "copy_plain: two ldp q on arm64; copy_bytes: a 64-iteration ldrb loop; copy_words: eight ldr x unrolled",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/atomic_copies.cpp -S: copy_plain ldp q0,q1 / ldp q2,q3; copy_bytes ldrb loop with cmp x8,#64; copy_words 8 x ldr x8; x86-64 listings per the cleared question"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB10",
+    "claim": "TSan reports two data races (flag and payload) for a volatile flag publishing a plain struct, although the output is right",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/volatile_flag.cpp -O1 -g -fsanitize=thread: 2 x \"WARNING: ThreadSanitizer: data race\" (spin line and print line), \"a=1 b=2\", \"reported 2 warnings\""
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB11",
+    "claim": "the per-thread-normalised time of a shared fetch_add rises at every step from 1 to 8 threads and far more steeply than private counters or shared loads; worker loops use ldadd (shared, private) and ldapr (load)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/rmw_scale.cpp, 3 runs of the 3x4 grid (load average 2-3): shared rose at every step in 3/3 (about 2.5 -> 11 -> 47 -> 210 ns), private and load stayed about flat (2.6 and 0.6 ns); -S: ldadd x2 in workers, ldapr in the load loop, ldar in main"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB12",
+    "claim": "libc++ lock_shared takes an internal mutex and increments a state word; libstdc++ calls pthread_rwlock_rdlock, whose glibc 2.39 fast path is an atomic add",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/03-concurrency/lab/practice/reader_lock.cpp -S: bl __ZNSt3__119__shared_mutex_base11lock_sharedEv / 13unlock_sharedEv; shipped-body disassembly, header and Linux results per the cleared question (lldb, gdb, glibc 2.39, upstream sources)"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB13",
+    "claim": "under taskset -c 0, hardware_concurrency() and sysconf(_SC_NPROCESSORS_ONLN) still report 10; only sched_getaffinity reports 1",
+    "source_urls": [],
+    "verification": "re-run here, 2026-11-18, in the Ubuntu 24.04 aarch64 container (GCC 13.3 and clang 18.1.3): pool_size.cpp printed 10/10/10, and 10/10/1 under taskset -c 0; on macOS it builds and prints the first two lines (10, 10)"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB14",
+    "claim": "M1 Max has 10 physical and 10 logical CPUs (no SMT); the container reports thread_siblings_list 0 and 1 thread per core",
+    "source_urls": [],
+    "verification": "sysctl output and container output saved in the cleared question's runs (all six keys re-run)"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB8",
+    "claim": "Stats: second counter at 8, sizeof 16; alignas on the struct: still 8, sizeof 128; alignas on each member: 128, sizeof 256",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/layout.cpp -Xclang -fdump-record-layouts: Stats rejects at 8, sizeof=16 align=8; StatsAlignedStruct rejects at 8, sizeof=128 align=128; StatsAlignedMembers rejects at 128, sizeof=256 align=128"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB9",
+    "claim": "the offsetof subtraction guard wraps and passes on swapped members; a line-index guard rejects both one-line layouts and accepts both member-aligned layouts",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/layout_guard.cpp: T_ALIGNED_STRUCT and T_REORDERED_STRUCT fail \"static assertion failed due to requirement 'on_different_lines...\", T_ALIGNED_MEMBERS, T_REORDERED_MEMBERS and OLD_GUARD_REORDERED compile; GCC 13.3 and clang 18 same per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB10",
+    "claim": "Apple clang arm64 destructive 256 / constructive 64, x86-64 target 64; GCC 13.3 256/64 and a -Winterference-size warning in a header; clang 18 + libstdc++ does not define the feature macro; host line 128, container getconf 64",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/hdis.cpp printed destructive=256 constructive=64; --target=x86_64-apple-macos -S has movl $64 for both; sysctl hw.cachelinesize 128; Linux part re-run here, 2026-11-18, in the Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): use_hdr.cpp g++ -Wall: \"warning: use of 'std::hardware_destructive_interference_size' [-Winterference-size]\" with the two notes; clang++ 18 hdis.cpp printed \"__cpp_lib_hardware_interference_size not defined\"; getconf LEVEL1_DCACHE_LINESIZE 64"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB11",
+    "claim": "destructive/constructive 256/64 on libc++ and libstdc++ aarch64; host line 128, container 64; sizeof(std::mutex) 64 (libc++ macOS) vs 48 (libstdc++ aarch64)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/line_consts.cpp printed destructive=256 constructive=64, sizeof(std::mutex)=64; sysctl 128; Linux part re-run here, 2026-11-18, in the Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC 13.3 printed 256/64 and sizeof(std::mutex)=48; getconf 64"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB12",
+    "claim": "M1 Max: 8 P-CPUs, 4 per 12 MiB L2; 2 E-CPUs sharing a 4 MiB L2; 128-byte line; the Docker Linux VM reports all 10 CPUs sharing every cache level",
+    "source_urls": [],
+    "verification": "sysctl re-run here, 2026-11-18: hw.perflevel0.physicalcpu 8, cpusperl2 4, l2cachesize 12582912; hw.perflevel1.physicalcpu 2, cpusperl2 2, l2cachesize 4194304; hw.cachelinesize 128; VM view from the cleared question's saved output"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB13",
+    "claim": "dependent-load time is flat to 128 KiB and steps between 128 and 256 KiB; flat to 2 MiB, clearly higher at 8 MiB (below the 12 MiB L2) and rising beyond",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/chase_sizes.cpp, 3 runs: 1.50 ns to 128 KiB, 6.5-7.2 ns at 256 KiB, 6.6-6.7 ns at 2 MiB, 10.6-18.2 ns at 8 MiB, 39-48 ns at 16 MiB, about 128 ns at 256 MiB; sysctl l1dcachesize 131072, l2cachesize 12582912; timings from one machine, varies with load"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB14",
+    "claim": "sizeof(Reading) 224, sizeof(ReadingHot) 8; scanning temp touches 6000 lines together and 750 / 375 lines split (64 / 128-byte lines)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/telemetry.cpp printed sizeof 224 / 8, address mod 128 = 0, together 6000 / split 750 (64 B) and 375 (128 B); GCC 13.3 751 / 376 per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB15",
+    "claim": "in C++14, GCC warns -Waligned-new= for new of an alignas(128) type, clang is silent unless -Wover-aligned; C++17 passes the alignment and no diagnostic appears",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/overaligned_new.cpp: -std=c++14 -Wall -Wextra no diagnostic; with -Wover-aligned \"type 'Slot' requires 128 bytes of alignment and the default allocator only guarantees 16 bytes\"; -std=c++17 no diagnostic; GCC 13.3 warning text and sanitizer run per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB16",
+    "claim": "taking the address of a packed member warns on both compilers; binding a uint32_t& to it is an error on GCC 13 and silent on clang",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/packed_ref.cpp -Wall -Wextra: one -Waddress-of-packed-member warning (\"may result in an unaligned pointer value\"), no diagnostic for the reference binding; GCC 13 error per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB17",
+    "claim": "NEON: the if forms have 0 vector stores (20 / 48 branches), the always forms 1; with SVE: 2 st1w and 3 st1b predicated stores in the if forms; TSan: the always form races with a reader, the if form does not",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: clamp_sve.sh: NEON clamp32_if 0/0/20, clamp8_if 0/0/48, always forms 1 plain store each; +sve clamp32_if 2 predicated, clamp8_if 3 predicated, 0 plain; clamp_reader.cpp -O2 -g -fsanitize=thread: if form checksum=10240000 and no report, always form \"Read of size 8 ... by thread T1\" / \"Previous write of size 8 ... by main thread\"; clang 18.1.3 and GCC 13.3 counts per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB18",
+    "claim": "with a fault at 400 the two functions differ in 600 output elements (0 with no fault); the stopping loop is not vectorized, the convert-all loop is; in place, calib_all overruns the array",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: calib_report.sh: calib_stop \"Cannot vectorize early exit loop with writes to memory\", calib_all vectorized (width 4); no fault 0 differing, fault at 400 600 differing from index 400; calib_alias.cpp: \"in-place stop returned 1\", ASan stack-buffer-overflow READ of size 4 in calib_all; clang 18 / GCC 13 reports per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB19",
+    "claim": "the branch-free pack writes one past an exact-size buffer when a rejected element comes last; ASan reports a heap-buffer-overflow WRITE of size 4 only for that order; one spare element fixes the scalar form",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/slack.cpp -O1 -g -fsanitize=address: b, b k, n k clean (\"kept 4 of 6, out capacity 4\"); n: \"heap-buffer-overflow ... WRITE of size 4 ... located 0 bytes after 16-byte region\" in keep_odd_nobranch; GCC 13.3 and the 2047-case spare-slot check per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB20",
+    "claim": "vector fadd present (accumulate / reduce / reduce(unseq)): GCC 13.3 no/no/no (unseq yes with -fopenmp-simd); clang 18 + libstdc++ no/yes/no (unseq yes with -fopenmp-simd); Apple clang 21 + libc++ -fexperimental-library no/no/yes",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/fsum.cpp -O3 -fexperimental-library: sum_accumulate vector_fadd=0, sum_reduce 0, sum_reduce_unseq 8; without the flag \"no member named 'unseq' in namespace 'std::execution'\"; Linux toolchains per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB21",
+    "claim": "unseq permits unordered interleaved execution on the calling thread and promises no speed; locking a mutex under unseq is UB because lock synchronizes (vectorization-unsafe)",
+    "source_urls": [],
+    "verification": "citations re-read in the cleared question (N4861 pages for [algorithms.parallel.exec] p5, p8, [algorithms.parallel.defns] p4, [thread.mutex.requirements.mutex] p11; unsequenced_policy 0 hits in N4659)"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB22",
+    "claim": "under -ftrivial-auto-var-init=zero, [[indeterminate]] is ignored with a warning on Apple clang 21 and GCC 13 (fill stays); __attribute__((uninitialized)) removes it; GCC ICF can hide the count",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/05-memory-perf/lab/practice/fill_optout.cpp -std=c++2c -O2 -DTRY_STD: \"warning: unknown attribute 'indeterminate' ignored\"; memset/bzero calls plain 1, opted_out 0, std_opted_out 1; GCC counts with and without -fno-ipa-icf per the cleared question"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB23",
+    "claim": "model fadd latency 5; cycles per element about 5.0, 2.5, 1.67, 0.83, 0.50 for K = 1, 2, 3, 6, 10; at K=10 the two load units show 5.00 per iteration",
+    "source_urls": [],
+    "verification": "run here, 2026-11-18, Homebrew LLVM 22.1.6 llvm-mca -mtriple=aarch64 -mcpu=apple-m1 -iterations=1000: Total Cycles 5007, 5007, 5008, 5009, 5011 (/1000K = 5.0, 2.5, 1.67, 0.83, 0.50); acc10 -resource-pressure: [8.0] [8.1] 5.00, [9.0-9.2] 3.33; fadd latency 5"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB8",
+    "claim": "1 Mb/s for 1.5 us is 1.5 bits; a 16-byte command takes 128 us; 300 m out and back needs at least 2.00 us",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/bus_window.cpp printed 1.5 bits, 128 bits / 128.0 us, round trip 2.00 us; at 10 Mb/s 15.0 bits and 12.8 us"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB9",
+    "claim": "adding encode, decode and crossing to a half-round-trip figure double counts them: the named span is 64 us; under the stated assumption 26 us of the 90 is server handling after the span; the full round trip is 180 us",
+    "source_urls": [],
+    "verification": "arithmetic: 12 + 12 + 40 = 64; 90 - 64 = 26; 154 - 64 = 90; 2 x 90 = 180; the assumption-dependence was replayed with two symmetric constructions in the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB10",
+    "claim": "response >= service for 12800 of 12800 messages; the last message of each burst waits at least the sum of the burst's service times (200 of 200); the median gap is large with burst 64 and about 1 with burst 1",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/spans.cpp 64: 12800 of 12800, 200 of 200, median ratio 33.8; spans 1: ratio 1.0; clang 18.1.3 and GCC 13.3 per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB11",
+    "claim": "steady_clock period is 1 ns but the smallest observed step is 41 ns; cntfrq_el0 = 24 MHz and mach_timebase_info 125/3 both give 41.67 ns",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/clock_step.cpp, 3 runs: period 1/1000000000 s, smallest step 41 ns, timebase 125/3, cntfrq_el0 24000000 Hz; Linux VM per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB12",
+    "claim": "observed steady_clock steps 41/42 ns (then 83/84); period 1 ns; clock_getres 1000 ns on macOS and 1 ns in the Linux VM; cntfrq_el0 24 MHz",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/tick_step.cpp, 3 runs: zero deltas about 70% of 200000, steps 41/42/83/84 ns, clock_getres 1000 ns, cntfrq 24000000; Linux part re-run here, 2026-11-18, in the Ubuntu 24.04 aarch64 container (GCC 13.3): zero deltas 95227 of 200000, steps 41/42/83/84, clock_getres 1 ns"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB13",
+    "claim": "no wakeup was early; relative sleeps drift by about the sum of all latenesses, absolute deadlines by about one",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/wake_probe.cpp, 3 runs (loaded desktop): negative_lateness=0 for both variants; absolute end_drift 295-435 us vs p50 341-347 us; relative end_drift 250-292 ms; Linux runs per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB14",
+    "claim": "thread_policy_set(THREAD_AFFINITY_POLICY) returns 46 (KERN_NOT_SUPPORTED) on macOS 27 on M1 Max; affinity tags are hints, not CPU binding",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/affinity_probe.cpp printed \"thread_policy_set(THREAD_AFFINITY_POLICY) = 46 ((os/kern) service not supported); KERN_NOT_SUPPORTED = 46\"; Linux pthread_setaffinity_np = 0 and Apple notes per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB15",
+    "claim": "macOS: 4096 first-touch faults (16 KiB pages), 0 hot; Linux VM default THP: 542 first-touch faults; nothp (prctl took effect): 16383; hot loop 0 everywhere",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/prefault.cpp, 3 runs: page=16384 pages=4096 first_touch_faults=4096 hot_loop_faults=0; Linux part re-run here, 2026-11-18, in the Ubuntu 24.04 aarch64 container (GCC 13.3): default 542/0 in 3 runs; nothp prctl=0, PR_GET_THP_DISABLE=1, 16383/0 in 3 runs; THP enabled [always]; per-size files [never] except hugepages-2048kB [inherit]"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB16",
+    "claim": "Linux glibc defines TCP_NODELAY, TCP_QUICKACK, TCP_CORK, not TCP_NOPUSH; macOS defines TCP_NODELAY and TCP_NOPUSH only; tcp(7) says QUICKACK and CORK should not be used in portable code",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/sockopts.cpp: NODELAY yes, QUICKACK no, CORK no, NOPUSH yes; Linux part re-run here, 2026-11-18, in the Ubuntu 24.04 aarch64 container (GCC 13.3): NODELAY yes, QUICKACK yes, CORK yes, NOPUSH no; man-page wording per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB17",
+    "claim": "at -O2 ok_early and ok_andand have 1 conditional branch (Apple clang 21) or 4 (GCC 13.3, clang 18.1.3); ok_bitand has 0 on all three; at -O0 ok_early has 5",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: count_branches.sh: -O2 ok_early 1, ok_andand 1, ok_bitand 0 (select 4/4/1); -O0 ok_early 5; GCC and clang 18 counts per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB18",
+    "claim": "majority-guess miss rate equals min(p, 1-p); 2-bit counter and 8-outcome history are worse on random outcomes (about 0.30 at p = 0.25); on a repeating TNNN pattern the history table reaches 0",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/predictor_model.cpp printed majority 0.5000/0.4000/0.2497/0.1499/0.0199, counter2bit 0.2997 at 0.25, 0.4609 at 0.40, 0.1710 at 0.15, history8 0.2997/0.4616/0.1708, repeating 0.2500/0.2500/0.0000; identical on GCC 13.3 per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB19",
+    "claim": "plain -O2 sum_big is vectorized and shows no order penalty; with the branch kept (asm volatile), shuffled is slower than sorted in 3 of 3 runs",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/sorted_shuffled.cpp: -S Build A 8 uaddw + 8 uaddw2, no tbz; Build B 1 ldrsb + 1 tbz, no uaddw; 3 runs: A sorted 0.076-0.079 vs shuffled 0.076-0.077 ns/element, B sorted 0.384-0.390 vs shuffled 3.98-4.01; totals equal"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB20",
+    "claim": "arm64 prfm pldl1keep/pldl2keep/pldl3keep/pldl1strm/pstl1keep; x86-64 prefetcht0/t1/t2/nta and the write form prefetcht0 unless PRFCHW (prefetchw); a variable locality is a compile error",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/prefetch_five.cpp -S: arm64 as stated; x86_64 generic and -march=x86-64-v3 / x86-64: write prefetcht0; -mprfchw, broadwell, skylake, znver2: prefetchw; prefetch_var.cpp: \"argument to '__builtin_prefetch' must be a constant integer\"; GCC per the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB21",
+    "claim": "(p,0,0..3) map to pldl1strm/pldl3keep/pldl2keep/pldl1keep on arm64 and prefetchnta/t2/t1/t0 on x86-64; the write hint becomes prefetcht0 on baseline x86-64 with 0 warnings, prefetchw with -mprfchw",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/prefetch_forms.cpp: arm64 pldl1strm, pldl3keep, pldl2keep, pldl1keep, pstl1keep; x86_64-linux-gnu prefetchnta, t2, t1, t0, t0; -mprfchw last is prefetchw; no warnings with -Wall -Wextra"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB22",
+    "claim": "PREFETCHh is a hint that does not affect program behaviour; locality hints are implementation-dependent and may be ignored; not ordered with fences or locked instructions",
+    "source_urls": [],
+    "verification": "quoted phrases re-read in the Intel SDM PREFETCHh entry in the cleared question"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB23",
+    "claim": "prefetch at distance 16 is slower on a cache-resident 2^18 table and never clearly faster on a 2^28 table; a dependent chase at 2^28 is far slower per read than the gather",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/pf_gather.cpp, 3 rotations: 2^18 D=0 0.54 vs D=16 0.75-0.76 ns; 2^28 D=16 4.21-4.32 vs D=0 4.07-4.37 ns (no consistent win); checksums equal; pf_chase.cpp 28: about 130 ns per lookup"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB24",
+    "claim": "GCC 13.3 and 14.2 compile with both macros 0 and an attributes-ignored warning that does not name musttail; GCC 15.3 gives 1 and 1; clang gives clang::musttail 1, gnu::musttail 0",
+    "source_urls": [],
+    "verification": "Compiler Explorer results from the cleared question (request and responses saved); local Apple clang 21 build here, 2026-11-18: has_clang_musttail .long 1, no warning"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB25",
+    "claim": "clang accepts (a) and (d); rejects (b) for a different parameter count and (c) because a cast is not a call result",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/musttail_rules.cpp -c: two errors, \"cannot perform a tail call to function 'one' because its signature is incompatible\", note \"different number of parameters (expected 2 but has 1)\"; \"'clang::musttail' attribute requires that the return value is the result of a function call\""
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB10",
+    "claim": "only the upper-case copy loop is vectorized; both compaction loops are refused even with __restrict and without the branch",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/pack.cpp upper \"vectorized loop (vectorization width: 16, interleaved count: 4)\"; both compaction loops \"could not be identified as reduction\"; restrict version same, no array-bounds remark; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3)"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB11",
+    "claim": "an empty vectorizer report at low -O levels means the vectorizer did not run; keep a known-vectorizable control loop",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/levels_report.sh O0 0 lines, O1 2 bare lines, Os cost-model reasons, O2/O3 add_fee vectorized; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3)"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB12",
+    "claim": "an early-exit loop over a std::array is vectorized by Apple clang 21 but not by clang 18.1.3 or GCC 13.3; the pointer version stays scalar",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/search_report.sh pointer version \"potentially faulting early exit loop\", array version vectorized width 4; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3)"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB13",
+    "claim": "xmm registers appear in scalar double code on x86-64; count packed arithmetic instead and test the census on known loops",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64 (cross-compiled to x86-64): modules/07-architecture/lab/practice/scalar_fp.sh total 12 xmm lines, 9 scalar, 0 packed, 3 ps/pd zeroing hits; twice 5 packed"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB14",
+    "claim": "clang vectorizes count_above at -O2; GCC 13.3 does so only at -O3",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/count_above.cpp -O2 listing has cmgt .4s; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC -O2 no SIMD, -O3 SIMD"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB15",
+    "claim": "clang -Rpass=loop-unroll reports \"completely unrolled loop with 12 iterations\"; GCC -fopt-info-loop reports 11 iterations for the same loop",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/hashloop.cpp -O2 remark \"completely unrolled loop with 12 iterations\"; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC -O3 \"loop with 11 iterations completely unrolled\""
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB16",
+    "claim": "GCC 13.3 keeps the 12-step loop at -O2 and unrolls it at -O3; Apple clang unrolls at -O2, not at -O1",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/hashloop.cpp backward branches O1 1, O2 0; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC O2 1, O3 0"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB17",
+    "claim": "a call across a translation unit stays a real call (1 in main) without LTO and is inlined (0) with -flto",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/boundary prints 1000; 1 call without LTO, 0 with LTO; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3)"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB18",
+    "claim": "clang removes the allocation and fill in noise_plain; volatile keeps them; GCC 13.3 keeps both",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/noise.cpp noise_plain 6 instructions, 0 operator new, 0 stores; noise_volatile 1 operator new and store loop; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3)"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB19",
+    "claim": "a fixed 2 ms cost is 50% of 4 ms and 10% of 20 ms; report absolute times and differences",
+    "source_urls": [],
+    "verification": "arithmetic: 2/4 = 50%, 2/20 = 10%, 6 < 22, 10% of 4 = 0.4, 10% of 20 = 2"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB20",
+    "claim": "the unprotected copy shows torn snapshots and the version-counter copy shows none (3 of 3 runs, one machine)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/torn_detect.cpp none non-zero, seq 0, 3 of 3 runs"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB21",
+    "claim": "perf r<hex> is a raw vendor-specific event; cache-misses is the generalized event whose underlying event the kernel picks per CPU",
+    "source_urls": [],
+    "verification": "perf stat -vv run here, 2026-11-18, perf 6.8.12 in an Ubuntu 24.04 aarch64 container: r412e opened as type 4 config 0x412e; cache-misses as PERF_TYPE_HARDWARE; counting refused, no values read"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB22",
+    "claim": "llvm-mca apple-m1 gives stfwd 1006 cycles by default and 9003 with --noalias=false; regchain 1003 in both",
+    "source_urls": [],
+    "verification": "run here, 2026-11-18, Homebrew LLVM 22.1.6 llvm-mca -mcpu=apple-m1: regchain 1003/1003, stfwd 1006/9003"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB23",
+    "claim": "a default container masks /proc/interrupts with /dev/null, so an empty diff means no data",
+    "source_urls": [],
+    "verification": "observed in a default Docker container (kernel 7.0.12-linuxkit): char device 1,3, 0 lines, /null mount in mountinfo"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB24",
+    "claim": "Apple clang TSan stayed quiet on the plain-copy seqlock; GCC 13.3 and clang 18.1.3 TSan report the race; GCC warns -Wtsan for fences",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/seq_tsan.cpp 0 reports for COPY=0 and COPY=1; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): COPY=0 race 3/3, COPY=1 none, -Wtsan warning"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB25",
+    "claim": "float-to-int overflow is undefined; int64 from UINT64_MAX is defined (-1) since C++20; GCC 13.3 -fsanitize=undefined does not include float-cast-overflow",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/float_cast.cpp \"3e+09 is outside the range of representable values\" with both settings, printed 2147483647; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC =undefined 0 reports, =float-cast-overflow 1"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB26",
+    "claim": "-ftrivial-auto-var-init=pattern gives 0xaaaaaaaa on Apple clang 21 and 0xfefefefe on GCC 13.3; the pattern is not a contract",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/autoinit_pick.cpp printed 0xaaaaaaaa; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC 0xfefefefe"
   }
 ]

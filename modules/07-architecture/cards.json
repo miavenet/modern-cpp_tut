@@ -17,7 +17,7 @@
       "minutes": 25
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 89
+      "minutes": 220
     }
   },
   "cards": {
@@ -755,6 +755,244 @@
         "mode": "self"
       },
       "source": "measured in this course: filter.cpp (and its -O2 listing)",
+      "concepts": []
+    },
+    "M7-PB10": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "expiry",
+      "objective": 3,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: pack.cpp, pack_restrict.cpp (vectorizer remarks)",
+      "concepts": []
+    },
+    "M7-PB11": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "expiry",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: levels.cpp via levels_report.sh",
+      "concepts": []
+    },
+    "M7-PB12": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "research",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "GCC 14 release notes (gcc.gnu.org/gcc-14/changes.html); measured in this course: search_fixed.cpp via search_report.sh",
+      "concepts": []
+    },
+    "M7-PB13": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: scalar_fp.cpp via scalar_fp.sh (x86-64 listing)",
+      "concepts": []
+    },
+    "M7-PB14": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "expiry",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "GCC 12 release notes (gcc.gnu.org/gcc-12/changes.html); measured in this course: count_above.cpp",
+      "concepts": []
+    },
+    "M7-PB15": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "research",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "clang and GCC optimization-remark documentation; measured in this course: hashloop.cpp",
+      "concepts": []
+    },
+    "M7-PB16": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "expiry",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: hashloop.cpp",
+      "concepts": []
+    },
+    "M7-PB17": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: boundary/lib.cpp, boundary/app.cpp",
+      "concepts": []
+    },
+    "M7-PB18": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: noise.cpp (-O2 listing)",
+      "concepts": []
+    },
+    "M7-PB19": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "arithmetic on the figures stated in the card",
+      "concepts": []
+    },
+    "M7-PB20": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: torn_detect.cpp",
+      "concepts": []
+    },
+    "M7-PB21": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "research",
+      "objective": 3,
+      "minutes": 15,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Intel SDM, architectural performance events; perf_event_open(2); perf-list(1)",
+      "concepts": []
+    },
+    "M7-PB22": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "research",
+      "objective": 3,
+      "minutes": 15,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "llvm-mca --help (--noalias); measured in this course: mca/stfwd.s, mca/regchain.s",
+      "concepts": []
+    },
+    "M7-PB23": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: default Docker container, /proc/interrupts",
+      "concepts": []
+    },
+    "M7-PB24": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "C++23 draft N4950 [intro.races] p21; measured in this course: seq_tsan.cpp",
+      "concepts": []
+    },
+    "M7-PB25": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "C++20 [conv.fpint] p1, [conv.integral] p3; C++17 N4659 [conv.integral] p3; measured in this course: float_cast.cpp",
+      "concepts": []
+    },
+    "M7-PB26": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "GCC manual, Optimize-Options (-ftrivial-auto-var-init); measured in this course: autoinit_pick.cpp",
       "concepts": []
     }
   },

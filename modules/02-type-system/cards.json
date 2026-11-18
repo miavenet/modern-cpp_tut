@@ -12,6 +12,9 @@
     },
     "lesson-04-lpa-constinit.md": {
       "minutes": 14
+    },
+    "lesson-05-practice-bank.md": {
+      "minutes": 65
     }
   },
   "cards": {
@@ -575,6 +578,132 @@
       "concepts": [
         "C8"
       ]
+    },
+    "M2-PB1": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "gotcha",
+      "topic": "constexpr",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[stmt.if] p2 (C++20 draft N4861, 8.5.1); measured in this course: ifc.cpp, ifc_fix.cpp",
+      "concepts": []
+    },
+    "M2-PB2": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "gotcha",
+      "topic": "if-constexpr",
+      "objective": 4,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[stmt.if] p2 (C++23 draft N4950, 8.5.2); measured in this course: discard.cpp, fixed_false.cpp, fixed_false_nondep.cpp",
+      "concepts": []
+    },
+    "M2-PB3": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "apply",
+      "topic": "expiry",
+      "objective": 6,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[temp.param] p7 and 6.8 p9 (C++20 draft N4861); measured in this course: nttp.cpp",
+      "concepts": []
+    },
+    "M2-PB4": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "apply",
+      "topic": "constexpr",
+      "objective": 6,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[basic.fundamental], [expr.pre] p4, [expr.const] p5.8 (C++23 draft N4950); measured in this course: wrap_constexpr.cpp",
+      "concepts": []
+    },
+    "M2-PB5": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "apply",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: tier_table.cpp, tier_listing.sh, tier_vla.cpp",
+      "concepts": []
+    },
+    "M2-PB6": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "apply",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: cls.cpp, cls_bad.cpp",
+      "concepts": []
+    },
+    "M2-PB7": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "recall",
+      "topic": "research",
+      "objective": 6,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[basic.indet] p1-p2, [dcl.attr.indet], [defns.erroneous], [intro.abstract] (C++26 working draft N5054, 2026-07)",
+      "concepts": []
+    },
+    "M2-PB8": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "apply",
+      "topic": "conversions",
+      "objective": 6,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[conv.fpint] p2 (C++23 draft N4950); measured in this course: float_rows.cpp",
+      "concepts": []
+    },
+    "M2-PB9": {
+      "lesson": "lesson-05-practice-bank.md",
+      "type": "apply",
+      "topic": "conversions",
+      "objective": 6,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Intel 64 and IA-32 Architectures Software Developer's Manual, VCVTTSD2USI (CPUID \"AVX512F OR AVX10.1\"); measured in this course: to_unsigned.cpp; GCC 13.3 / 15.3 listings on Compiler Explorer",
+      "concepts": []
     }
   },
   "concepts": {

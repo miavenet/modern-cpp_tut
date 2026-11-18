@@ -1,13 +1,13 @@
 # Lesson 06 — Practice Bank (optional): Pages, Clocks, Percentiles and Manuals
 
-**Time: about 39 minutes** for 5 cards (4 + 12 + 10 + 8 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 193 minutes** for 23 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a guard page at `base + 4096` that `mprotect` refuses, because this Mac's page is 16384 bytes.
 
 These cards are optional extra practice on measurement, research and C++ techniques, and on how results expire.
 Each answer ends with a **Holds for / re-check** line: where the result was true, and how to check it again.
 Hands-on cards give their commands; run them from the tutorial root. Build output goes to your temporary folder.
-Results come from one machine (Apple M1 Max, macOS 27, Apple clang 21, libc++); counts are steadier than timings, which vary with load.
+Results come from one machine (Apple M1 Max, macOS 27, Apple clang 21, libc++) unless a card names another toolchain; counts are steadier than timings, which vary with load.
 
 ## Cards
 
@@ -82,6 +82,306 @@ Key:
   - Exit only if a control is set: RDTSC ("RDTSC exiting"), RDTSCP ("RDTSC exiting" and "enable RDTSCP"), PAUSE ("PAUSE exiting" / "PAUSE-loop exiting").
   - Technique: when an instruction is suspiciously slow in a guest, look it up in that list first, then time it in the guest and on bare metal.
   - Holds for / re-check: Intel VMX only, per SDM 325462-093, sections 28.1.2-28.1.3; AMD SVM uses its own intercept controls, not checked. Which optional controls a given cloud enables is not in the manual. On a Linux/Intel box: time the same loop of each instruction in the guest and on bare metal, and compare.
+</details>
+
+### Card M6-PB8 · Apply
+Q: A field-bus module's datasheet says it "replies to a 16-byte command in 1.5 us". The bus runs at 1 Mb/s over 300 m of cable. Before anyone argues about it, compute: how many bits arrive in 1.5 us at that rate; how long the whole command takes to arrive; and the least time a signal needs to travel the cable out and back. Which pairs of events can the 1.5 us lie between, and which can it not? Check your numbers:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/bus_window.cpp -o "${TMPDIR:-/tmp}/bus_window" && "${TMPDIR:-/tmp}/bus_window"
+   ```
+   Answer format: the three numbers, then which spans are impossible and which one is possible.
+<details><summary>Answer</summary>
+Key:
+
+  - 1 Mb/s x 1.5 us = 1.5 bits. The command is 128 bits and takes 128 us to arrive.
+  - So 1.5 us cannot run from "first command bit leaves the master" (or arrives at the module) to "first reply bit leaves the module" for a module that reads the whole command.
+  - Light in vacuum, 299 792 458 m/s, needs 1.00 us for 300 m, so at least 2.00 us out and back. Real cable is slower. So 1.5 us also cannot span "master sends" to "master sees the reply".
+  - What it can span: some interval inside the module, for example from the last command bit it needs to the first reply bit leaving. That may be true and still useless for a bus budget.
+  - Habit: for any headline latency, do the bits-per-window and distance-per-window arithmetic first, then ask for the start and end events.
+  - Holds for / re-check: raw bit rate only; line coding and framing overhead only lower the usable bit count. Redo the arithmetic when rate, message size or cable length changes: at 10 Mb/s the same window holds 15 bits and the command takes 12.8 us. The speed of light is an exact defined constant (SI defining constants, BIPM) and does not expire. The cable is assumed to carry the signal at no more than c; real cables are slower, which only strengthens the point.
+</details>
+
+### Card M6-PB9 · Spot the trap
+Q: An RPC library's page gives "one-way latency: 90 us", defined as half of a round trip timed from just before the client encodes the request to just after it decodes the reply, between two hosts. A teammate builds a budget for the span "client starts encoding the request to server finishes decoding it": 90 (one-way) + 12 (encode) + 12 (decode) + 40 (network crossing) = 154 us. Assume both directions cost the same, with 12 us to encode, 12 us to decode and 40 us for one crossing, and that there are no other costs before the server finishes decoding: all remaining round-trip time is server handling after that event and before it encodes the reply. What is wrong, and what is left of the 90 once you account for the parts already in it?
+   Answer format: the error in one line, the span's figure, then what the leftover 26 us is.
+<details><summary>Answer</summary>
+Key:
+
+  - By that definition the round trip contains two encodes, two decodes and two network crossings. Half of it already contains one of each.
+  - So adding encode, decode and the crossing on top of the 90 counts them twice: 154 - 64 = 90, the whole published figure is surplus for this span.
+  - For the span the teammate named, the given parts alone give 12 + 40 + 12 = 64 us. The 90 is not a figure for that span: under the stated assumption the round trip is 12+40+12 (request) + server handling + 12+40+12 (reply) = 180, so server handling is 52 us and half of it, 26 us, sits in the 90 but after the named span ends. Without that assumption the 26 us could equally be queueing before decode, which would sit inside the span (the span would then be 90 and the 52 us of handling would be zero): the facts alone do not place the residual, so say which assumption you make.
+  - If the budget is meant for the client's full request-to-reply time, the answer is the whole round trip, 2 x 90 = 180 us, not 154. Either way, the total depends on which span the budget is for, so write the span down first.
+  - You can only do this split after reading the definition. Under another definition (say, timed on the wire) the answer changes.
+  - Holds for / re-check: arithmetic on invented figures (the no-other-costs-before-decode assumption in the question is what fixes the 64 us and 52 us answers); the part sizes are given, not measured. The method applies to any published "half round trip" or "one-way" figure. Re-read the definition whenever the vendor changes the test set-up.
+</details>
+
+### Card M6-PB10 · Apply
+Q: `spans.cpp` lets a burst of 64 messages arrive, then one worker handles them in order. It records two spans per message: service time (handler start to handler end) and response time (message arrival to handler end). Predict: (a) for how many of the 12 800 messages is response >= service? (b) For the last message of each burst, how does its response time compare with the sum of all 64 service times? (c) Which median is larger, and what happens to the gap with a burst of 1? Run:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/spans.cpp -o "${TMPDIR:-/tmp}/spans" && "${TMPDIR:-/tmp}/spans" 64 && "${TMPDIR:-/tmp}/spans" 1
+   ```
+   Answer format: (a), (b), (c), then the question to ask when someone quotes a latency.
+<details><summary>Answer</summary>
+Key:
+
+  - (a) All 12 800. The response span contains the service span, so it can never be shorter.
+  - (b) In 200 of 200 bursts the last message's response time is at least the sum of all service times in the burst. It waited for every message ahead of it.
+  - (c) With a burst of 64 the median response time is far larger than the median service time (same direction in 3 runs on each of three compilers). With a burst of 1 the two medians are about equal.
+  - Same code, same run, two honest numbers that differ by a large factor. A latency figure without its start and end events cannot be compared with another one.
+  - When someone quotes the small one, ask: where did the clock start?
+  - Holds for / re-check: (a) and (b) follow from the order of the clock reads and hold on any machine with a monotonic clock. (c) is a direction only; the size of the gap depends on burst size and handler cost, and was observed under an unknown desktop load (one machine, varies with load). Checked with Apple clang 21 (macOS arm64), and clang 18.1.3 and GCC 13.3 (Linux aarch64).
+</details>
+
+### Card M6-PB11 · Spot the trap
+Q: `std::chrono::steady_clock::period` on your machine says nanoseconds. Is a 10 ns difference between two timestamps meaningful? `clock_step.cpp` takes two back-to-back `now()` readings, spins until they differ, and keeps the smallest non-zero step. It also prints `mach_timebase_info` (macOS) and the arm64 counter frequency register `cntfrq_el0`. Predict, then run:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/clock_step.cpp -o "${TMPDIR:-/tmp}/clock_step" && "${TMPDIR:-/tmp}/clock_step"
+   ```
+   Answer format: the declared period, the smallest step, the tick from the counter, then what you do with short events.
+<details><summary>Answer</summary>
+Key:
+
+  - On M1 Max (macOS) and in a Linux VM on it: declared period 1/1000000000 s, but the smallest observed step is 41 ns (3 of 3 runs).
+  - `cntfrq_el0` = 24,000,000 Hz, so one tick is 41.67 ns; macOS `mach_timebase_info` = 125/3 ns per tick, the same 41.67 ns.
+  - So the declared period is the unit, not the resolution. Single events shorter than about one tick cannot be timed; time many repetitions or use a cycle counter, and report the tick size with any result.
+  - Holds for / re-check: Apple M1 Max hardware counter (24 MHz). Other arm64 parts and x86 TSC-based clocks differ; re-run the probe on each machine and OS.
+</details>
+
+### Card M6-PB12 · Apply
+Q: `std::chrono::steady_clock::period` is `1/1000000000` on your machine, so "it measures nanoseconds". `tick_step.cpp` reads the clock twice back to back, 200,000 times, and prints how many pairs gave a zero difference, the smallest nonzero differences, what `clock_getres(CLOCK_MONOTONIC)` reports, and on arm64 the generic timer frequency register `cntfrq_el0`. Predict the smallest nonzero step, then run it. Do the four numbers agree? What should you do with a 10 ns event?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/tick_step.cpp -o "${TMPDIR:-/tmp}/tick_step" && "${TMPDIR:-/tmp}/tick_step"
+   ```
+   Answer format: the observed steps, the four numbers side by side, then the action.
+<details><summary>Answer</summary>
+Key:
+
+  - The observed steps were 41 and 42 ns (then 83-84 ns), in 3 of 3 runs on the Mac and 3 of 3 in a Linux VM on it. Most pairs read 0 on the Mac, and a bit under half in the Linux VM; the share varies between runs.
+  - `cntfrq_el0` = 24,000,000 Hz, so one tick of that counter is 41.67 ns. The observed steps are consistent with the clock advancing in 24 MHz ticks on this hardware; this does not by itself prove which timer the C++ library reads.
+  - The other numbers disagree: `period` says 1 ns, `clock_getres(CLOCK_MONOTONIC)` says 1000 ns on macOS and 1 ns in the Linux VM, and the observed step is about 41.67 ns on both. So the unit (`period`), the OS-reported resolution and the observed step are three different things.
+  - The smallest observed difference also depends on call overhead, so it is a property of "this clock plus this call on this machine", not a general resolution constant.
+  - For libstdc++ 13.3 the source of `chrono.cc` shows `steady_clock::now()` built on `clock_gettime(CLOCK_MONOTONIC, ...)` when `_GLIBCXX_USE_CLOCK_MONOTONIC` is set; the VM's physical clock source is not shown by that.
+  - Action: a 10 ns event cannot be timed one at a time with a step this size: time a batch of many and divide (keeping the work from being optimised away), and measure the step first on every new machine.
+  - Holds for / re-check: Apple M1 Max (macOS with libc++, and a Linux VM with libstdc++). Other machines and operating systems back `steady_clock` with other timers, so every number above will differ; re-run `tick_step.cpp` there before timing anything short.
+</details>
+
+### Card M6-PB13 · Apply
+Q: A wakeup probe sleeps for a 1 ms period 500 times and records how late each wakeup is. Variant A sleeps until absolute deadlines `start + k*period`. Variant B calls `sleep_for(period)` after each wakeup. Predict: (1) can any wakeup be early (negative lateness)? (2) After 500 periods, which variant ends far behind `start + 500*period`, and roughly by how much compared with one typical lateness? Run it three times:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/wake_probe.cpp -o "${TMPDIR:-/tmp}/wake_probe" && "${TMPDIR:-/tmp}/wake_probe"
+   ```
+   Answer format: (1) yes or no, (2) which variant and how far, then the rule for periodic loops.
+<details><summary>Answer</summary>
+Key:
+
+  - (1) Lateness was never negative: `negative_lateness=0` in all 6 runs (3 macOS, 3 Linux).
+  - (2) B drifts: its end drift is about the sum of all 500 latenesses (hundreds of times one typical lateness). A's end drift stays about one lateness, because every deadline is fixed from the start and errors do not add up. Seen in all 6 runs.
+  - So a periodic probe (or a timer loop on a trading box) must use absolute deadlines, and should report the whole distribution (min, median, max), not one number.
+  - Holds for / re-check: direction checked on one Mac (not isolated) and one Linux container, 3 process runs each; the microsecond values are from this machine only and are not part of the key (one machine, varies with load). The C++ form used here is `std::this_thread::sleep_until` against `steady_clock`. The standard says a timeout lasts `Dt + Di + Dm` for `_for` and returns at `Ct + Di + Dm` for `_until` (the delays are non-negative), so with an unadjusted `steady_clock` an early wakeup is not expected; the "should" wording makes it a recommendation, so the observation is the check ([thread.req.timing] p3-p4, [thread.thread.this], C++23 draft N4950).
+</details>
+
+### Card M6-PB14 · Recall
+Q: A harness pins its reader and writer to chosen cores so that "same cluster" and "different cluster" can be compared. You port it to macOS on Apple silicon and replace the Linux call with the Mach affinity API. A 10-line probe calls `thread_policy_set(..., THREAD_AFFINITY_POLICY, ...)` and prints the return code. What does it print, and what does that do to the comparison?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/affinity_probe.cpp -o "${TMPDIR:-/tmp}/affinity_probe" && "${TMPDIR:-/tmp}/affinity_probe"
+   ```
+   Answer format: the return code, what the API promises even on success, then how to report the results.
+<details><summary>Answer</summary>
+Key:
+
+  - It returns 46, `KERN_NOT_SUPPORTED` ("(os/kern) service not supported"), here on macOS 27.
+  - Even where it returned success, `THREAD_AFFINITY_POLICY` takes affinity-set tags, not CPU ids, and Apple documents these as placement hints, not thread-to-processor binding (Thread Affinity API release notes). So it is not a replacement for a Linux CPU-id pin, and success would not establish pinning.
+  - So on this Mac you cannot choose core placement; any "same vs different cluster" result is uncontrolled. Report it as unpinned, or run that part on Linux. If a future OS returns success, treat that as a prompt to check actual placement, not as proof of pinning.
+  - The same probe on Linux (`pthread_setaffinity_np` to CPU 0) returns 0 in a container. But in a VM that selects a guest CPU: physical-cluster claims still need the host topology and placement control (card M5-PB12 in module 05).
+  - Holds for / re-check: macOS 27 on M1 Max, Apple clang 21 SDK; Linux container on the same host. Apple could change behaviour later; re-run the probe on each OS release. The contract statement rests on Apple's documentation (developer.apple.com, Thread Affinity API release notes: "explicit thread to processor binding is not supported"; the notes predate Apple silicon, so they give the contract, not current support); the return code on the actual run.
+</details>
+
+### Card M6-PB15 · Apply
+Q: `prefault.cpp` mallocs 64 MiB, writes one byte per page (the prefault: touch every page once during start-up so later passes find them mapped), then runs a "hot loop" three times over the same pages. It prints the page size, the number of pages, and the minor faults (`ru_minflt` from `getrusage`) for each phase. On Linux, the argument `nothp` first calls `prctl(PR_SET_THP_DISABLE, 1, ...)` (THP: transparent huge pages, 2 MiB here) and prints its return value and `PR_GET_THP_DISABLE`. Predict the fault counts on macOS, on Linux by default, and on Linux with `nothp`. Then run each 3 times, and list the per-size THP files under `/sys/kernel/mm/transparent_hugepage/`:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/prefault.cpp -o "${TMPDIR:-/tmp}/prefault" && "${TMPDIR:-/tmp}/prefault"
+   g++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/prefault.cpp -o "${TMPDIR:-/tmp}/prefault" && "${TMPDIR:-/tmp}/prefault" && "${TMPDIR:-/tmp}/prefault" nothp
+   ```
+   Answer format: one line per platform/mode, what zero hot faults does and does not mean, then the lessons.
+<details><summary>Answer</summary>
+Key:
+
+  - macOS (M1 Max): page = 16384 bytes, 4096 pages, first touch = 4096 faults (one per page), hot loop = 0. Same in 3 of 3 runs.
+  - Linux VM, `nothp`: `prctl` returned 0 and `PR_GET_THP_DISABLE` read back 1 (so the request took effect); page = 4096 bytes, 16384 pages, first touch = 16383 faults (about one per page), hot loop = 0, in 3 of 3 runs.
+  - Linux VM, default (top-level THP mode `[always]`): first touch = 542 faults in 3 of 3 runs, far fewer than pages, because huge pages back most of the buffer; the exact count varies. Hot loop = 0.
+  - These three immediate passes recorded zero additional minor faults. That is a measurement, not a lifetime guarantee: touched pages can later be reclaimed, and after `fork` they become copy-on-write so the next write faults again. mlock(2) says writes after `fork` "will cause a page fault" and that `fork` should not follow `mlock`; real fault avoidance needs a residency/lifecycle strategy (for example `mlockall` plus no `fork`), checked by counting faults.
+  - Lessons: (1) do the touching at start-up, then count faults in the hot phase instead of assuming zero; (2) never assume a page size: read `sysconf(_SC_PAGESIZE)`; (3) the fault count depends on THP, so a "faults per MiB" figure from another box does not transfer; (4) check the return value of a control call such as `prctl` before labelling a run `nothp`.
+  - The top-level `enabled` file alone does not describe all THP: this VM also has per-size `hugepages-*/enabled` files (all `[never]` except `hugepages-2048kB`, `[inherit]`), and the kernel THP documentation says `MADV_COLLAPSE` ignores the sysfs settings and that the process-level `prctl` control is inherited across `fork` and `execve`.
+  - Holds for / re-check: macOS on M1 Max (16 KiB pages) and one Linux VM kernel (Docker Desktop on the same Mac; 4 KiB pages, top-level THP `always`). Counts change with page size, THP mode and allocator (a large `malloc` may come straight from `mmap`). Re-check with `prefault.cpp` on the target box.
+</details>
+
+### Card M6-PB16 · Recall
+Q: Which of `TCP_NODELAY`, `TCP_QUICKACK`, `TCP_CORK`, `TCP_NOPUSH` exist on Linux and on macOS, what does the Linux man page tcp(7) say about portability of `TCP_QUICKACK` and `TCP_CORK`, and how do you check the names on a new platform in two minutes?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/sockopts.cpp -o "${TMPDIR:-/tmp}/sockopts" && "${TMPDIR:-/tmp}/sockopts"
+   ```
+   Answer format: the names per platform, the man page's words, then the two-minute check.
+<details><summary>Answer</summary>
+Key:
+
+  - Header check (`sockopts.cpp`, `#ifdef` on each name, `-Wall -Wextra` clean, run on both): Linux glibc defines `TCP_NODELAY`, `TCP_QUICKACK`, `TCP_CORK` and not `TCP_NOPUSH`; macOS defines `TCP_NODELAY` and `TCP_NOPUSH` and not `TCP_QUICKACK` or `TCP_CORK`.
+  - The man page marks both `TCP_QUICKACK` and `TCP_CORK` "should not be used in code intended to be portable".
+  - Two-minute check: compile a file that `#ifdef`s each option name on the target, then read that platform's man page for the semantics.
+  - Holds for / re-check: Ubuntu 24.04 glibc headers and the macOS SDK with Apple clang 21; tcp(7) on man7.org as opened on 2026-11-17. Nothing is claimed about network behaviour. Re-check headers and man page on each new OS or libc.
+</details>
+
+### Card M6-PB17 · Apply
+Q: You want to benchmark an order check with five separately predicted branches. `checks.cpp` writes the same five range checks three ways: `ok_early` (five `if (...) return false;` lines), `ok_andand` (one `return a && b && c && d && e;`) and `ok_bitand` (the same with `&`). Predict how many conditional-branch instructions each function has at `-O2`. Then count them (the script is for arm64 listings; it counts `b.<cond>`, `cbz`, `cbnz`, `tbz`, `tbnz`, and separately compare-and-select instructions such as `ccmp` and `cset`). If you have a second compiler, repeat with it, and once at `-O0`:
+   ```sh
+   clang++ -std=c++20 -O2 -S modules/06-hft-patterns/lab/practice/checks.cpp -o "${TMPDIR:-/tmp}/checks.s" && sh modules/06-hft-patterns/lab/practice/count_branches.sh "${TMPDIR:-/tmp}/checks.s"
+   ```
+   Answer format: counts per function per compiler, then what "number of branches" should mean in a benchmark.
+<details><summary>Answer</summary>
+Key:
+
+  - The source does not tell you. Five `if` lines gave 1 conditional branch with Apple clang 21 and 4 with both GCC 13.3 and clang 18.1.3, same flags, same CPU family.
+  - `ok_early` and `ok_andand` compile to the same count as each other on every compiler tested at `-O2` (1 and 1, or 4 and 4). Writing `&&` instead of early returns changed nothing.
+  - `ok_bitand` has 0 conditional branches on all three compilers. GCC 13.3 used `ccmp`/`cset`; both clangs used a NEON vector compare (`cmhi` + `umaxv`) plus one `cset`, and no `ccmp`. Either way there is no branch for the predictor to see.
+  - At `-O0` the count follows the source (5 for `ok_early` on all three), so an unoptimized build can mislead you about the optimized one.
+  - Consequence for any branch benchmark: "number of branches" has two meanings, sites (one branch instruction at one address) and instances (one execution of it). A loop that runs one `if` a million times has one site and a million instances. State which one you vary, and count the sites in the listing, because the compiler may merge or remove them.
+  - Holds for / re-check: counts are for Apple clang 21.0.0 (arm64) and for GCC 13.3.0 and clang 18.1.3 (aarch64 Linux). They will differ on x86 (different instructions; the script's patterns are arm64 only) and can change with any compiler release or flag. That is the point: re-count after every toolchain or flag change.
+</details>
+
+### Card M6-PB18 · Apply
+Q: A profile shows one branch mispredicted 25% of the time. A teammate says the predictor is "failing badly" on it. Before agreeing, you need a reference line. `predictor_model.cpp` simulates three simple predictors in software and counts their mistakes exactly: (a) always guess the more common outcome, (b) one 2-bit saturating counter (a tiny state machine that moves toward "taken" or "not taken" by one step per outcome), (c) a table of such counters indexed by the last 8 outcomes. It feeds them independent random outcomes taken 50%, 40%, 25%, 15% and 2% of the time, and then a repeating pattern taken-not-not-not that is also 25% taken. Predict the miss rate of (a), (b) and (c) for random 25% and for the repeating 25%. Then run:
+   ```sh
+   clang++ -std=c++20 -O2 modules/06-hft-patterns/lab/practice/predictor_model.cpp -o "${TMPDIR:-/tmp}/predictor_model" && "${TMPDIR:-/tmp}/predictor_model"
+   ```
+   Answer format: three rates for random 25%, three for the repeating pattern, then the rule.
+<details><summary>Answer</summary>
+Key:
+
+  - For outcomes independent of all information the predictor has (and with no other branch exposing the next outcome), the minimum expected miss rate is min(p, 1-p), the best constant-prediction baseline; finite samples fluctuate. Always guessing the common side misses min(p, 1-p) of the time. Model output: 0.5000, 0.4000, 0.2497, 0.1499, 0.0199 for the five cases (equal to the realized taken rate, or one minus it).
+  - Neither learning predictor beats that line on random outcomes. The 2-bit counter is worse: 0.2997 at p=0.25, 0.4609 at p=0.40, 0.1710 at p=0.15. The 8-outcome history table is no better (0.2997, 0.4616, 0.1708), because past random outcomes say nothing about the next one. Accept about 0.30 for both learning predictors on random 25% input.
+  - So 25% misses on a branch that is taken 25% of the time, with random outcomes the predictor cannot otherwise see, is already about the best available. The predictor is not failing; the data is unpredictable. For a real profile treat min(p, 1-p) as the baseline to compare against, not as an unconditional bound: another branch may reveal the next outcome.
+  - The repeating pattern has the same 25% taken rate but a different answer: majority guess 0.2500, 2-bit counter 0.2500, history table 0.0000 (3 warm-up misses). Structure in the order of outcomes, not the taken rate, is what a history predictor uses.
+  - Rule: judge a measured miss rate against the min(p, 1-p) baseline for that branch, not against zero. If the rate is far below that line, the outcomes have a pattern the predictor learned. Then ask whether your benchmark input has that same pattern in production.
+  - Holds for / re-check: a software model with a fixed seed, so the mistake counts are deterministic and were identical with Apple clang 21 and GCC 13.3 (Linux); displayed rates are rounded to four decimals. It says nothing about how large or clever a real CPU's predictor is. The min(p, 1-p) line is arithmetic and does not expire. Whether a real core reaches it, or learns a given pattern, depends on the CPU and must be measured there with a mispredict counter.
+</details>
+
+### Card M6-PB19 · Apply
+Q: `sorted_shuffled.cpp` sums the bytes >= 128 in a 1 MiB array, 200 times, once with the array sorted and once shuffled (same values). Build A: plain `-O2`. Build B: `-O2 -DKEEP_BRANCH`, which puts an empty `asm volatile("")` inside the `if`. First read the `sum_big` listing of each build and say whether a per-element branch survives. Then predict for each build whether shuffled is slower than sorted, and run each three times:
+   ```sh
+   clang++ -std=c++20 -O2 -S modules/06-hft-patterns/lab/practice/sorted_shuffled.cpp -o -
+   clang++ -std=c++20 -O2 -DKEEP_BRANCH -S modules/06-hft-patterns/lab/practice/sorted_shuffled.cpp -o -
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/sorted_shuffled.cpp -o "${TMPDIR:-/tmp}/ss_a" && clang++ -std=c++20 -O2 -Wall -Wextra -DKEEP_BRANCH modules/06-hft-patterns/lab/practice/sorted_shuffled.cpp -o "${TMPDIR:-/tmp}/ss_b"
+   for r in 1 2 3; do for b in ss_a ss_b; do "${TMPDIR:-/tmp}/$b" sorted; "${TMPDIR:-/tmp}/$b" shuffled; done; done
+   ```
+   Answer format: what each listing shows, the direction per build, then the trap.
+<details><summary>Answer</summary>
+Key:
+
+  - Listing: Build A's `sum_big` is vectorized (16 `uaddw`-family SIMD adds, no `tbz`); Build B's has no `uaddw` and a per-byte `ldrsb` + `tbz` test-and-branch.
+  - Build B: shuffled was slower than sorted in 3 of 3 runs. Build A: no consistent order penalty at the printed precision. Grade branch presence and direction only; no magnitude is part of the key (one machine, varies with load).
+  - So "sorted vs random input" only exposes branch prediction if the branch survives compilation. Check the listing first.
+  - Trap: without the `asm volatile` clobber in the repeat loop, build A printed `0.000` ns per element and the listing had a single `bl sum_big` in `main`, outside the 200-repetition loop: the compiler hoisted the call and reused the result (so the printed value is rounded amortised output, not literally no work). The checksum was still right; only the time showed the problem.
+  - Holds for / re-check: direction only, M1 Max, Apple clang 21 `-O2`, 3 process runs. Other compilers or flags may if-convert differently (or not vectorize); re-check the listing and the direction on the target.
+</details>
+
+### Card M6-PB20 · Apply
+Q: `__builtin_prefetch(p, rw, locality)` takes rw = 0 (read) or 1 (write) and locality 0-3. Predict what `prefetch_five.cpp`'s five forms (read with locality 3, 2, 1, 0; write with 3) compile to on arm64 and on x86-64, then check. What happens to the write form on generic x86-64, on GCC as well as Clang, and what if you pass the locality from a variable (`prefetch_var.cpp`)?
+   ```sh
+   clang++ -std=c++20 -O2 -S modules/06-hft-patterns/lab/practice/prefetch_five.cpp -o -
+   clang++ -std=c++20 -O2 --target=x86_64-apple-macos -S modules/06-hft-patterns/lab/practice/prefetch_five.cpp -o -
+   clang++ -std=c++20 -O2 -S modules/06-hft-patterns/lab/practice/prefetch_var.cpp -o -
+   ```
+   (Repeat the x86-64 line with `-mprfchw`, `-march=broadwell` and `-march=x86-64`.)
+   Answer format: the arm64 list, the x86-64 list, what the write form becomes, then the variable-locality result.
+<details><summary>Answer</summary>
+Key:
+
+  - arm64: `prfm pldl1keep`, `pldl2keep`, `pldl3keep`, `pldl1strm`; write: `prfm pstl1keep`.
+  - x86-64: `prefetcht0`, `prefetcht1`, `prefetcht2`, `prefetchnta`. Write form with generic x86-64 (and `-march=x86-64-v3`): plain `prefetcht0`; it becomes `prefetchw` only when the target has PRFCHW, for example `-mprfchw` or a `-march` that includes it: `-march=broadwell`, `-march=skylake` and `-march=znver2` did on GCC 13.3 and Clang 20.1 (Compiler Explorer); `-march=x86-64` did not. Other targets: check.
+  - GCC 13.3 x86-64 (Compiler Explorer, `-O2 -std=c++20`): the same five instructions, with the write form `prefetcht0`; with `-mprfchw` it is `prefetchw`.
+  - A non-constant locality is a compile error: Clang says "argument to '__builtin_prefetch' must be a constant integer"; GCC 13.3 says "third argument to '__builtin_prefetch' must be a constant".
+  - So the write hint silently degrades to a read hint unless the target flags allow it: read the asm for your build flags.
+  - Holds for / re-check: Apple clang 21.0.0, targets arm64-apple-macos and x86_64-apple-macos (compile only, nothing x86 was run); GCC 13.3 x86-64 on Compiler Explorer. New `-march` levels may add PREFETCHW; re-check with `-S`.
+</details>
+
+### Card M6-PB21 · Apply
+Q: Predict the instruction each `__builtin_prefetch` form becomes on arm64 and on baseline x86-64: `(p,0,0)`, `(p,0,1)`, `(p,0,2)`, `(p,0,3)` and `(p,1,3)`. Then build `prefetch_forms.cpp` for both targets, and once more for x86-64 with `-mprfchw` added. Which hint is silently weakened on baseline x86-64, and how many warnings do you get?
+   ```sh
+   clang++ --target=arm64-apple-macos -std=c++20 -O2 -Wall -Wextra -S modules/06-hft-patterns/lab/practice/prefetch_forms.cpp -o -
+   clang++ -std=c++20 -O2 -Wall -Wextra -S --target=x86_64-linux-gnu modules/06-hft-patterns/lab/practice/prefetch_forms.cpp -o -
+   ```
+   Answer format: the five arm64 instructions in order, the five x86-64 ones, then the weakened hint and the habit.
+<details><summary>Answer</summary>
+Key:
+
+  - arm64: `(p,0,0)` -> `prfm pldl1strm`; `(p,0,1)` -> `prfm pldl3keep`; `(p,0,2)` -> `prfm pldl2keep`; `(p,0,3)` -> `prfm pldl1keep`; `(p,1,3)` -> `prfm pstl1keep` (the "st" form is the write hint).
+  - x86-64 baseline: `prefetchnta`, `prefetcht2`, `prefetcht1`, `prefetcht0`, and the write hint `(p,1,3)` also becomes plain `prefetcht0`. With `-mprfchw` it becomes `prefetchw`.
+  - GCC 13.3 x86-64 (Compiler Explorer, `-O2`): same mapping, write hint `prefetcht0`, and `prefetchw` with `-mprfchw`.
+  - So the write intent is dropped without a warning (0 warnings with `-Wall -Wextra`) unless the target has the PRFCHW feature enabled: the compiler still emits a read prefetch, it does not drop the instruction. (GCC's documented "no other code is generated" rule is for targets with no prefetch at all; it is not what happened here.)
+  - Habit: read the assembly for the exact `-march` you ship before you trust a hint.
+  - Holds for / re-check: Apple clang 21.0.0 (arm64-apple-macos, and x86-64 compile only) and GCC 13.3 x86-64 on Compiler Explorer; GCC's `__builtin_prefetch` documentation (gcc.gnu.org, Other-Builtins) gives locality 0-3, default 3. Other compilers and versions may map locality differently; re-check with `-S`. Whether the hint helps speed was not measured.
+</details>
+
+### Card M6-PB22 · Recall
+Q: A code review says "this prefetch guarantees the line is in L1 when we read it, so the read cannot miss." Using the Intel SDM entry for PREFETCHh (Vol. 2B), list what the architecture actually promises, and say how you would check the effect on a new CPU.
+   Answer format: three short points from the manual, then the check.
+<details><summary>Answer</summary>
+Key:
+
+  - It is "merely a hint and does not affect program behavior".
+  - Locality hints are "implementation-dependent, and can be overloaded or ignored by a processor implementation"; the amount fetched is implementation-dependent (at least 32 bytes).
+  - It is not ordered with respect to fences or locked instructions; prefetches to uncacheable or WC memory are ignored.
+  - So nothing is guaranteed: the effect is a property of the CPU model, and can change with the next one. Check by timing with the prefetch on and off, with a checksum gate (as in card M6-PB23), on each target CPU.
+  - Holds for / re-check: Intel 64 architecture text only (SDM). Other ISAs have their own wording; arm64 `prfm` was not looked up here.
+</details>
+
+### Card M6-PB23 · Apply
+Q: `pf_gather.cpp` does 8M random reads `sum += table[idx[i]]` from a table of 2^18 bytes (fits in cache) or 2^28 bytes (does not), optionally prefetching `table[idx[i+16]]`. `pf_chase.cpp` does dependent reads, where each index comes from the previous value. Predict (a) the direction of the prefetch effect at each size (faster, slower, no clear change), (b) how chase compares with gather at 2^28, and say what in the loop body could make your prediction wrong on other hardware. Run both in rotated order 3 times, and check that checksums match between prefetch on and off:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/pf_gather.cpp -o "${TMPDIR:-/tmp}/pf_gather" && for r in 1 2 3; do "${TMPDIR:-/tmp}/pf_gather" 18 0; "${TMPDIR:-/tmp}/pf_gather" 18 16; "${TMPDIR:-/tmp}/pf_gather" 28 16; "${TMPDIR:-/tmp}/pf_gather" 28 0; done
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/pf_chase.cpp -o "${TMPDIR:-/tmp}/pf_chase" && for r in 1 2 3; do "${TMPDIR:-/tmp}/pf_chase" 28; done
+   ```
+   Answer format: (a) one direction per size, (b) one line, then the lesson.
+<details><summary>Answer</summary>
+Key:
+
+  - Directions only (one machine, varies with load; no figures are claimed): 2^18 table: prefetch on was slower in every pair (extra instructions for data already in cache). 2^28 table: prefetch on was never clearly faster, so no win here.
+  - Chase at 2^28 was far slower per read than gather at 2^28 in every run. Likely explanation (reasoned, not measured here): independent misses overlap in the out-of-order core (memory-level parallelism), dependent ones cannot.
+  - The no-win result is specific to this loop body (two instructions per lookup) and this core. Where there is more work per lookup, or a core that cannot keep enough misses in flight, a prefetch can win: test, do not assume.
+  - Lesson: a prefetch helps only when the CPU cannot already see the future address early enough. Predict, measure on your machine, and keep a checksum gate so both versions do the same work.
+  - Holds for / re-check: one Apple M1 Max, macOS, Apple clang 21.0.0 `-O2`, unpinned; directions only. A CPU with a smaller out-of-order window, more work per element, or a different distance can change the result. Re-check by sweeping the distance (0, 4, 16, 64) and the table size on the target box.
+</details>
+
+### Card M6-PB24 · Apply
+Q: `musttail_feat.cpp` prints nothing; it stores `__has_cpp_attribute(clang::musttail)` and `__has_cpp_attribute(gnu::musttail)` in two globals and has one function whose `return` carries `[[clang::musttail]]` (a Clang attribute that makes the tail call a requirement: compile error if it cannot be done). Predict both values and whether the file compiles with GCC 13, GCC 14, GCC 15 and clang 18/20. Check on Compiler Explorer (x86-64, `-O1 -std=c++20`) and read the globals in the listing; locally:
+   ```sh
+   clang++ -std=c++20 -O1 -Wall -Wextra -S modules/06-hft-patterns/lab/practice/musttail_feat.cpp -o -
+   ```
+   What text does GCC print, does it name the attribute, and what one flag makes it a build error?
+   Answer format: one line per compiler, then the flag and the habit.
+<details><summary>Answer</summary>
+Key:
+
+  - GCC 13.3 and 14.2 (x86-64): compiles; both globals are 0 (`.zero 4`); warning `attributes at the beginning of statement are ignored [-Wattributes]`. The text does not say `musttail`. With `-Werror=attributes` it is an error (`cc1plus: some warnings being treated as errors`).
+  - GCC 15.3: both values are 1 (`.long 1`), no warning: the attribute is accepted under both spellings.
+  - clang 18.1 and 20.1: `clang::musttail` is 1, `gnu::musttail` is 0, no warning.
+  - Lesson: an ignored statement attribute is a warning on a line that does not name it. Feature-test with `__has_cpp_attribute(...)` (the value, not just the spelling, differs per compiler) and put `-Werror=attributes` on, or `#error` when the macro is 0, so a build without the guarantee fails instead of silently producing ordinary calls.
+  - Holds for / re-check: Compiler Explorer, x86-64: GCC 13.3, 14.2, 15.3, clang 18.1.0 and 20.1.0, compile only, nothing run. Which compilers define which spelling changes between releases; re-run the same two-line test on any new compiler.
+</details>
+
+### Card M6-PB25 · Spot the trap
+Q: Which of these does Apple clang 21 accept under `[[clang::musttail]]`? (a) `int ok(int a, int b) { [[clang::musttail]] return two(b, a); }` with `int two(int, int)`; (b) `int fewer(int a, int b) { [[clang::musttail]] return one(a + b); }` with `int one(int)`; (c) `int widened(int a, int b) { [[clang::musttail]] return (int)wide(a + b); }` with `long wide(int)`; (d) a function that copies an argument into a local, reads it through a pointer, then `[[clang::musttail]] return two(*p, b);`.
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra -c modules/06-hft-patterns/lab/practice/musttail_rules.cpp -o "${TMPDIR:-/tmp}/musttail_rules.o"
+   ```
+   Answer format: which compile, the two error messages, then the design rule.
+<details><summary>Answer</summary>
+Key:
+
+  - (a) and (d) compile.
+  - (b) error: "cannot perform a tail call to function 'one' because its signature is incompatible with the calling function", note "different number of parameters (expected 2 but has 1)".
+  - (c) error: "'clang::musttail' attribute requires that the return value is the result of a function call" (a cast is extra work after the call).
+  - Design rule: give every handler in a tail-call chain the same signature, and return the call's result unchanged.
+  - Holds for / re-check: Apple clang 21.0.0, `-std=c++20 -O2 -Wall -Wextra`. Clang's rules for musttail have changed across versions; re-check by compiling the same four functions.
 </details>
 
 ---
