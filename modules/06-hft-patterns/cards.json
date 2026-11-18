@@ -1,0 +1,684 @@
+{
+  "schema_version": 1,
+  "lessons": {
+    "lesson-01-spsc-lockfree.md": {
+      "minutes": 40
+    },
+    "lesson-02-hot-path-design.md": {
+      "minutes": 30
+    },
+    "lesson-03-measurement-bypass.md": {
+      "minutes": 43
+    },
+    "lesson-04-prefetching.md": {
+      "minutes": 40
+    },
+    "lesson-05-lpa-tail-budget.md": {
+      "minutes": 30
+    }
+  },
+  "cards": {
+    "M6-P1": {
+      "lesson": "lesson-01-spsc-lockfree.md",
+      "type": "pretest",
+      "topic": "spsc-lockfree",
+      "objective": 1,
+      "minutes": 6,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "module 05 (cache lines); cppreference.com/w/cpp/thread/hardware_destructive_interference_size",
+      "concepts": []
+    },
+    "M6-C1": {
+      "lesson": "lesson-01-spsc-lockfree.md",
+      "type": "completion",
+      "topic": "spsc-lockfree",
+      "objective": 1,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m6-c1.check.sh)",
+        "reject": "regex(/seq_cst|relaxed|consume/i)"
+      },
+      "source": "lab/spsc/solution/spsc_ring.hpp; cppreference.com/w/cpp/atomic/memory_order",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M6-Q1": {
+      "lesson": "lesson-01-spsc-lockfree.md",
+      "type": "recall",
+      "topic": "spsc-lockfree",
+      "objective": 1,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C1 (codegen observed with Apple clang 21, -O2, arm64)",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M6-Q2": {
+      "lesson": "lesson-01-spsc-lockfree.md",
+      "type": "apply",
+      "topic": "spsc-lockfree",
+      "objective": 1,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Apple clang 21 -O2 output for arm64 and for --target=x86_64-apple-macos13 (see lesson-rewrite notes)",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M6-J1": {
+      "lesson": "lesson-01-spsc-lockfree.md",
+      "type": "apply",
+      "topic": "spsc-lockfree",
+      "objective": 1,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C2; lab/mpmc/mpmc_ring.hpp",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M6-G1": {
+      "lesson": "lesson-01-spsc-lockfree.md",
+      "type": "gotcha",
+      "topic": "spsc-lockfree",
+      "objective": 1,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C2",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M6-G2": {
+      "lesson": "lesson-01-spsc-lockfree.md",
+      "type": "gotcha",
+      "topic": "spsc-lockfree",
+      "objective": 1,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C2; libcds.sourceforge.net (VyukovMPMCCycleQueue documentation)",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M6-P2": {
+      "lesson": "lesson-02-hot-path-design.md",
+      "type": "pretest",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C3",
+      "concepts": []
+    },
+    "M6-C2": {
+      "lesson": "lesson-02-hot-path-design.md",
+      "type": "completion",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m6-c2.check.sh)",
+        "reject": "regex(/vector|mutex|string/i)"
+      },
+      "source": "CONCEPT C3; lab/spsc/solution/spsc_ring.hpp",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M6-G3": {
+      "lesson": "lesson-02-hot-path-design.md",
+      "type": "gotcha",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C3 (lab/hotpath/first_touch.cpp output on the test Mac)",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M6-J2": {
+      "lesson": "lesson-02-hot-path-design.md",
+      "type": "apply",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C4; lab/hotpath/hot_cold_log.cpp",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M6-Q3": {
+      "lesson": "lesson-02-hot-path-design.md",
+      "type": "recall",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C4 (lab/hotpath/pre_encoded.cpp)",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M6-Q4": {
+      "lesson": "lesson-02-hot-path-design.md",
+      "type": "apply",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C4 (lab/hotpath/hot_cold_log.cpp)",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M6-G4": {
+      "lesson": "lesson-02-hot-path-design.md",
+      "type": "gotcha",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "kernel.org/doc/html/latest/admin-guide/mm/transhuge.html",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M6-P3": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "pretest",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C6 (lab/measure/coordinated_omission.cpp)",
+      "concepts": []
+    },
+    "M6-J3": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "apply",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C6; lab/measure/coordinated_omission.cpp",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M6-Q5": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "recall",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "kernel.org/doc/html/latest/networking/timestamping.html",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M6-G5": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "gotcha",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "felixcloutier.com/x86/rdtsc (Intel SDM text); Linux arch/arm64/include/asm/arch_timer.h",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M6-C3": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "completion",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/^\\s*(interrupts?|irqs?)\\s*,\\s*(polling|poll|spinning|busy[- ]?polling)\\s*$/i)"
+      },
+      "source": "doc.dpdk.org/guides/prog_guide/overview.html",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M6-G6": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "gotcha",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "doc.dpdk.org/api/rte__mbuf_8h.html (rte_pktmbuf_pool_create socket_id); CONCEPT C7",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M6-Q6": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "apply",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C8; eel.is/c++draft/dcl.attr.likelihood",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M6-G7": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "gotcha",
+      "topic": "measurement-bypass",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C8; lab/measure/pgo.cpp",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M6-P4": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "pretest",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C9; gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html",
+      "concepts": []
+    },
+    "M6-C4": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "completion",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m6-c4.check.sh)",
+        "reject": "regex(/_mm_prefetch|memory_order/i)"
+      },
+      "source": "CONCEPT C9; gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M6-Q7": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "recall",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C9; gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M6-J4": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "apply",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C9 and C10; lab/prefetch/gather.cpp",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M6-Q8": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "apply",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C10 (pointer-chase measurement in lab/prefetch/gather.cpp)",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M6-G8": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "gotcha",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C9 and C10; gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M6-G9": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "gotcha",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C10",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M6-INT1": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "synthesize",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "course synthesis of lessons 03 and 04 and module 05",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M6-INT2": {
+      "lesson": "lesson-04-prefetching.md",
+      "type": "synthesize",
+      "topic": "all",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "course synthesis of lessons 01 to 03",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M6-LPA1": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "recall",
+      "topic": "measurement",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/measure/lat_hist.hpp (min_samples); test_lat_hist.cpp",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M6-LPA2": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "completion",
+      "topic": "measurement",
+      "objective": 5,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/\\A\\s*`?53(?:\\s*calls?)?`?\\s*\\.?\\s*\\Z/i)"
+      },
+      "source": "arithmetic on the values stated in the card (tick 42 ns, call 8 ns, 10 ticks); lab/measure/clock_tail.cpp prints the real floor",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M6-LPA3": {
+      "lesson": "lesson-03-measurement-bypass.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 5,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C11 of this lesson; module 05 lesson 06 concept C16",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M6-LPA4": {
+      "lesson": "lesson-05-lpa-tail-budget.md",
+      "type": "pretest",
+      "topic": "measurement",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/budget/solution/tail_budget.cpp output, 7 runs (ingest/lpa/evidence/m6-tail-budget-forked-*.txt)",
+      "concepts": []
+    },
+    "M6-LPA5": {
+      "lesson": "lesson-05-lpa-tail-budget.md",
+      "type": "lab",
+      "topic": "measurement",
+      "objective": 6,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/tail_budget.check.sh)"
+      },
+      "source": "lab/budget/starter/tail_budget.cpp; checks/tail_budget.check.sh",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M6-LPA6": {
+      "lesson": "lesson-05-lpa-tail-budget.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 6,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/\\A\\s*(?:the\\s+)?`?(?:service|strategy)`?\\s*\\.?\\s*\\Z/i)"
+      },
+      "source": "Concept C12 of this lesson (per-stage table, ingest/lpa/evidence/m6-tail-budget-forked-*.txt)",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M6-LPA7": {
+      "lesson": "lesson-05-lpa-tail-budget.md",
+      "type": "recall",
+      "topic": "measurement",
+      "objective": 6,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C12 of this lesson; lesson 03 concept C6",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M6-LPA8": {
+      "lesson": "lesson-05-lpa-tail-budget.md",
+      "type": "synthesize",
+      "topic": "measurement",
+      "objective": 6,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C12 of this lesson (sliced runs, ingest/lpa/evidence/m6-tail-budget-forked-*.txt); module 03 lesson 05",
+      "concepts": [
+        "C12"
+      ]
+    }
+  },
+  "concepts": {
+    "lesson-01-spsc-lockfree.md#C1": {
+      "source": ""
+    },
+    "lesson-01-spsc-lockfree.md#C2": {
+      "source": ""
+    },
+    "lesson-02-hot-path-design.md#C3": {
+      "source": ""
+    },
+    "lesson-02-hot-path-design.md#C4": {
+      "source": ""
+    },
+    "lesson-02-hot-path-design.md#C5": {
+      "source": "the kernel's admin guide, `admin-guide/mm/transhuge` on kernel.org."
+    },
+    "lesson-03-measurement-bypass.md#C6": {
+      "source": ""
+    },
+    "lesson-03-measurement-bypass.md#C7": {
+      "source": ""
+    },
+    "lesson-03-measurement-bypass.md#C8": {
+      "source": ""
+    },
+    "lesson-04-prefetching.md#C9": {
+      "source": ""
+    },
+    "lesson-04-prefetching.md#C10": {
+      "source": ""
+    },
+    "lesson-03-measurement-bypass.md#C11": {
+      "source": "lab/measure/lat_hist.hpp + test_lat_hist.cpp; lab/measure/clock_tail.cpp runs, 7 (ingest/lpa/evidence/clock-tail-*.txt)"
+    },
+    "lesson-05-lpa-tail-budget.md#C12": {
+      "source": "lab/budget/solution/tail_budget.cpp runs, 7 in fresh processes (ingest/lpa/evidence/m6-tail-budget-forked-*.txt); lesson 03 concept C6"
+    }
+  }
+}

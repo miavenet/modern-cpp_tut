@@ -1,0 +1,23 @@
+# Learner state and attempts
+progress*.json
+*.jsonl
+*.attempts
+
+# Python and local caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+
+# Downloaded or generated dependencies
+third_party/
+paper/
+modules/*/lab/work/
+
+# Local backups and scratch output
+*.bak
+*.bak.*
+*.backup
+*.backup.*
+*~

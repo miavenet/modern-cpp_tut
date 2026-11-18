@@ -1,0 +1,44 @@
+# clock-tail: 7 runs; built with: clang++ -std=c++20 -Wall -Wextra -O2 -I modules/06-hft-patterns/lab/measure modules/06-hft-patterns/lab/measure/clock_tail.cpp
+# machine: Apple M1 Max, 10 cores, macOS 27.0.1, Apple clang version 21.0.0 (clang-2100.4.1.1)
+# run 1: 22:25:16, load 11.57 10.70 12.05, tmutil BackupNotRunning
+empty interval x 1,000,000; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+empty, 1e6     n=1000000  p50=0  p99=42  p99.9=83  p99.99=125  max=19958 ns  (clock floor 41 ns)
+empty, 5e3     n=5000  p50=0  p99=42  p99.9=n/a  p99.99=n/a  max=84 ns  (clock floor 41 ns)
+p99.99 needs 100000 samples, p99.9 needs 10000, p99 needs 1000 (at least 10 samples beyond the rank)
+# exit 0
+# run 2: 22:25:17, load 11.57 10.70 12.05, tmutil BackupNotRunning
+empty interval x 1,000,000; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+empty, 1e6     n=1000000  p50=0  p99=42  p99.9=85  p99.99=167  max=18958 ns  (clock floor 41 ns)
+empty, 5e3     n=5000  p50=0  p99=42  p99.9=n/a  p99.99=n/a  max=84 ns  (clock floor 41 ns)
+p99.99 needs 100000 samples, p99.9 needs 10000, p99 needs 1000 (at least 10 samples beyond the rank)
+# exit 0
+# run 3: 22:25:17, load 11.57 10.70 12.05, tmutil BackupNotRunning
+empty interval x 1,000,000; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+empty, 1e6     n=1000000  p50=0  p99=42  p99.9=83  p99.99=167  max=28584 ns  (clock floor 41 ns)
+empty, 5e3     n=5000  p50=0  p99=42  p99.9=n/a  p99.99=n/a  max=42 ns  (clock floor 41 ns)
+p99.99 needs 100000 samples, p99.9 needs 10000, p99 needs 1000 (at least 10 samples beyond the rank)
+# exit 0
+# run 4: 22:25:17, load 11.57 10.70 12.05, tmutil BackupNotRunning
+empty interval x 1,000,000; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+empty, 1e6     n=1000000  p50=0  p99=42  p99.9=42  p99.99=85  max=30334 ns  (clock floor 41 ns)
+empty, 5e3     n=5000  p50=0  p99=42  p99.9=n/a  p99.99=n/a  max=83 ns  (clock floor 41 ns)
+p99.99 needs 100000 samples, p99.9 needs 10000, p99 needs 1000 (at least 10 samples beyond the rank)
+# exit 0
+# run 5: 22:25:17, load 11.57 10.70 12.05, tmutil BackupNotRunning
+empty interval x 1,000,000; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+empty, 1e6     n=1000000  p50=0  p99=42  p99.9=42  p99.99=85  max=16875 ns  (clock floor 41 ns)
+empty, 5e3     n=5000  p50=0  p99=42  p99.9=n/a  p99.99=n/a  max=84 ns  (clock floor 41 ns)
+p99.99 needs 100000 samples, p99.9 needs 10000, p99 needs 1000 (at least 10 samples beyond the rank)
+# exit 0
+# run 6: 22:25:17, load 11.57 10.70 12.05, tmutil BackupNotRunning
+empty interval x 1,000,000; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+empty, 1e6     n=1000000  p50=0  p99=42  p99.9=83  p99.99=85  max=18417 ns  (clock floor 41 ns)
+empty, 5e3     n=5000  p50=0  p99=42  p99.9=n/a  p99.99=n/a  max=84 ns  (clock floor 41 ns)
+p99.99 needs 100000 samples, p99.9 needs 10000, p99 needs 1000 (at least 10 samples beyond the rank)
+# exit 0
+# run 7: 22:25:17, load 11.57 10.70 12.05, tmutil BackupNotRunning
+empty interval x 1,000,000; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+empty, 1e6     n=1000000  p50=0  p99=42  p99.9=42  p99.99=85  max=14083 ns  (clock floor 41 ns)
+empty, 5e3     n=5000  p50=0  p99=42  p99.9=n/a  p99.99=n/a  max=83 ns  (clock floor 41 ns)
+p99.99 needs 100000 samples, p99.9 needs 10000, p99 needs 1000 (at least 10 samples beyond the rank)
+# exit 0

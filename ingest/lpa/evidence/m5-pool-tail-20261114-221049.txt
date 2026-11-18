@@ -1,0 +1,74 @@
+# cmd: clang++ -std=c++20 -Wall -Wextra -O2 -I modules/06-hft-patterns/lab/measure modules/05-memory-perf/lab/solution/pool_tail.cpp; 7 runs, serial (final code)
+# date: Sat Nov 14 22:10:49 EST 2026
+# machine: Apple M1 Max, macOS 27.0.1, 22:10  up 45 days, 22:09, 9 users, load averages: 11.99 9.98 15.77
+# tmutil: BackupNotRunning
+## run 1
+burst: 2000000 orders into an empty std::pmr::list<Order>, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+default (heap) n=125000  p50=335  p99=1727  p99.9=4223  p99.99=27135  max=52041 ns  (clock floor 41 ns)
+               heap calls while timed = 2000000, minor page faults = 5896
+pool, lazy     n=125000  p50=83  p99=125  p99.9=17407  p99.99=33791  max=55417 ns  (clock floor 41 ns)
+               heap calls while timed = 499, minor page faults = 4918
+pool, prepared n=125000  p50=83  p99=125  p99.9=423  p99.99=503  max=19167 ns  (clock floor 41 ns)
+               heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - the prepared pool made no heap calls while the clock ran
+## run 2
+burst: 2000000 orders into an empty std::pmr::list<Order>, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+default (heap) n=125000  p50=335  p99=1631  p99.9=3711  p99.99=20479  max=30292 ns  (clock floor 41 ns)
+               heap calls while timed = 2000000, minor page faults = 5896
+pool, lazy     n=125000  p50=83  p99=167  p99.9=16895  p99.99=32767  max=74709 ns  (clock floor 41 ns)
+               heap calls while timed = 499, minor page faults = 4917
+pool, prepared n=125000  p50=83  p99=125  p99.9=463  p99.99=1759  max=24666 ns  (clock floor 41 ns)
+               heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - the prepared pool made no heap calls while the clock ran
+## run 3
+burst: 2000000 orders into an empty std::pmr::list<Order>, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+default (heap) n=125000  p50=335  p99=1695  p99.9=3775  p99.99=29695  max=79584 ns  (clock floor 41 ns)
+               heap calls while timed = 2000000, minor page faults = 5897
+pool, lazy     n=125000  p50=83  p99=167  p99.9=17919  p99.99=38911  max=55500 ns  (clock floor 41 ns)
+               heap calls while timed = 499, minor page faults = 4919
+pool, prepared n=125000  p50=83  p99=125  p99.9=423  p99.99=1183  max=14625 ns  (clock floor 41 ns)
+               heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - the prepared pool made no heap calls while the clock ran
+## run 4
+burst: 2000000 orders into an empty std::pmr::list<Order>, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+default (heap) n=125000  p50=335  p99=1599  p99.9=4479  p99.99=19967  max=50750 ns  (clock floor 41 ns)
+               heap calls while timed = 2000000, minor page faults = 5895
+pool, lazy     n=125000  p50=83  p99=125  p99.9=18431  p99.99=34815  max=71125 ns  (clock floor 41 ns)
+               heap calls while timed = 499, minor page faults = 4917
+pool, prepared n=125000  p50=83  p99=125  p99.9=423  p99.99=3199  max=19167 ns  (clock floor 41 ns)
+               heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - the prepared pool made no heap calls while the clock ran
+## run 5
+burst: 2000000 orders into an empty std::pmr::list<Order>, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+default (heap) n=125000  p50=335  p99=1695  p99.9=4223  p99.99=24063  max=229542 ns  (clock floor 41 ns)
+               heap calls while timed = 2000000, minor page faults = 5896
+pool, lazy     n=125000  p50=83  p99=125  p99.9=17407  p99.99=33791  max=66333 ns  (clock floor 41 ns)
+               heap calls while timed = 499, minor page faults = 4918
+pool, prepared n=125000  p50=83  p99=167  p99.9=799  p99.99=1503  max=30375 ns  (clock floor 41 ns)
+               heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - the prepared pool made no heap calls while the clock ran
+## run 6
+burst: 2000000 orders into an empty std::pmr::list<Order>, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+default (heap) n=125000  p50=335  p99=1695  p99.9=4479  p99.99=21503  max=66209 ns  (clock floor 41 ns)
+               heap calls while timed = 2000000, minor page faults = 5896
+pool, lazy     n=125000  p50=83  p99=125  p99.9=16895  p99.99=32255  max=56708 ns  (clock floor 41 ns)
+               heap calls while timed = 499, minor page faults = 4917
+pool, prepared n=125000  p50=83  p99=125  p99.9=423  p99.99=591  max=5459 ns  (clock floor 41 ns)
+               heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - the prepared pool made no heap calls while the clock ran
+## run 7
+burst: 2000000 orders into an empty std::pmr::list<Order>, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+default (heap) n=125000  p50=335  p99=1727  p99.9=4031  p99.99=24063  max=61041 ns  (clock floor 41 ns)
+               heap calls while timed = 2000000, minor page faults = 5894
+pool, lazy     n=125000  p50=83  p99=167  p99.9=17919  p99.99=36863  max=73042 ns  (clock floor 41 ns)
+               heap calls while timed = 499, minor page faults = 4918
+pool, prepared n=125000  p50=83  p99=167  p99.9=423  p99.99=1727  max=32875 ns  (clock floor 41 ns)
+               heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - the prepared pool made no heap calls while the clock ran

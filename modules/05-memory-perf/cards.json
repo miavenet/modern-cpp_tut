@@ -1,0 +1,866 @@
+{
+  "schema_version": 1,
+  "lessons": {
+    "lesson-01-allocators-pmr.md": {
+      "minutes": 29
+    },
+    "lesson-02-cache-soa.md": {
+      "minutes": 29
+    },
+    "lesson-03-compile-time-perf.md": {
+      "minutes": 20
+    },
+    "lesson-04-parallel-attributes.md": {
+      "minutes": 33
+    },
+    "lesson-05-pool-allocator-lab.md": {
+      "minutes": 45
+    },
+    "lesson-06-lpa-pool-tail.md": {
+      "minutes": 28
+    }
+  },
+  "cards": {
+    "M5-P1": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "pretest",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/named_req/Allocator (section \"Stateful and stateless allocators\")",
+      "concepts": []
+    },
+    "M5-C1": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "completion",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m5-c1.check.sh)",
+        "reject": "regex(/vector|malloc/i)"
+      },
+      "source": "cppreference.com/w/cpp/memory/monotonic_buffer_resource",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M5-Q1": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "recall",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/memory/monotonic_buffer_resource",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M5-Q2": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "apply",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/mem.res.public",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M5-G1": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "gotcha",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/memory/monotonic_buffer_resource/monotonic_buffer_resource",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M5-G2": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "gotcha",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/mem.res.public; cppreference.com/w/cpp/memory/memory_resource",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M5-INT1": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "synthesize",
+      "topic": "allocators",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/mem.res.monotonic.buffer; whole-program allocation review",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M5-G10": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "apply",
+      "topic": "allocators",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/basic.life; eel.is/c++draft/expr.reinterpret.cast; cppreference.com/w/cpp/utility/launder",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M5-P2": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "pretest",
+      "topic": "cache",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C4 of this lesson (arithmetic from the struct sizes printed there)",
+      "concepts": []
+    },
+    "M5-G3": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "gotcha",
+      "topic": "cache",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/container/vector_bool",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M5-C2": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "completion",
+      "topic": "cache",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m5-c2.check.sh)",
+        "reject": "regex(/aligned|pragma|__declspec/i)"
+      },
+      "source": "cppreference.com/w/cpp/language/alignas",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M5-Q3": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "recall",
+      "topic": "cache",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "docs.kernel.org/kernel-hacking/false-sharing.html; eel.is/c++draft/intro.races",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M5-Q4": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "apply",
+      "topic": "cache",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "docs.kernel.org/kernel-hacking/false-sharing.html; cppreference.com/w/cpp/language/alignas",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M5-G4": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "gotcha",
+      "topic": "cache",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "timsong-cpp.github.io/cppwp/n4861/hardware.interference",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M5-G11": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "gotcha",
+      "topic": "cache",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/container.requirements.dataraces; cppreference.com/w/cpp/container/vector_bool",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M5-P3": {
+      "lesson": "lesson-03-compile-time-perf.md",
+      "type": "pretest",
+      "topic": "compile-time",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/language/consteval; cppreference.com/w/cpp/language/constexpr",
+      "concepts": []
+    },
+    "M5-Q5": {
+      "lesson": "lesson-03-compile-time-perf.md",
+      "type": "recall",
+      "topic": "compile-time",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/language/consteval",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M5-G5": {
+      "lesson": "lesson-03-compile-time-perf.md",
+      "type": "gotcha",
+      "topic": "compile-time",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/language/constexpr",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M5-C3": {
+      "lesson": "lesson-03-compile-time-perf.md",
+      "type": "completion",
+      "topic": "compile-time",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m5-c3.check.sh)",
+        "reject": "regex(/inline|macro/i)"
+      },
+      "source": "cppreference.com/w/cpp/language/consteval; cppreference.com/w/cpp/language/attributes/likely",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M5-Q6": {
+      "lesson": "lesson-03-compile-time-perf.md",
+      "type": "apply",
+      "topic": "compile-time",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/dcl.attr.likelihood",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M5-G6": {
+      "lesson": "lesson-03-compile-time-perf.md",
+      "type": "gotcha",
+      "topic": "compile-time",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/except.terminate",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M5-P4": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "pretest",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/algorithm/execution_policy_tag_t",
+      "concepts": []
+    },
+    "M5-P5": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "pretest",
+      "topic": "source-location",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/utility/source_location",
+      "concepts": []
+    },
+    "M5-C4": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "completion",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m5-c4.check.sh)",
+        "reject": "regex(/thread.*create|manual/i)"
+      },
+      "source": "cppreference.com/w/cpp/algorithm/execution_policy_tag_t",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M5-Q10": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "apply",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/algorithms.parallel.exceptions; cppreference.com/w/cpp/algorithm/execution_policy_tag_t",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M5-G7": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "gotcha",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/algorithm/count_if",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M5-G12": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "gotcha",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/atomic/atomic; cppreference.com/w/cpp/algorithm/reduce",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M5-C5": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "completion",
+      "topic": "user-defined-literals",
+      "objective": 8,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m5-c5.check.sh)",
+        "reject": "regex(/include|define/i)"
+      },
+      "source": "cppreference.com/w/cpp/symbol_index/chrono_literals",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M5-G8": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "gotcha",
+      "topic": "user-defined-literals",
+      "objective": 8,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/string/basic_string/operator%22%22s",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M5-G9": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "apply",
+      "topic": "digit-separators",
+      "objective": 8,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cppreference.com/w/cpp/language/integer_literal; eel.is/c++draft/conv.integral",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M5-Q9": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "recall",
+      "topic": "source-location",
+      "objective": 8,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "timsong-cpp.github.io/cppwp/n4861/support.srcloc.cons",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M5-P6": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "pretest",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/solution/pool_lab.cpp output (\"pool bound to 40-byte, 8-aligned requests\"); cppreference.com/w/cpp/container/list",
+      "concepts": []
+    },
+    "M5-C6": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "completion",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m5-c6.check.sh)",
+        "reject": "regex(/malloc|\\bnew\\b|\\bdelete\\b|prev|search|loop/i)"
+      },
+      "source": "Concept C13 of this lesson",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M5-Q11": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "recall",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C13 of this lesson",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M5-Q12": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "apply",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C14 of this lesson; cppreference.com/w/cpp/memory/unsynchronized_pool_resource",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M5-G13": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "gotcha",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C15 of this lesson; cppreference.com/w/cpp/memory/memory_resource",
+      "concepts": [
+        "C15"
+      ]
+    },
+    "M5-G14": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "gotcha",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "timsong-cpp.github.io/cppwp/n4861/mem.res.pool",
+      "concepts": [
+        "C15"
+      ]
+    },
+    "M5-INT2": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "synthesize",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Lessons 01, 02 and 05 of this module",
+      "concepts": [
+        "C15"
+      ]
+    },
+    "M5-Q13": {
+      "lesson": "lesson-01-allocators-pmr.md",
+      "type": "recall",
+      "topic": "placement-new",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/basic.life; eel.is/c++draft/expr.new",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M5-Q14": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "recall",
+      "topic": "data-layout",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cache-line arithmetic in lesson 02",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M5-J2": {
+      "lesson": "lesson-02-cache-soa.md",
+      "type": "apply",
+      "topic": "data-layout",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "cache-line arithmetic in lesson 02",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M5-Q15": {
+      "lesson": "lesson-04-parallel-attributes.md",
+      "type": "recall",
+      "topic": "parallel-algorithms",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "eel.is/c++draft/algorithms.parallel.exec",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M5-LAB1": {
+      "lesson": "lesson-05-pool-allocator-lab.md",
+      "type": "lab",
+      "topic": "pool-allocator",
+      "objective": 7,
+      "minutes": 20,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/pool_lab.check.sh)"
+      },
+      "source": "lab/README.md; checks/pool_lab.check.sh",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M5-LPA1": {
+      "lesson": "lesson-06-lpa-pool-tail.md",
+      "type": "pretest",
+      "topic": "pool-allocator",
+      "objective": 9,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/solution/pool_tail.cpp output, 7 runs (ingest/lpa/evidence/m5-pool-tail-*.txt); checks/pool_tail.check.sh",
+      "concepts": []
+    },
+    "M5-LPA2": {
+      "lesson": "lesson-06-lpa-pool-tail.md",
+      "type": "lab",
+      "topic": "pool-allocator",
+      "objective": 9,
+      "minutes": 14,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/pool_tail.check.sh)"
+      },
+      "source": "lab/starter/pool_tail.cpp; lab/README.md; checks/pool_tail.check.sh",
+      "concepts": [
+        "C16"
+      ]
+    },
+    "M5-LPA3": {
+      "lesson": "lesson-06-lpa-pool-tail.md",
+      "type": "recall",
+      "topic": "pool-allocator",
+      "objective": 9,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C16 of this lesson; lab/solution/pool_tail.cpp counters",
+      "concepts": [
+        "C16"
+      ]
+    },
+    "M5-LPA4": {
+      "lesson": "lesson-06-lpa-pool-tail.md",
+      "type": "apply",
+      "topic": "pool-allocator",
+      "objective": 9,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/\\A\\s*(?:the\\s+)?`?p?99\\.9(?:th)?(?:\\s*%|\\s+percent(?:ile)?)?`?\\s*\\.?\\s*\\Z/i)"
+      },
+      "source": "Concept C16 of this lesson (nearest-rank percentile); modules/06-hft-patterns/lab/measure/lat_hist.hpp",
+      "concepts": [
+        "C16"
+      ]
+    },
+    "M5-LPA5": {
+      "lesson": "lesson-06-lpa-pool-tail.md",
+      "type": "completion",
+      "topic": "pool-allocator",
+      "objective": 9,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m5-lpa5.check.sh)",
+        "reject": "regex(/new_delete_resource|get_default_resource|nullptr/)"
+      },
+      "source": "Concept C17 of this lesson; https://en.cppreference.com/w/cpp/memory/null_memory_resource",
+      "concepts": [
+        "C17"
+      ]
+    },
+    "M5-LPA6": {
+      "lesson": "lesson-06-lpa-pool-tail.md",
+      "type": "recall",
+      "topic": "pool-allocator",
+      "objective": 9,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concepts C16 and C17 of this lesson",
+      "concepts": [
+        "C16",
+        "C17"
+      ]
+    }
+  },
+  "concepts": {
+    "lesson-01-allocators-pmr.md#C1": {
+      "source": "cppreference.com/w/cpp/memory/monotonic_buffer_resource; eel.is/c++draft/mem.res.public"
+    },
+    "lesson-01-allocators-pmr.md#C2": {
+      "source": "cppreference.com/w/cpp/memory/monotonic_buffer_resource/monotonic_buffer_resource; cppreference.com/w/cpp/memory/null_memory_resource"
+    },
+    "lesson-01-allocators-pmr.md#C3": {
+      "source": "cppreference.com/w/cpp/utility/launder (Example, case 2); eel.is/c++draft/basic.life; timsong-cpp.github.io/cppwp/n4659/basic.life (C++17 wording, paragraph 8.3)"
+    },
+    "lesson-02-cache-soa.md#C4": {
+      "source": "cppreference.com/w/cpp/container/vector_bool; course run of the program above and `sysctl hw.cachelinesize`"
+    },
+    "lesson-02-cache-soa.md#C5": {
+      "source": "docs.kernel.org/kernel-hacking/false-sharing.html; timsong-cpp.github.io/cppwp/n4861/hardware.interference; eel.is/c++draft/intro.races"
+    },
+    "lesson-03-compile-time-perf.md#C6": {
+      "source": "cppreference.com/w/cpp/language/consteval; cppreference.com/w/cpp/language/constexpr; course compile of the program above"
+    },
+    "lesson-03-compile-time-perf.md#C7": {
+      "source": "eel.is/c++draft/dcl.attr.likelihood; cppreference.com/w/cpp/language/attributes/likely"
+    },
+    "lesson-03-compile-time-perf.md#C8": {
+      "source": "eel.is/c++draft/vector.modifiers; eel.is/c++draft/except.terminate"
+    },
+    "lesson-04-parallel-attributes.md#C9": {
+      "source": "timsong-cpp.github.io/cppwp/n4861/algorithms.parallel.exec"
+    },
+    "lesson-04-parallel-attributes.md#C10": {
+      "source": "cppreference.com/w/cpp/algorithm/count_if; cppreference.com/w/cpp/algorithm/execution_policy_tag_t; course runs"
+    },
+    "lesson-04-parallel-attributes.md#C11": {
+      "source": "cppreference.com/w/cpp/symbol_index/chrono_literals; cppreference.com/w/cpp/language/integer_literal; eel.is/c++draft/conv.integral"
+    },
+    "lesson-04-parallel-attributes.md#C12": {
+      "source": "timsong-cpp.github.io/cppwp/n4861/support.srcloc.cons"
+    },
+    "lesson-05-pool-allocator-lab.md#C13": {
+      "source": "cppreference.com/w/cpp/memory/memory_resource; cppreference.com/w/cpp/memory/unsynchronized_pool_resource"
+    },
+    "lesson-05-pool-allocator-lab.md#C14": {
+      "source": "modules/05-memory-perf/lab/solution/pool_lab.cpp (built and run with the command above); eel.is/c++draft/mem.res.public"
+    },
+    "lesson-05-pool-allocator-lab.md#C15": {
+      "source": "cppreference.com/w/cpp/memory/unsynchronized_pool_resource; course runs described above"
+    },
+    "lesson-06-lpa-pool-tail.md#C16": {
+      "source": "lab/solution/pool_tail.cpp runs (ingest/lpa/evidence/); modules/06-hft-patterns/lab/measure/lat_hist.hpp; course runs described above"
+    },
+    "lesson-06-lpa-pool-tail.md#C17": {
+      "source": "cppreference.com/w/cpp/memory/null_memory_resource; checks/m5-lpa5.check.sh runs"
+    }
+  }
+}

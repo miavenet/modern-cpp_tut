@@ -1,0 +1,93 @@
+# m1-push-tail: 7 runs; built with: clang++ -std=c++20 -Wall -Wextra -O2 -I modules/06-hft-patterns/lab/measure modules/01-foundations/lab/solution/push_tail.cpp
+# machine: Apple M1 Max, 10 cores, macOS 27.0.1, Apple clang version 21.0.0 (clang-2100.4.1.1)
+# run 1: 22:25:18, load 11.57 10.70 12.05, tmutil BackupNotRunning
+burst: 2000000 orders moved into an empty std::vector, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+copy-growth    n=125000  p50=42  p99=3711  p99.9=5119  p99.99=53247  max=45807833 ns  (clock floor 41 ns)
+               copies while timed = 2097151, heap calls while timed = 2097173, minor page faults = 14648
+move-growth    n=125000  p50=42  p99=4223  p99.9=7423  p99.99=32767  max=8225125 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 22, minor page faults = 10015
+reserve only   n=125000  p50=42  p99=3839  p99.9=4991  p99.99=20479  max=28542 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 4883
+prepared       n=125000  p50=42  p99=3007  p99.9=4351  p99.99=7295  max=29791 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - growth moves instead of copying, and the prepared book made no copies and no heap calls while the clock ran
+# exit 0
+# run 2: 22:25:18, load 11.57 10.70 12.05, tmutil BackupNotRunning
+burst: 2000000 orders moved into an empty std::vector, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+copy-growth    n=125000  p50=42  p99=3263  p99.9=5503  p99.99=48127  max=46375458 ns  (clock floor 41 ns)
+               copies while timed = 2097151, heap calls while timed = 2097173, minor page faults = 14648
+move-growth    n=125000  p50=42  p99=1855  p99.9=5247  p99.99=27647  max=8425834 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 22, minor page faults = 10015
+reserve only   n=125000  p50=42  p99=1727  p99.9=3391  p99.99=19455  max=44250 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 4883
+prepared       n=125000  p50=42  p99=847  p99.9=1919  p99.99=3647  max=23000 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - growth moves instead of copying, and the prepared book made no copies and no heap calls while the clock ran
+# exit 0
+# run 3: 22:25:19, load 11.57 10.70 12.05, tmutil BackupNotRunning
+burst: 2000000 orders moved into an empty std::vector, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+copy-growth    n=125000  p50=42  p99=2175  p99.9=5119  p99.99=43007  max=41910417 ns  (clock floor 41 ns)
+               copies while timed = 2097151, heap calls while timed = 2097173, minor page faults = 14648
+move-growth    n=125000  p50=42  p99=1695  p99.9=5119  p99.99=41983  max=8772791 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 22, minor page faults = 10015
+reserve only   n=125000  p50=42  p99=3711  p99.9=6015  p99.99=19967  max=44583 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 4883
+prepared       n=125000  p50=42  p99=2687  p99.9=5247  p99.99=6655  max=30500 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - growth moves instead of copying, and the prepared book made no copies and no heap calls while the clock ran
+# exit 0
+# run 4: 22:25:20, load 11.57 10.70 12.05, tmutil BackupNotRunning
+burst: 2000000 orders moved into an empty std::vector, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+copy-growth    n=125000  p50=42  p99=3903  p99.9=5247  p99.99=50175  max=42945500 ns  (clock floor 41 ns)
+               copies while timed = 2097151, heap calls while timed = 2097173, minor page faults = 14648
+move-growth    n=125000  p50=42  p99=3135  p99.9=5119  p99.99=31231  max=8638250 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 22, minor page faults = 10014
+reserve only   n=125000  p50=42  p99=2239  p99.9=5119  p99.99=23551  max=32250 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 4883
+prepared       n=125000  p50=42  p99=1599  p99.9=3839  p99.99=4735  max=237417 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - growth moves instead of copying, and the prepared book made no copies and no heap calls while the clock ran
+# exit 0
+# run 5: 22:25:20, load 11.21 10.64 12.02, tmutil BackupNotRunning
+burst: 2000000 orders moved into an empty std::vector, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+copy-growth    n=125000  p50=42  p99=4095  p99.9=5503  p99.99=57343  max=43084083 ns  (clock floor 41 ns)
+               copies while timed = 2097151, heap calls while timed = 2097173, minor page faults = 14647
+move-growth    n=125000  p50=42  p99=3839  p99.9=5375  p99.99=27135  max=8095416 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 22, minor page faults = 10014
+reserve only   n=125000  p50=42  p99=4223  p99.9=5503  p99.99=26111  max=64042 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 4883
+prepared       n=125000  p50=42  p99=335  p99.9=3711  p99.99=6399  max=26250 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - growth moves instead of copying, and the prepared book made no copies and no heap calls while the clock ran
+# exit 0
+# run 6: 22:25:21, load 11.21 10.64 12.02, tmutil BackupNotRunning
+burst: 2000000 orders moved into an empty std::vector, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+copy-growth    n=125000  p50=42  p99=1567  p99.9=5119  p99.99=49151  max=41692292 ns  (clock floor 41 ns)
+               copies while timed = 2097151, heap calls while timed = 2097173, minor page faults = 14649
+move-growth    n=125000  p50=42  p99=4031  p99.9=6399  p99.99=29695  max=8309584 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 22, minor page faults = 10014
+reserve only   n=125000  p50=42  p99=3711  p99.9=4991  p99.99=21503  max=64917 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 4883
+prepared       n=125000  p50=42  p99=2815  p99.9=3903  p99.99=7167  max=19167 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - growth moves instead of copying, and the prepared book made no copies and no heap calls while the clock ran
+# exit 0
+# run 7: 22:25:21, load 11.21 10.64 12.02, tmutil BackupNotRunning
+burst: 2000000 orders moved into an empty std::vector, timed per 16 push_backs (125000 samples per run)
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine; numbers vary run to run
+copy-growth    n=125000  p50=42  p99=3967  p99.9=5119  p99.99=46079  max=42837959 ns  (clock floor 41 ns)
+               copies while timed = 2097151, heap calls while timed = 2097173, minor page faults = 14648
+move-growth    n=125000  p50=42  p99=1695  p99.9=5119  p99.99=30207  max=8336292 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 22, minor page faults = 10014
+reserve only   n=125000  p50=42  p99=1599  p99.9=4991  p99.99=21503  max=340250 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 4883
+prepared       n=125000  p50=42  p99=211  p99.9=3775  p99.99=7295  max=28542 ns  (clock floor 41 ns)
+               copies while timed = 0, heap calls while timed = 0, minor page faults = 0
+RESULT: PASS - growth moves instead of copying, and the prepared book made no copies and no heap calls while the clock ran
+# exit 0

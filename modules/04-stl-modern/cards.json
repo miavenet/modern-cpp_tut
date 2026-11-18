@@ -1,0 +1,776 @@
+{
+  "schema_version": 1,
+  "lessons": {
+    "lesson-01-optional-variant-expected.md": {
+      "minutes": 38
+    },
+    "lesson-02-ranges-views.md": {
+      "minutes": 29
+    },
+    "lesson-03-structured-bindings-modern-patterns.md": {
+      "minutes": 26
+    },
+    "lesson-04-string_view-span-ctad.md": {
+      "minutes": 34
+    },
+    "lesson-05-lpa-expected-tail.md": {
+      "minutes": 22
+    }
+  },
+  "cards": {
+    "M4-P2": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "pretest",
+      "topic": "optional",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/optional",
+      "concepts": []
+    },
+    "M4-P3": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "pretest",
+      "topic": "variant",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/variant",
+      "concepts": []
+    },
+    "M4-J1": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "apply",
+      "topic": "optional",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/optional.observe",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M4-C2": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "completion",
+      "topic": "optional",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m4-c2.check.sh)",
+        "reject": "regex(/nullptr/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/optional",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M4-Q3": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "recall",
+      "topic": "optional",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/optional",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M4-G2": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "gotcha",
+      "topic": "optional",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/optional",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M4-C3": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "completion",
+      "topic": "variant",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m4-c3.check.sh)",
+        "reject": "regex(/get/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/variant/visit",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M4-Q5": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "recall",
+      "topic": "variant",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/variant",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M4-G1": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "gotcha",
+      "topic": "variant",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/variant/get",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M4-Q6": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "apply",
+      "topic": "variant",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/variant",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M4-Q4": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "apply",
+      "topic": "expected",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/expected",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M4-P1": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "pretest",
+      "topic": "ranges",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/ranges",
+      "concepts": []
+    },
+    "M4-C4": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "completion",
+      "topic": "ranges",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m4-c4.check.sh)",
+        "reject": "regex(/std::sort.*begin/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/algorithm/ranges/sort",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M4-C1": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "completion",
+      "topic": "ranges",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m4-c1.check.sh)",
+        "reject": "regex(/remove|erase/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/ranges/filter_view",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M4-Q1": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "recall",
+      "topic": "views",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/ranges",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M4-Q2": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "apply",
+      "topic": "views",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/ranges/filter_view",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M4-J2": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "apply",
+      "topic": "views",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/range.ref.view",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M4-G3": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "gotcha",
+      "topic": "views",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/ranges/owning_view",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M4-Q7": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "recall",
+      "topic": "range-concepts",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/ranges/range",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M4-Q8": {
+      "lesson": "lesson-02-ranges-views.md",
+      "type": "apply",
+      "topic": "range-concepts",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/^\\s*(?:std::)?bidirectional(?:_iterator)?\\s*$/i)",
+        "reject": "regex(/forward|input|random/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/ranges/reverse_view",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M4-P4": {
+      "lesson": "lesson-03-structured-bindings-modern-patterns.md",
+      "type": "pretest",
+      "topic": "struct-bindings",
+      "objective": 7,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/structured_binding",
+      "concepts": []
+    },
+    "M4-J3": {
+      "lesson": "lesson-03-structured-bindings-modern-patterns.md",
+      "type": "apply",
+      "topic": "struct-bindings",
+      "objective": 7,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/dcl.struct.bind",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M4-G4": {
+      "lesson": "lesson-03-structured-bindings-modern-patterns.md",
+      "type": "gotcha",
+      "topic": "struct-bindings",
+      "objective": 7,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/structured_binding",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M4-INT1": {
+      "lesson": "lesson-03-structured-bindings-modern-patterns.md",
+      "type": "synthesize",
+      "topic": "all",
+      "objective": 7,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/structured_binding",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M4-G5": {
+      "lesson": "lesson-03-structured-bindings-modern-patterns.md",
+      "type": "gotcha",
+      "topic": "format",
+      "objective": 7,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/format/format_to_n",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M4-INT2": {
+      "lesson": "lesson-03-structured-bindings-modern-patterns.md",
+      "type": "synthesize",
+      "topic": "all",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/variant/visit",
+      "concepts": [
+        "lesson-01-optional-variant-expected.md#C2"
+      ]
+    },
+    "M4-P5": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "pretest",
+      "topic": "string_view",
+      "objective": 6,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/string/basic_string_view",
+      "concepts": []
+    },
+    "M4-P6": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "pretest",
+      "topic": "span",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/span",
+      "concepts": []
+    },
+    "M4-J4": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "apply",
+      "topic": "string_view",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/string.view",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M4-C5": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "completion",
+      "topic": "string_view",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m4-c5.check.sh)",
+        "reject": "regex(/string(?!_view)|char\\s*\\*/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/string/basic_string_view",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M4-G6": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "gotcha",
+      "topic": "string_view",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/string/basic_string_view",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M4-G7": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "gotcha",
+      "topic": "string_view",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/string/basic_string_view",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M4-G9": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "gotcha",
+      "topic": "string_view",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/from_chars",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M4-C6": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "completion",
+      "topic": "span",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m4-c6.check.sh)",
+        "reject": "regex(/vector|char/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/span",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M4-G8": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "gotcha",
+      "topic": "span",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/span",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M4-Q10": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "apply",
+      "topic": "ctad",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/class_template_argument_deduction",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M4-Q9": {
+      "lesson": "lesson-04-string_view-span-ctad.md",
+      "type": "recall",
+      "topic": "nodiscard",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/attributes/nodiscard",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M4-Q11": {
+      "lesson": "lesson-03-structured-bindings-modern-patterns.md",
+      "type": "recall",
+      "topic": "struct-bindings-format",
+      "objective": 7,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/dcl.struct.bind",
+      "concepts": [
+        "C8",
+        "C10"
+      ]
+    },
+    "M4-Q12": {
+      "lesson": "lesson-01-optional-variant-expected.md",
+      "type": "recall",
+      "topic": "expected",
+      "objective": 3,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/expected",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M4-LPA1": {
+      "lesson": "lesson-05-lpa-expected-tail.md",
+      "type": "pretest",
+      "topic": "expected",
+      "objective": 8,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/expected_tail.cpp output, 7 runs (ingest/lpa/evidence/m4-expected-tail-*.txt)",
+      "concepts": []
+    },
+    "M4-LPA2": {
+      "lesson": "lesson-05-lpa-expected-tail.md",
+      "type": "recall",
+      "topic": "expected",
+      "objective": 8,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C15 of this lesson; lab/expected_tail.cpp heap-call counter",
+      "concepts": [
+        "C15"
+      ]
+    },
+    "M4-LPA3": {
+      "lesson": "lesson-05-lpa-expected-tail.md",
+      "type": "completion",
+      "topic": "expected",
+      "objective": 8,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m4-lpa3.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/expected/unexpected; checks/m4-lpa3.check.sh",
+      "concepts": [
+        "C15"
+      ]
+    },
+    "M4-LPA4": {
+      "lesson": "lesson-05-lpa-expected-tail.md",
+      "type": "apply",
+      "topic": "expected",
+      "objective": 8,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/\\A\\s*(?:the\\s+)?`?p?99\\.9(?:th)?(?:\\s*%|\\s+percent(?:ile)?)?`?\\s*\\.?\\s*\\Z/i)"
+      },
+      "source": "Concept C15 of this lesson (nearest-rank percentile); modules/06-hft-patterns/lab/measure/lat_hist.hpp",
+      "concepts": [
+        "C15"
+      ]
+    },
+    "M4-LPA5": {
+      "lesson": "lesson-05-lpa-expected-tail.md",
+      "type": "recall",
+      "topic": "expected",
+      "objective": 8,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C15 of this lesson; https://en.cppreference.com/w/cpp/utility/expected/operator*",
+      "concepts": [
+        "C15"
+      ]
+    }
+  },
+  "concepts": {
+    "lesson-01-optional-variant-expected.md#C1": {
+      "source": "https://en.cppreference.com/w/cpp/utility/optional"
+    },
+    "lesson-01-optional-variant-expected.md#C2": {
+      "source": "https://en.cppreference.com/w/cpp/utility/variant/visit"
+    },
+    "lesson-01-optional-variant-expected.md#C3": {
+      "source": "https://en.cppreference.com/w/cpp/utility/expected"
+    },
+    "lesson-02-ranges-views.md#C4": {
+      "source": "https://en.cppreference.com/w/cpp/algorithm/ranges/sort"
+    },
+    "lesson-02-ranges-views.md#C5": {
+      "source": "https://en.cppreference.com/w/cpp/ranges"
+    },
+    "lesson-02-ranges-views.md#C6": {
+      "source": "https://en.cppreference.com/w/cpp/ranges/borrowed_range"
+    },
+    "lesson-02-ranges-views.md#C7": {
+      "source": "https://en.cppreference.com/w/cpp/ranges/range"
+    },
+    "lesson-03-structured-bindings-modern-patterns.md#C8": {
+      "source": "https://en.cppreference.com/w/cpp/language/structured_binding"
+    },
+    "lesson-03-structured-bindings-modern-patterns.md#C9": {
+      "source": "https://en.cppreference.com/w/cpp/language/if"
+    },
+    "lesson-03-structured-bindings-modern-patterns.md#C10": {
+      "source": "https://en.cppreference.com/w/cpp/utility/format/format_to_n"
+    },
+    "lesson-04-string_view-span-ctad.md#C11": {
+      "source": "https://en.cppreference.com/w/cpp/string/basic_string_view"
+    },
+    "lesson-04-string_view-span-ctad.md#C12": {
+      "source": "https://en.cppreference.com/w/cpp/container/span"
+    },
+    "lesson-04-string_view-span-ctad.md#C13": {
+      "source": "https://en.cppreference.com/w/cpp/language/class_template_argument_deduction"
+    },
+    "lesson-04-string_view-span-ctad.md#C14": {
+      "source": "https://en.cppreference.com/w/cpp/language/attributes/nodiscard"
+    },
+    "lesson-05-lpa-expected-tail.md#C15": {
+      "source": "lab/expected_tail.cpp runs, 7 (ingest/lpa/evidence/m4-expected-tail-*.txt); https://en.cppreference.com/w/cpp/utility/expected"
+    }
+  }
+}

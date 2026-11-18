@@ -1,0 +1,606 @@
+{
+  "schema_version": 1,
+  "lessons": {
+    "lesson-01-constexpr.md": {
+      "minutes": 29
+    },
+    "lesson-02-concepts.md": {
+      "minutes": 35
+    },
+    "lesson-03-type-traits-fold.md": {
+      "minutes": 41
+    },
+    "lesson-04-lpa-constinit.md": {
+      "minutes": 14
+    }
+  },
+  "cards": {
+    "M2-P2": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "pretest",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/consteval",
+      "concepts": []
+    },
+    "M2-Q3": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "recall",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constexpr",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M2-G1": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "gotcha",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constexpr",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M2-Q4": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "apply",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constexpr",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M2-G2": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "gotcha",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constexpr",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M2-J1": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "synthesize",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C5",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M2-C2": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "completion",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m2-c2.check.sh)",
+        "reject": "regex(/constexpr/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/consteval",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M2-G3": {
+      "lesson": "lesson-01-constexpr.md",
+      "type": "gotcha",
+      "topic": "constexpr",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constant_expression",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M2-P1": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "pretest",
+      "topic": "concepts",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constraints",
+      "concepts": []
+    },
+    "M2-J2": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "synthesize",
+      "topic": "concepts",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C2",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M2-C1": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "completion",
+      "topic": "concepts",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m2-c1.check.sh)",
+        "reject": "regex(/enable_if/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/requires",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M2-Q1": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "recall",
+      "topic": "concepts",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constraints",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M2-G4": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "gotcha",
+      "topic": "concepts",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/requires",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M2-G6": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "gotcha",
+      "topic": "concepts",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/function_template",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M2-Q2": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "apply",
+      "topic": "concepts",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constraints",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M2-C4": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "completion",
+      "topic": "concepts",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m2-c4.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constraints",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M2-Q7": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "apply",
+      "topic": "concepts",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constraints",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M2-G5": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "gotcha",
+      "topic": "concepts",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constraints",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M2-P3": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "pretest",
+      "topic": "type-traits-fold",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/fold",
+      "concepts": []
+    },
+    "M2-Q5": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "recall",
+      "topic": "type-traits-fold",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/header/type_traits",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M2-Q6": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "apply",
+      "topic": "type-traits-fold",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/if",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M2-G8": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "gotcha",
+      "topic": "type-traits-fold",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/if",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M2-G9": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "gotcha",
+      "topic": "type-traits-fold",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/dependent_name",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M2-J3": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "synthesize",
+      "topic": "type-traits-fold",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C7",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M2-C3": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "completion",
+      "topic": "type-traits-fold",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m2-c3.check.sh)",
+        "reject": "regex(/enable_if/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/fold",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M2-G7": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "gotcha",
+      "topic": "type-traits-fold",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/fold",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M2-INT1": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "synthesize",
+      "topic": "compile-time-dispatch",
+      "objective": 6,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constexpr",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M2-INT2": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "synthesize",
+      "topic": "compile-time-validation",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/consteval",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M2-Q8": {
+      "lesson": "lesson-02-concepts.md",
+      "type": "recall",
+      "topic": "concepts",
+      "objective": 3,
+      "minutes": 1,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/temp.constr.order",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M2-Q9": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "recall",
+      "topic": "type-traits-fold",
+      "objective": 5,
+      "minutes": 1,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/temp.variadic",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M2-Q10": {
+      "lesson": "lesson-03-type-traits-fold.md",
+      "type": "recall",
+      "topic": "type-traits-fold",
+      "objective": 6,
+      "minutes": 1,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/expr.prim.req",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M2-LPA1": {
+      "lesson": "lesson-04-lpa-constinit.md",
+      "type": "recall",
+      "topic": "constexpr",
+      "objective": 7,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/stmt.dcl (block-scope static initialisation); course assembly count, ingest/lpa/evidence/m2-constinit-guard-*.txt",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M2-LPA2": {
+      "lesson": "lesson-04-lpa-constinit.md",
+      "type": "apply",
+      "topic": "constexpr",
+      "objective": 7,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m2-lpa2.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/constinit; checks/m2-lpa2.check.sh (compiles and runs two threads); course assembly, ingest/lpa/evidence/m2-constinit-guard-*.txt",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M2-LPA3": {
+      "lesson": "lesson-04-lpa-constinit.md",
+      "type": "pretest",
+      "topic": "constexpr",
+      "objective": 7,
+      "minutes": 2,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "course assembly, ingest/lpa/evidence/m2-constinit-guard-*.txt; lab/starter and lab/solution constinit_guard.cpp",
+      "concepts": []
+    },
+    "M2-LPA4": {
+      "lesson": "lesson-04-lpa-constinit.md",
+      "type": "lab",
+      "topic": "constexpr",
+      "objective": 7,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/constinit_lab.check.sh)"
+      },
+      "source": "lab/starter/constinit_guard.cpp; checks/constinit_lab.check.sh",
+      "concepts": [
+        "C8"
+      ]
+    }
+  },
+  "concepts": {
+    "lesson-01-constexpr.md#C1": {
+      "source": "https://en.cppreference.com/w/cpp/language/constexpr"
+    },
+    "lesson-01-constexpr.md#C4": {
+      "source": "https://en.cppreference.com/w/cpp/types/is_constant_evaluated"
+    },
+    "lesson-01-constexpr.md#C5": {
+      "source": "https://en.cppreference.com/w/cpp/language/consteval"
+    },
+    "lesson-02-concepts.md#C2": {
+      "source": "https://en.cppreference.com/w/cpp/language/constraints"
+    },
+    "lesson-02-concepts.md#C6": {
+      "source": "https://en.cppreference.com/w/cpp/language/constraints"
+    },
+    "lesson-03-type-traits-fold.md#C3": {
+      "source": "https://en.cppreference.com/w/cpp/language/if"
+    },
+    "lesson-03-type-traits-fold.md#C7": {
+      "source": "https://en.cppreference.com/w/cpp/language/fold"
+    },
+    "lesson-04-lpa-constinit.md#C8": {
+      "source": "https://en.cppreference.com/w/cpp/language/constinit"
+    }
+  }
+}

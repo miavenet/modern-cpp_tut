@@ -1,0 +1,221 @@
+# clang++ -std=c++20 -O2 -S ingest/lpa/evidence/constinit_guard.cpp ; Apple clang version 21.0.0 (clang-2100.4.1.1); macOS 27.0.1, Apple M1 Max
+# calls per function (bl/blr lines):
+__Z13limit_dynamicv: 	bl	___cxa_guard_acquire
+__Z13limit_dynamicv: 	bl	__Z19load_limit_from_envv
+__Z13limit_dynamicv: 	bl	___cxa_guard_release
+__Z13limit_dynamicv: 	bl	___cxa_guard_abort
+__Z13limit_dynamicv: 	bl	__Unwind_Resume
+__Z14bump_constinitv: 	blr	x8
+__Z11bump_externv: 	bl	__ZTW7t_other
+__ZTW7t_count: 	blr	x9
+# full assembly follows
+	.build_version macos, 27, 0	sdk_version 27, 2
+	.section	__TEXT,__text,regular,pure_instructions
+	.globl	__Z13limit_dynamicv             ; -- Begin function _Z13limit_dynamicv
+	.p2align	2
+__Z13limit_dynamicv:                    ; @_Z13limit_dynamicv
+Lfunc_begin0:
+	.cfi_startproc
+	.cfi_personality 155, ___gxx_personality_v0
+	.cfi_lsda 16, Lexception0
+; %bb.0:
+	stp	x20, x19, [sp, #-32]!           ; 16-byte Folded Spill
+	stp	x29, x30, [sp, #16]             ; 16-byte Folded Spill
+	add	x29, sp, #16
+	.cfi_def_cfa w29, 16
+	.cfi_offset w30, -8
+	.cfi_offset w29, -16
+	.cfi_offset w19, -24
+	.cfi_offset w20, -32
+Lloh0:
+	adrp	x8, __ZGVZ13limit_dynamicvE5limit@PAGE
+Lloh1:
+	add	x8, x8, __ZGVZ13limit_dynamicvE5limit@PAGEOFF
+	ldaprb	w8, [x8]
+	adrp	x19, __ZZ13limit_dynamicvE5limit@PAGE
+	tbz	w8, #0, LBB0_2
+LBB0_1:
+	ldr	w0, [x19, __ZZ13limit_dynamicvE5limit@PAGEOFF]
+	ldp	x29, x30, [sp, #16]             ; 16-byte Folded Reload
+	ldp	x20, x19, [sp], #32             ; 16-byte Folded Reload
+	ret
+LBB0_2:
+Lloh2:
+	adrp	x0, __ZGVZ13limit_dynamicvE5limit@PAGE
+Lloh3:
+	add	x0, x0, __ZGVZ13limit_dynamicvE5limit@PAGEOFF
+	bl	___cxa_guard_acquire
+	cbz	w0, LBB0_1
+; %bb.3:
+Ltmp0:
+	bl	__Z19load_limit_from_envv
+Ltmp1:
+; %bb.4:
+	str	w0, [x19, __ZZ13limit_dynamicvE5limit@PAGEOFF]
+Lloh4:
+	adrp	x0, __ZGVZ13limit_dynamicvE5limit@PAGE
+Lloh5:
+	add	x0, x0, __ZGVZ13limit_dynamicvE5limit@PAGEOFF
+	bl	___cxa_guard_release
+	b	LBB0_1
+LBB0_5:
+Ltmp2:
+	mov	x19, x0
+Lloh6:
+	adrp	x0, __ZGVZ13limit_dynamicvE5limit@PAGE
+Lloh7:
+	add	x0, x0, __ZGVZ13limit_dynamicvE5limit@PAGEOFF
+	bl	___cxa_guard_abort
+	mov	x0, x19
+	bl	__Unwind_Resume
+	.loh AdrpAdd	Lloh0, Lloh1
+	.loh AdrpAdd	Lloh2, Lloh3
+	.loh AdrpAdd	Lloh4, Lloh5
+	.loh AdrpAdd	Lloh6, Lloh7
+Lfunc_end0:
+	.cfi_endproc
+	.section	__TEXT,__gcc_except_tab
+	.p2align	2, 0x0
+GCC_except_table0:
+Lexception0:
+	.byte	255                             ; @LPStart Encoding = omit
+	.byte	255                             ; @TType Encoding = omit
+	.byte	1                               ; Call site Encoding = uleb128
+	.uleb128 Lcst_end0-Lcst_begin0
+Lcst_begin0:
+	.uleb128 Ltmp0-Lfunc_begin0             ; >> Call Site 1 <<
+	.uleb128 Ltmp1-Ltmp0                    ;   Call between Ltmp0 and Ltmp1
+	.uleb128 Ltmp2-Lfunc_begin0             ;     jumps to Ltmp2
+	.byte	0                               ;   On action: cleanup
+	.uleb128 Ltmp1-Lfunc_begin0             ; >> Call Site 2 <<
+	.uleb128 Lfunc_end0-Ltmp1               ;   Call between Ltmp1 and Lfunc_end0
+	.byte	0                               ;     has no landing pad
+	.byte	0                               ;   On action: cleanup
+Lcst_end0:
+	.p2align	2, 0x0
+                                        ; -- End function
+	.section	__TEXT,__text,regular,pure_instructions
+	.globl	__Z10tier_locali                ; -- Begin function _Z10tier_locali
+	.p2align	2
+__Z10tier_locali:                       ; @_Z10tier_locali
+	.cfi_startproc
+; %bb.0:
+	and	w8, w0, #0x3
+Lloh8:
+	adrp	x9, __ZZ10tier_localiE5tiers@PAGE
+Lloh9:
+	add	x9, x9, __ZZ10tier_localiE5tiers@PAGEOFF
+	ldr	w0, [x9, w8, uxtw #2]
+	ret
+	.loh AdrpAdd	Lloh8, Lloh9
+	.cfi_endproc
+                                        ; -- End function
+	.globl	__Z11tier_globali               ; -- Begin function _Z11tier_globali
+	.p2align	2
+__Z11tier_globali:                      ; @_Z11tier_globali
+	.cfi_startproc
+; %bb.0:
+	and	w8, w0, #0x3
+Lloh10:
+	adrp	x9, _g_tiers@PAGE
+Lloh11:
+	add	x9, x9, _g_tiers@PAGEOFF
+	ldr	w0, [x9, w8, uxtw #2]
+	ret
+	.loh AdrpAdd	Lloh10, Lloh11
+	.cfi_endproc
+                                        ; -- End function
+	.globl	__Z14bump_constinitv            ; -- Begin function _Z14bump_constinitv
+	.p2align	2
+__Z14bump_constinitv:                   ; @_Z14bump_constinitv
+	.cfi_startproc
+; %bb.0:
+	stp	x29, x30, [sp, #-16]!           ; 16-byte Folded Spill
+	mov	x29, sp
+	.cfi_def_cfa w29, 16
+	.cfi_offset w30, -8
+	.cfi_offset w29, -16
+Lloh12:
+	adrp	x0, _t_count@TLVPPAGE
+Lloh13:
+	ldr	x0, [x0, _t_count@TLVPPAGEOFF]
+	ldr	x8, [x0]
+	blr	x8
+	ldr	w8, [x0]
+	add	w8, w8, #1
+	str	w8, [x0]
+	mov	x0, x8
+	ldp	x29, x30, [sp], #16             ; 16-byte Folded Reload
+	ret
+	.loh AdrpLdr	Lloh12, Lloh13
+	.cfi_endproc
+                                        ; -- End function
+	.globl	__Z11bump_externv               ; -- Begin function _Z11bump_externv
+	.p2align	2
+__Z11bump_externv:                      ; @_Z11bump_externv
+	.cfi_startproc
+; %bb.0:
+	stp	x29, x30, [sp, #-16]!           ; 16-byte Folded Spill
+	mov	x29, sp
+	.cfi_def_cfa w29, 16
+	.cfi_offset w30, -8
+	.cfi_offset w29, -16
+	bl	__ZTW7t_other
+	ldr	w8, [x0]
+	add	w8, w8, #1
+	str	w8, [x0]
+	mov	x0, x8
+	ldp	x29, x30, [sp], #16             ; 16-byte Folded Reload
+	ret
+	.cfi_endproc
+                                        ; -- End function
+	.globl	__ZTW7t_count                   ; -- Begin function _ZTW7t_count
+	.p2align	2
+__ZTW7t_count:                          ; @_ZTW7t_count
+	.cfi_startproc
+; %bb.0:
+	stp	x29, x30, [sp, #-16]!           ; 16-byte Folded Spill
+	mov	x29, sp
+	.cfi_def_cfa w29, 16
+	.cfi_offset w30, -8
+	.cfi_offset w29, -16
+Lloh14:
+	adrp	x0, _t_count@TLVPPAGE
+Lloh15:
+	ldr	x0, [x0, _t_count@TLVPPAGEOFF]
+	ldr	x9, [x0]
+	blr	x9
+	ldp	x29, x30, [sp], #16             ; 16-byte Folded Reload
+	ret
+	.loh AdrpLdr	Lloh14, Lloh15
+	.cfi_endproc
+                                        ; -- End function
+.zerofill __DATA,__bss,__ZZ13limit_dynamicvE5limit,4,2 ; @_ZZ13limit_dynamicvE5limit
+.zerofill __DATA,__bss,__ZGVZ13limit_dynamicvE5limit,8,3 ; @_ZGVZ13limit_dynamicvE5limit
+	.section	__TEXT,__const
+	.p2align	2, 0x0                          ; @_ZZ10tier_localiE5tiers
+__ZZ10tier_localiE5tiers:
+	.long	100                             ; 0x64
+	.long	500                             ; 0x1f4
+	.long	1000                            ; 0x3e8
+	.long	5000                            ; 0x1388
+
+	.section	__DATA,__data
+	.globl	_g_tiers                        ; @g_tiers
+	.p2align	2, 0x0
+_g_tiers:
+	.long	100                             ; 0x64
+	.long	500                             ; 0x1f4
+	.long	1000                            ; 0x3e8
+	.long	5000                            ; 0x1388
+
+.tbss _t_count$tlv$init, 4, 2           ; @t_count
+
+	.section	__DATA,__thread_vars,thread_local_variables
+	.globl	_t_count
+_t_count:
+	.quad	__tlv_bootstrap
+	.quad	0
+	.quad	_t_count$tlv$init
+
+.subsections_via_symbols

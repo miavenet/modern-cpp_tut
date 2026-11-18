@@ -1,0 +1,805 @@
+{
+  "schema_version": 1,
+  "lessons": {
+    "lesson-01-move-semantics.md": {
+      "minutes": 34
+    },
+    "lesson-02-smart-pointers.md": {
+      "minutes": 29
+    },
+    "lesson-03-auto-lambdas.md": {
+      "minutes": 45
+    },
+    "lesson-04-enum-chrono-essentials.md": {
+      "minutes": 35
+    },
+    "lesson-05-lpa-push-back-tail.md": {
+      "minutes": 26
+    }
+  },
+  "cards": {
+    "M1-P1": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "pretest",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/copy_elision",
+      "concepts": []
+    },
+    "M1-C1": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "completion",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m1-c1.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/move_constructor",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M1-Q1": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "recall",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/move_constructor",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M1-G3": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "gotcha",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/vector/push_back",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M1-G1": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "gotcha",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/lib.types.movedfrom",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M1-Q2": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "apply",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/return",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M1-G2": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "gotcha",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/copy_elision",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M1-INT1": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "synthesize",
+      "topic": "all",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/move_constructor",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M1-J1": {
+      "lesson": "lesson-01-move-semantics.md",
+      "type": "synthesize",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C4",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M1-P2": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "pretest",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory",
+      "concepts": []
+    },
+    "M1-C2": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "completion",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory/unique_ptr",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M1-INT2": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "synthesize",
+      "topic": "all",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory/unique_ptr/unique_ptr",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M1-J2": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "synthesize",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C6",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M1-Q3": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "recall",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M1-Q4": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "apply",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory/weak_ptr",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M1-G4": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "gotcha",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory/weak_ptr",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M1-G5": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "gotcha",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory/shared_ptr/shared_ptr",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M1-G6": {
+      "lesson": "lesson-02-smart-pointers.md",
+      "type": "gotcha",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/memory/shared_ptr",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M1-P3": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "pretest",
+      "topic": "auto-deduction",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/auto",
+      "concepts": []
+    },
+    "M1-P4": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "pretest",
+      "topic": "lambdas",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/lambda",
+      "concepts": []
+    },
+    "M1-C3": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "completion",
+      "topic": "auto-deduction",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m1-c3.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/auto",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M1-Q5": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "recall",
+      "topic": "auto-deduction",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/auto",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M1-Q6": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "apply",
+      "topic": "auto-deduction",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/range-for",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M1-G7": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "gotcha",
+      "topic": "auto-deduction",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/range-for",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M1-G9": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "gotcha",
+      "topic": "auto-deduction",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/value_initialization",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M1-Q8": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "apply",
+      "topic": "lambdas",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/vector/erase2",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M1-J3": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "synthesize",
+      "topic": "lambdas",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C10",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M1-C4": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "completion",
+      "topic": "lambdas",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/\\A\\s*\\[?\\s*(?:=|order|order\\s*=\\s*(?:std::move\\(\\s*order\\s*\\)|order))\\s*\\]?\\s*\\Z/)",
+        "reject": "regex(/&/)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/lambda",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M1-Q7": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "recall",
+      "topic": "lambdas",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/lambda",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M1-G8": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "gotcha",
+      "topic": "lambdas",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/lambda",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M1-G10": {
+      "lesson": "lesson-03-auto-lambdas.md",
+      "type": "gotcha",
+      "topic": "lambdas",
+      "objective": 4,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/utility/functional/function",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M1-P5": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "pretest",
+      "topic": "enum-class",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/enum",
+      "concepts": []
+    },
+    "M1-P6": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "pretest",
+      "topic": "chrono",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/chrono/steady_clock",
+      "concepts": []
+    },
+    "M1-C5": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "completion",
+      "topic": "enum-class",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m1-c5.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/enum",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M1-G13": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "gotcha",
+      "topic": "enum-class",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/enum",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M1-J4": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "synthesize",
+      "topic": "chrono",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C13",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M1-C6": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "completion",
+      "topic": "chrono",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m1-c6.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/chrono/steady_clock",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M1-G12": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "gotcha",
+      "topic": "chrono",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/chrono/high_resolution_clock",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M1-Q9": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "recall",
+      "topic": "array",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/array",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M1-G11": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "gotcha",
+      "topic": "initializer_list",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/vector/vector",
+      "concepts": [
+        "C15"
+      ]
+    },
+    "M1-Q10": {
+      "lesson": "lesson-04-enum-chrono-essentials.md",
+      "type": "apply",
+      "topic": "thread_local",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/storage_duration",
+      "concepts": [
+        "C16"
+      ]
+    },
+    "M1-LPA1": {
+      "lesson": "lesson-05-lpa-push-back-tail.md",
+      "type": "pretest",
+      "topic": "move-semantics",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/solution/push_tail.cpp output, 7 runs (ingest/lpa/evidence/m1-push-tail-*.txt)",
+      "concepts": []
+    },
+    "M1-LPA2": {
+      "lesson": "lesson-05-lpa-push-back-tail.md",
+      "type": "lab",
+      "topic": "move-semantics",
+      "objective": 6,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/push_tail.check.sh)"
+      },
+      "source": "lab/starter/push_tail.cpp; checks/push_tail.check.sh",
+      "concepts": [
+        "C17"
+      ]
+    },
+    "M1-LPA3": {
+      "lesson": "lesson-05-lpa-push-back-tail.md",
+      "type": "recall",
+      "topic": "move-semantics",
+      "objective": 6,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C17 of this lesson; lab/solution/push_tail.cpp counters",
+      "concepts": [
+        "C17"
+      ]
+    },
+    "M1-LPA4": {
+      "lesson": "lesson-05-lpa-push-back-tail.md",
+      "type": "apply",
+      "topic": "move-semantics",
+      "objective": 6,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m1-lpa4.check.sh)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/container/unordered_map/reserve; https://eel.is/c++draft/unord.req.general; checks/m1-lpa4.check.sh (bucket count unchanged across 500,000 inserts)",
+      "concepts": [
+        "C17"
+      ]
+    },
+    "M1-LPA5": {
+      "lesson": "lesson-05-lpa-push-back-tail.md",
+      "type": "recall",
+      "topic": "move-semantics",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C17 of this lesson",
+      "concepts": [
+        "C17"
+      ]
+    }
+  },
+  "concepts": {
+    "lesson-01-move-semantics.md#C1": {
+      "source": "https://en.cppreference.com/w/cpp/language/value_category"
+    },
+    "lesson-01-move-semantics.md#C2": {
+      "source": "https://en.cppreference.com/w/cpp/container/vector/push_back"
+    },
+    "lesson-01-move-semantics.md#C3": {
+      "source": "https://eel.is/c++draft/lib.types.movedfrom"
+    },
+    "lesson-01-move-semantics.md#C4": {
+      "source": "https://en.cppreference.com/w/cpp/language/copy_elision"
+    },
+    "lesson-02-smart-pointers.md#C5": {
+      "source": "https://en.cppreference.com/w/cpp/memory/unique_ptr"
+    },
+    "lesson-02-smart-pointers.md#C6": {
+      "source": "https://en.cppreference.com/w/cpp/memory/shared_ptr"
+    },
+    "lesson-03-auto-lambdas.md#C7": {
+      "source": "https://en.cppreference.com/w/cpp/language/auto"
+    },
+    "lesson-03-auto-lambdas.md#C8": {
+      "source": "https://en.cppreference.com/w/cpp/language/range-for"
+    },
+    "lesson-03-auto-lambdas.md#C9": {
+      "source": "https://en.cppreference.com/w/cpp/language/lambda"
+    },
+    "lesson-03-auto-lambdas.md#C10": {
+      "source": "https://en.cppreference.com/w/cpp/language/lambda"
+    },
+    "lesson-03-auto-lambdas.md#C11": {
+      "source": "https://en.cppreference.com/w/cpp/utility/functional/function"
+    },
+    "lesson-04-enum-chrono-essentials.md#C12": {
+      "source": "https://en.cppreference.com/w/cpp/language/enum"
+    },
+    "lesson-04-enum-chrono-essentials.md#C13": {
+      "source": "https://en.cppreference.com/w/cpp/chrono/duration"
+    },
+    "lesson-04-enum-chrono-essentials.md#C14": {
+      "source": "https://en.cppreference.com/w/cpp/container/array"
+    },
+    "lesson-04-enum-chrono-essentials.md#C15": {
+      "source": "https://en.cppreference.com/w/cpp/utility/initializer_list"
+    },
+    "lesson-04-enum-chrono-essentials.md#C16": {
+      "source": "https://en.cppreference.com/w/cpp/language/storage_duration"
+    },
+    "lesson-05-lpa-push-back-tail.md#C17": {
+      "source": "lab/solution/push_tail.cpp runs, 7 (ingest/lpa/evidence/m1-push-tail-*.txt); https://eel.is/c++draft/vector.modifiers; https://en.cppreference.com/w/cpp/container/vector/reserve"
+    }
+  }
+}

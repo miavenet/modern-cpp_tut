@@ -1,0 +1,58 @@
+# m7-map-tail: 7 runs; built with: clang++ -std=c++23 -Wall -Wextra -O2 -I modules/06-hft-patterns/lab/measure modules/07-architecture/lab/bench/map_tail.cpp
+# machine: Apple M1 Max, 10 cores, macOS 27.0.1, Apple clang version 21.0.0 (clang-2100.4.1.1)
+# run 1: 23:03:12, load 8.74 9.38 11.52, tmutil BackupNotRunning
+1000000 keys, 1000000 lookups; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+median of 5 means : map 626.2 ns/lookup, flat_map 104.4 ns/lookup
+map lookup     n=1000000  p50=591  p99=1151  p99.9=4223  p99.99=5247  max=21250 ns  (clock floor 41 ns)
+flat lookup    n=1000000  p50=125  p99=423  p99.9=671  p99.99=1151  max=19875 ns  (clock floor 41 ns)
+map insert     n=1000  p50=1215  p99=1983  p99.9=n/a  p99.99=n/a  max=9083 ns  (clock floor 41 ns)
+flat insert    n=1000  p50=196607  p99=376831  p99.9=n/a  p99.99=n/a  max=1683167 ns  (clock floor 41 ns)
+# exit 0
+# run 2: 23:03:17, load 8.92 9.40 11.52, tmutil BackupNotRunning
+1000000 keys, 1000000 lookups; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+median of 5 means : map 596.7 ns/lookup, flat_map 122.3 ns/lookup
+map lookup     n=1000000  p50=671  p99=1311  p99.9=4351  p99.99=11263  max=1680250 ns  (clock floor 41 ns)
+flat lookup    n=1000000  p50=125  p99=543  p99.9=879  p99.99=4479  max=27083 ns  (clock floor 41 ns)
+map insert     n=1000  p50=1343  p99=2111  p99.9=n/a  p99.99=n/a  max=9750 ns  (clock floor 41 ns)
+flat insert    n=1000  p50=200703  p99=1933311  p99.9=n/a  p99.99=n/a  max=3821375 ns  (clock floor 41 ns)
+# exit 0
+# run 3: 23:03:23, load 9.09 9.43 11.52, tmutil BackupNotRunning
+1000000 keys, 1000000 lookups; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+median of 5 means : map 586.6 ns/lookup, flat_map 101.9 ns/lookup
+map lookup     n=1000000  p50=591  p99=1183  p99.9=4351  p99.99=5759  max=39500 ns  (clock floor 41 ns)
+flat lookup    n=1000000  p50=125  p99=503  p99.9=751  p99.99=4351  max=14250 ns  (clock floor 41 ns)
+map insert     n=1000  p50=1215  p99=2303  p99.9=n/a  p99.99=n/a  max=12792 ns  (clock floor 41 ns)
+flat insert    n=1000  p50=192511  p99=2228223  p99.9=n/a  p99.99=n/a  max=5228667 ns  (clock floor 41 ns)
+# exit 0
+# run 4: 23:03:28, load 8.84 9.37 11.48, tmutil BackupNotRunning
+1000000 keys, 1000000 lookups; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+median of 5 means : map 606.7 ns/lookup, flat_map 101.1 ns/lookup
+map lookup     n=1000000  p50=591  p99=1151  p99.9=1439  p99.99=7423  max=99583 ns  (clock floor 41 ns)
+flat lookup    n=1000000  p50=125  p99=503  p99.9=719  p99.99=1695  max=38375 ns  (clock floor 41 ns)
+map insert     n=1000  p50=1311  p99=2111  p99.9=n/a  p99.99=n/a  max=9833 ns  (clock floor 41 ns)
+flat insert    n=1000  p50=192511  p99=2555903  p99.9=n/a  p99.99=n/a  max=5672416 ns  (clock floor 41 ns)
+# exit 0
+# run 5: 23:03:33, load 9.17 9.43 11.49, tmutil BackupNotRunning
+1000000 keys, 1000000 lookups; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+median of 5 means : map 647.5 ns/lookup, flat_map 97.9 ns/lookup
+map lookup     n=1000000  p50=639  p99=1183  p99.9=4607  p99.99=5375  max=28416 ns  (clock floor 41 ns)
+flat lookup    n=1000000  p50=125  p99=503  p99.9=799  p99.99=4351  max=23625 ns  (clock floor 41 ns)
+map insert     n=1000  p50=1151  p99=1919  p99.9=n/a  p99.99=n/a  max=7833 ns  (clock floor 41 ns)
+flat insert    n=1000  p50=196607  p99=1540095  p99.9=n/a  p99.99=n/a  max=5680625 ns  (clock floor 41 ns)
+# exit 0
+# run 6: 23:03:38, load 9.08 9.41 11.47, tmutil BackupNotRunning
+1000000 keys, 1000000 lookups; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+median of 5 means : map 600.6 ns/lookup, flat_map 98.9 ns/lookup
+map lookup     n=1000000  p50=639  p99=1311  p99.9=4863  p99.99=6143  max=23208 ns  (clock floor 41 ns)
+flat lookup    n=1000000  p50=125  p99=503  p99.9=2559  p99.99=4479  max=15667 ns  (clock floor 41 ns)
+map insert     n=1000  p50=1215  p99=1983  p99.9=n/a  p99.99=n/a  max=6416 ns  (clock floor 41 ns)
+flat insert    n=1000  p50=192511  p99=1441791  p99.9=n/a  p99.99=n/a  max=6060125 ns  (clock floor 41 ns)
+# exit 0
+# run 7: 23:03:44, load 8.67 9.32 11.43, tmutil BackupNotRunning
+1000000 keys, 1000000 lookups; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, one thread, no core pinning (macOS), shared machine
+median of 5 means : map 573.6 ns/lookup, flat_map 100.9 ns/lookup
+map lookup     n=1000000  p50=543  p99=1087  p99.9=4607  p99.99=8447  max=34375 ns  (clock floor 41 ns)
+flat lookup    n=1000000  p50=125  p99=423  p99.9=671  p99.99=3391  max=21042 ns  (clock floor 41 ns)
+map insert     n=1000  p50=1183  p99=1983  p99.9=n/a  p99.99=n/a  max=9125 ns  (clock floor 41 ns)
+flat insert    n=1000  p50=196607  p99=2031615  p99.9=n/a  p99.99=n/a  max=6069041 ns  (clock floor 41 ns)
+# exit 0

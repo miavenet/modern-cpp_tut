@@ -1,0 +1,664 @@
+{
+  "schema_version": 1,
+  "lessons": {
+    "lesson-01-modules.md": {
+      "minutes": 35
+    },
+    "lesson-02-sanitizers-analysis.md": {
+      "minutes": 30
+    },
+    "lesson-03-benchmarking-cpp23.md": {
+      "minutes": 45
+    },
+    "lesson-04-modern-cmake.md": {
+      "minutes": 40
+    },
+    "lesson-05-lpa-map-tail.md": {
+      "minutes": 25
+    }
+  },
+  "cards": {
+    "M7-P1": {
+      "lesson": "lesson-01-modules.md",
+      "type": "pretest",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C1; clang.llvm.org/docs/StandardCPlusPlusModules.html",
+      "concepts": []
+    },
+    "M7-C1": {
+      "lesson": "lesson-01-modules.md",
+      "type": "completion",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m7-c1.check.sh)",
+        "reject": "regex(/#\\s*include/i)"
+      },
+      "source": "CONCEPT C1; lab/modules/math_core.cppm",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M7-Q1": {
+      "lesson": "lesson-01-modules.md",
+      "type": "recall",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C1; clang.llvm.org/docs/StandardCPlusPlusModules.html",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M7-INT1": {
+      "lesson": "lesson-01-modules.md",
+      "type": "synthesize",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C1 (comment-edit experiment on the test machine)",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M7-J1": {
+      "lesson": "lesson-01-modules.md",
+      "type": "apply",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C1 and C2; lab/modules/math_core.cppm",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M7-Q2": {
+      "lesson": "lesson-01-modules.md",
+      "type": "apply",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C2 (SECRET_MACRO experiment)",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M7-G1": {
+      "lesson": "lesson-01-modules.md",
+      "type": "gotcha",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C2; cmake --help-manual cmake-cxxmodules (CMake 4.3.3)",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M7-G2": {
+      "lesson": "lesson-01-modules.md",
+      "type": "gotcha",
+      "topic": "modules",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C2 (lab/modules/use_ok.cpp and use_bad.cpp)",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M7-P3": {
+      "lesson": "lesson-02-sanitizers-analysis.md",
+      "type": "pretest",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "clang.llvm.org/docs/ThreadSanitizer.html",
+      "concepts": []
+    },
+    "M7-J2": {
+      "lesson": "lesson-02-sanitizers-analysis.md",
+      "type": "apply",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C3 and C4; lab/sanitizers/race.cpp",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M7-C3": {
+      "lesson": "lesson-02-sanitizers-analysis.md",
+      "type": "completion",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m7-c3.check.sh)",
+        "reject": "regex(/thread|undefined|memory|leak/i)"
+      },
+      "source": "CONCEPT C3; clang.llvm.org/docs/AddressSanitizer.html",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M7-Q5": {
+      "lesson": "lesson-02-sanitizers-analysis.md",
+      "type": "recall",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C3",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M7-G4": {
+      "lesson": "lesson-02-sanitizers-analysis.md",
+      "type": "gotcha",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "clang.llvm.org/docs/MemorySanitizer.html",
+      "concepts": [
+        "C3"
+      ]
+    },
+    "M7-Q6": {
+      "lesson": "lesson-02-sanitizers-analysis.md",
+      "type": "apply",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C4 (Apple clang 21 diagnostic)",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M7-G5": {
+      "lesson": "lesson-02-sanitizers-analysis.md",
+      "type": "gotcha",
+      "topic": "sanitizers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "clang.llvm.org/docs/AddressSanitizer.html; CONCEPT C4",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M7-P4": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "pretest",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C5",
+      "concepts": []
+    },
+    "M7-J3": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "apply",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C5; lab/bench/mini_bench.cpp",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M7-C4": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "completion",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m7-c4.check.sh)",
+        "reject": "regex(/ClobberMemory/i)"
+      },
+      "source": "CONCEPT C5; raw.githubusercontent.com/google/benchmark/v1.9.5/docs/user_guide.md",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M7-Q7": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "recall",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "raw.githubusercontent.com/google/benchmark/v1.9.5/docs/user_guide.md",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M7-G6": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "gotcha",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C5; raw.githubusercontent.com/google/benchmark/v1.9.5/docs/user_guide.md",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M7-Q8": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "apply",
+      "topic": "cpp23",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C6; eel.is/c++draft/flat.map.overview",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M7-G7": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "gotcha",
+      "topic": "cpp23",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C7 (lab/cpp23/deducing_this.cpp output, Apple clang 21, -std=c++23)",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M7-INT2": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "synthesize",
+      "topic": "all",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "course synthesis of lessons 02 and 03",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M7-P2": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "pretest",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C8",
+      "concepts": []
+    },
+    "M7-J4": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "apply",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C8; lab/cmake/starter and lab/cmake/solution",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M7-C2": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "completion",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m7-c2.check.sh)",
+        "reject": "regex(/\\blink_directories\\b|\\binclude_directories\\b/i)"
+      },
+      "source": "CONCEPT C8; cmake --help-command target_compile_features",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M7-Q3": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "recall",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C8; cmake --help-command target_include_directories",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M7-G8": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "gotcha",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C8 (CMAKE_CXX_FLAGS experiment); CONCEPT C9",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M7-INT3": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "synthesize",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C8 (lab verbose build output)",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M7-Q4": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "apply",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C9; cmake --help-manual cmake-generator-expressions",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M7-G3": {
+      "lesson": "lesson-04-modern-cmake.md",
+      "type": "gotcha",
+      "topic": "cmake",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C9; cmake.org/cmake/help/latest/variable/CMAKE_POLICY_VERSION_MINIMUM.html",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M7-Q9": {
+      "lesson": "lesson-03-benchmarking-cpp23.md",
+      "type": "apply",
+      "topic": "expected",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "CONCEPT C7; eel.is/c++draft/expected.object.obs",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M7-LPA1": {
+      "lesson": "lesson-05-lpa-map-tail.md",
+      "type": "pretest",
+      "topic": "benchmarking",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/bench/map_tail.cpp output, 7 runs (ingest/lpa/evidence/m7-map-tail-*.txt)",
+      "concepts": []
+    },
+    "M7-LPA2": {
+      "lesson": "lesson-05-lpa-map-tail.md",
+      "type": "recall",
+      "topic": "benchmarking",
+      "objective": 5,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C10 of this lesson; https://en.cppreference.com/w/cpp/container/flat_map",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M7-LPA3": {
+      "lesson": "lesson-05-lpa-map-tail.md",
+      "type": "apply",
+      "topic": "benchmarking",
+      "objective": 5,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m7-lpa3.check.sh)",
+        "reject": "regex(/s\\.size\\(\\)\\s*\\/\\s*2\\b/)"
+      },
+      "source": "nearest-rank definition (as in modules/06-hft-patterns/lab/measure/lat_hist.hpp); checks/m7-lpa3.check.sh",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M7-LPA4": {
+      "lesson": "lesson-05-lpa-map-tail.md",
+      "type": "apply",
+      "topic": "benchmarking",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/\\A\\s*(?:symbols\\s*:\\s*`?(?:(?:std::)?flat_map|(?:a\\s+)?sorted[\\s_]+(?:std::)?vector)`?\\s*[;,]\\s*orders\\s*:\\s*`?(?:std::)?map`?|orders\\s*:\\s*`?(?:std::)?map`?\\s*[;,]\\s*symbols\\s*:\\s*`?(?:(?:std::)?flat_map|(?:a\\s+)?sorted[\\s_]+(?:std::)?vector)`?)\\s*[;.]?\\s*\\Z/i)"
+      },
+      "source": "Concept C10 of this lesson; lab/bench/map_tail.cpp insert rows",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M7-LPA5": {
+      "lesson": "lesson-05-lpa-map-tail.md",
+      "type": "recall",
+      "topic": "benchmarking",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C10 of this lesson",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M7-LPA6": {
+      "lesson": "lesson-05-lpa-map-tail.md",
+      "type": "completion",
+      "topic": "benchmarking",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m7-lpa6.check.sh)"
+      },
+      "source": "nearest-rank percentile definition; checks/m7-lpa6.check.sh",
+      "concepts": [
+        "C10"
+      ]
+    }
+  },
+  "concepts": {
+    "lesson-01-modules.md#C1": {
+      "source": ""
+    },
+    "lesson-01-modules.md#C2": {
+      "source": ""
+    },
+    "lesson-02-sanitizers-analysis.md#C3": {
+      "source": ""
+    },
+    "lesson-02-sanitizers-analysis.md#C4": {
+      "source": ""
+    },
+    "lesson-03-benchmarking-cpp23.md#C5": {
+      "source": ""
+    },
+    "lesson-03-benchmarking-cpp23.md#C6": {
+      "source": ""
+    },
+    "lesson-03-benchmarking-cpp23.md#C7": {
+      "source": ""
+    },
+    "lesson-04-modern-cmake.md#C8": {
+      "source": ""
+    },
+    "lesson-04-modern-cmake.md#C9": {
+      "source": ""
+    },
+    "lesson-05-lpa-map-tail.md#C10": {
+      "source": "lab/bench/map_tail.cpp runs, 7 (ingest/lpa/evidence/m7-map-tail-*.txt); https://en.cppreference.com/w/cpp/container/flat_map"
+    }
+  }
+}

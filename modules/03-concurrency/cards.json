@@ -1,0 +1,708 @@
+{
+  "schema_version": 1,
+  "lessons": {
+    "lesson-01-threads-async.md": {
+      "minutes": 24
+    },
+    "lesson-02-atomics-memory-model.md": {
+      "minutes": 32
+    },
+    "lesson-03-synchronization-primitives.md": {
+      "minutes": 29
+    },
+    "lesson-04-coroutines.md": {
+      "minutes": 39
+    },
+    "lesson-05-lpa-handoff-tail.md": {
+      "minutes": 27
+    }
+  },
+  "cards": {
+    "M3-P1": {
+      "lesson": "lesson-01-threads-async.md",
+      "type": "pretest",
+      "topic": "threads-async",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/thread.thread.destr",
+      "concepts": []
+    },
+    "M3-C1": {
+      "lesson": "lesson-01-threads-async.md",
+      "type": "completion",
+      "topic": "threads-async",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m3-c1.check.sh)",
+        "reject": "regex(/std::thread\\b|\\bdetach\\b|async/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread/jthread",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M3-Q1": {
+      "lesson": "lesson-01-threads-async.md",
+      "type": "recall",
+      "topic": "threads-async",
+      "objective": 1,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/thread.thread.destr",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M3-G1": {
+      "lesson": "lesson-01-threads-async.md",
+      "type": "gotcha",
+      "topic": "threads-async",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread/thread/detach",
+      "concepts": [
+        "C1"
+      ]
+    },
+    "M3-J1": {
+      "lesson": "lesson-01-threads-async.md",
+      "type": "apply",
+      "topic": "threads-async",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/futures.async",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M3-Q2": {
+      "lesson": "lesson-01-threads-async.md",
+      "type": "apply",
+      "topic": "threads-async",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread/async",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M3-G2": {
+      "lesson": "lesson-01-threads-async.md",
+      "type": "gotcha",
+      "topic": "threads-async",
+      "objective": 1,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/futures.async",
+      "concepts": [
+        "C2"
+      ]
+    },
+    "M3-P2": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "pretest",
+      "topic": "atomics-memory-model",
+      "objective": 2,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/intro.races",
+      "concepts": []
+    },
+    "M3-J2": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "apply",
+      "topic": "atomics-memory-model",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/intro.races",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M3-C2": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "completion",
+      "topic": "atomics-memory-model",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m3-c2.check.sh)",
+        "reject": "regex(/relaxed|seq_cst/i)"
+      },
+      "source": "https://eel.is/c++draft/atomics.order",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M3-G3": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "gotcha",
+      "topic": "atomics-memory-model",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/intro.races",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M3-Q4": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "apply",
+      "topic": "atomics-memory-model",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "regex",
+        "accept": "regex(/^\\s*(?:std::)?(?:memory_order_|memory_order::)?relaxed\\s*$/i)",
+        "reject": "regex(/seq_cst|acquire|release/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/atomic/memory_order",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M3-G4": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "gotcha",
+      "topic": "atomics-memory-model",
+      "objective": 3,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/atomic/memory_order",
+      "concepts": [
+        "C5"
+      ]
+    },
+    "M3-Q3": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "recall",
+      "topic": "atomics-memory-model",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/atomics.types.operations",
+      "concepts": [
+        "C6"
+      ]
+    },
+    "M3-P3": {
+      "lesson": "lesson-03-synchronization-primitives.md",
+      "type": "pretest",
+      "topic": "synchronization-primitives",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread/shared_mutex",
+      "concepts": []
+    },
+    "M3-J3": {
+      "lesson": "lesson-03-synchronization-primitives.md",
+      "type": "apply",
+      "topic": "synchronization-primitives",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/thread.mutex.requirements",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M3-Q6": {
+      "lesson": "lesson-03-synchronization-primitives.md",
+      "type": "apply",
+      "topic": "synchronization-primitives",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread/mutex",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M3-G6": {
+      "lesson": "lesson-03-synchronization-primitives.md",
+      "type": "gotcha",
+      "topic": "synchronization-primitives",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "modules/03-concurrency/lab/spinlock.cpp",
+      "concepts": [
+        "C7"
+      ]
+    },
+    "M3-G5": {
+      "lesson": "lesson-03-synchronization-primitives.md",
+      "type": "gotcha",
+      "topic": "synchronization-primitives",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread/hardware_destructive_interference_size",
+      "concepts": [
+        "C8"
+      ]
+    },
+    "M3-Q5": {
+      "lesson": "lesson-03-synchronization-primitives.md",
+      "type": "recall",
+      "topic": "synchronization-primitives",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread/barrier",
+      "concepts": [
+        "C9"
+      ]
+    },
+    "M3-C3": {
+      "lesson": "lesson-03-synchronization-primitives.md",
+      "type": "completion",
+      "topic": "synchronization-primitives",
+      "objective": 4,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m3-c3.check.sh)",
+        "reject": "regex(/atomic</i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/atomic/atomic_ref",
+      "concepts": [
+        "C10"
+      ]
+    },
+    "M3-P4": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "pretest",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/coroutines",
+      "concepts": []
+    },
+    "M3-P5": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "pretest",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/dcl.fct.def.coroutine",
+      "concepts": []
+    },
+    "M3-C5": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "completion",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m3-c5.check.sh)",
+        "reject": "regex(/co_await|future/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/coroutine/generator",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M3-G9": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "gotcha",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/stmt.return.coroutine",
+      "concepts": [
+        "C11"
+      ]
+    },
+    "M3-C4": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "completion",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m3-c4.check.sh)",
+        "reject": "regex(/virtual|inheritance/i)"
+      },
+      "source": "https://en.cppreference.com/w/cpp/language/coroutines",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M3-Q7": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "recall",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/coroutine/generator",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M3-G8": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "gotcha",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/coroutine/coroutine_handle",
+      "concepts": [
+        "C12"
+      ]
+    },
+    "M3-J4": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "apply",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/dcl.fct.def.coroutine",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M3-Q8": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "apply",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/dcl.fct.def.coroutine",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M3-G7": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "gotcha",
+      "topic": "coroutines",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/dcl.fct.def.coroutine",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M3-INT1": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "synthesize",
+      "topic": "concurrency-architecture",
+      "objective": 5,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://en.cppreference.com/w/cpp/thread",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M3-INT2": {
+      "lesson": "lesson-04-coroutines.md",
+      "type": "synthesize",
+      "topic": "concurrency-debugging",
+      "objective": 2,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/atomics.order",
+      "concepts": [
+        "C13"
+      ]
+    },
+    "M3-Q9": {
+      "lesson": "lesson-02-atomics-memory-model.md",
+      "type": "recall",
+      "topic": "publication",
+      "objective": 2,
+      "minutes": 2,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "https://eel.is/c++draft/atomics.order",
+      "concepts": [
+        "C4"
+      ]
+    },
+    "M3-LPA1": {
+      "lesson": "lesson-05-lpa-handoff-tail.md",
+      "type": "pretest",
+      "topic": "synchronization",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": true,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "lab/handoff_tail.cpp output, 7 runs (ingest/lpa/evidence/m3-handoff-tail-*.txt)",
+      "concepts": []
+    },
+    "M3-LPA2": {
+      "lesson": "lesson-05-lpa-handoff-tail.md",
+      "type": "recall",
+      "topic": "synchronization",
+      "objective": 6,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C14 of this lesson",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M3-LPA3": {
+      "lesson": "lesson-05-lpa-handoff-tail.md",
+      "type": "apply",
+      "topic": "synchronization",
+      "objective": 6,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m3-lpa3.check.sh)"
+      },
+      "source": "https://eel.is/c++draft/atomics.order; checks/m3-lpa3.check.sh (ThreadSanitizer)",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M3-LPA4": {
+      "lesson": "lesson-05-lpa-handoff-tail.md",
+      "type": "gotcha",
+      "topic": "synchronization",
+      "objective": 6,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C14 of this lesson (E-core row)",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M3-LPA5": {
+      "lesson": "lesson-05-lpa-handoff-tail.md",
+      "type": "recall",
+      "topic": "synchronization",
+      "objective": 6,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Concept C14 of this lesson",
+      "concepts": [
+        "C14"
+      ]
+    },
+    "M3-LPA6": {
+      "lesson": "lesson-05-lpa-handoff-tail.md",
+      "type": "completion",
+      "topic": "synchronization",
+      "objective": 6,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "check",
+        "accept": "check(checks/m3-lpa6.check.sh)"
+      },
+      "source": "https://eel.is/c++draft/atomics.order; checks/m3-lpa6.check.sh (ThreadSanitizer)",
+      "concepts": [
+        "C14"
+      ]
+    }
+  },
+  "concepts": {
+    "lesson-01-threads-async.md#C1": {
+      "source": "https://en.cppreference.com/w/cpp/thread/jthread"
+    },
+    "lesson-01-threads-async.md#C2": {
+      "source": "https://eel.is/c++draft/futures.async"
+    },
+    "lesson-02-atomics-memory-model.md#C3": {
+      "source": "https://eel.is/c++draft/intro.races"
+    },
+    "lesson-02-atomics-memory-model.md#C4": {
+      "source": "https://eel.is/c++draft/atomics.order"
+    },
+    "lesson-02-atomics-memory-model.md#C5": {
+      "source": "https://en.cppreference.com/w/cpp/atomic/memory_order"
+    },
+    "lesson-02-atomics-memory-model.md#C6": {
+      "source": "https://eel.is/c++draft/atomics.types.operations"
+    },
+    "lesson-03-synchronization-primitives.md#C7": {
+      "source": "https://en.cppreference.com/w/cpp/atomic/atomic_flag"
+    },
+    "lesson-03-synchronization-primitives.md#C8": {
+      "source": "https://en.cppreference.com/w/cpp/thread/hardware_destructive_interference_size"
+    },
+    "lesson-03-synchronization-primitives.md#C9": {
+      "source": "https://en.cppreference.com/w/cpp/thread/latch"
+    },
+    "lesson-03-synchronization-primitives.md#C10": {
+      "source": "https://en.cppreference.com/w/cpp/atomic/atomic_ref"
+    },
+    "lesson-04-coroutines.md#C11": {
+      "source": "https://en.cppreference.com/w/cpp/language/coroutines"
+    },
+    "lesson-04-coroutines.md#C12": {
+      "source": "https://eel.is/c++draft/expr.await"
+    },
+    "lesson-04-coroutines.md#C13": {
+      "source": "https://en.cppreference.com/w/cpp/language/coroutines"
+    },
+    "lesson-05-lpa-handoff-tail.md#C14": {
+      "source": "lab/handoff_tail.cpp runs, 7 (ingest/lpa/evidence/m3-handoff-*.txt); https://eel.is/c++draft/atomics.order"
+    }
+  }
+}

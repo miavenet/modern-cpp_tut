@@ -1,0 +1,2782 @@
+[
+  {
+    "where": "M2/L1",
+    "claim": "C++11 constexpr body is essentially one return; a loop is rejected under -std=c++11 (\"statement not allowed in constexpr function\"), accepted under -std=c++14",
+    "source_urls": [],
+    "verification": "cppreference constexpr page; Apple clang 21 -std=c++11/14 compile of factorial loop",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "C++20 allows try blocks, virtual calls and new/delete freed within the evaluation in constexpr functions; std::vector/std::string usable inside one (not C++23)",
+    "source_urls": [],
+    "verification": "cppreference constexpr; __cpp_constexpr_dynamic_alloc=201907 and __cpp_lib_constexpr_vector/string=201907 in -std=c++20; static_assert on a constexpr fn using vector+string compiles with -std=c++20, fails with -std=c++17",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "A nonempty constexpr std::vector retaining an allocation fails; an empty constexpr std::vector is permitted: \"pointer to subobject of heap-allocated object is not a constant expression\"",
+    "source_urls": [],
+    "verification": "clang++ -std=c++20 compile",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "std::is_constant_evaluated distinguishes manifestly constant-evaluated contexts from ordinary execution; the constexpr initializer returns true and the ordinary int initializer returns false in the lesson example.",
+    "source_urls": [
+      "https://eel.is/c++draft/meta.const.eval"
+    ],
+    "verification": "Checked [meta.const.eval] and compiled and ran the lesson example with clang++ -std=c++20 -Wall -Wextra: a=0 b=1.",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "`int port = parsePort(\"8080\")` calls parsePort at -O0 (bl __Z9parsePortPKc) and is folded at -O2",
+    "source_urls": [],
+    "verification": "clang++ -S at -O0/-O2, Apple clang 21 arm64",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "constexpr variable from runtime int errors \"constexpr variable 'z' must be initialized by a constant expression\" / \"read of non-const variable 'x'\"",
+    "source_urls": [],
+    "verification": "clang++ -std=c++20 compile",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "consteval call with argc fails: \"call to consteval function 'getTableSize' is not a constant expression\"",
+    "source_urls": [],
+    "verification": "clang++ -std=c++20 compile",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "consteval may receive &global_val (pointer comparison builds); reading *p of a non-const global fails (\"read of non-const variable 'global_val'\"); constexpr global + const int* returns 10",
+    "source_urls": [],
+    "verification": "three clang++ -std=c++20 programs compiled/ran",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "constinit requires a constant initializer (\"variable does not have a constant initializer\"), applies only to static/thread storage (\"local variable cannot be declared 'constinit'\"), variable stays mutable (prints 1001)",
+    "source_urls": [],
+    "verification": "clang++ -std=c++20; cppreference constinit",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L2",
+    "claim": "std::enable_if is C++11; C++98 had none",
+    "source_urls": [],
+    "verification": "cppreference type_traits/enable_if (since C++11); -std=c++11 SFINAE sample compiles",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L2",
+    "claim": "C++98-compatible std::map<Order,int> example fails because Order lacks operator<",
+    "source_urls": [],
+    "verification": "Recompiled current sample with clang++ -std=c++98 -Wall -Wextra in deleted system-temp directory; operator< candidate failure observed.",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L2",
+    "claim": "clang 21 diagnostics: enable_if \"requirement 'std::is_integral<double>::value' was not satisfied\"; concept \"because 'double' does not satisfy 'integral'\"",
+    "source_urls": [],
+    "verification": "compiled both",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L2",
+    "claim": "constrained auto parameter = abbreviated function template (short/long/char print 2/8/1 bytes); `std::integral auto x = 3;` is a constrained variable",
+    "source_urls": [],
+    "verification": "cppreference constraints/function_template; compiled terse.cpp",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L2",
+    "claim": "subsumption: for otherwise-equivalent viable function-template overloads, constrained can beat unconstrained; more constrained wins only if it subsumes; else ambiguous; atomic constraints identical only if same source expression",
+    "source_urls": [],
+    "verification": "cppreference constraints (quoted); Message/MarketDataMessage prints generic/market-data; copied requirement -> \"call to 'process' is ambiguous\"",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L2",
+    "claim": "G5 diagnostic \"constraint expressions cannot be considered equivalent unless they originate from the same concept\"; fix B = A<T> && ... prints B then A for 8.0",
+    "source_urls": [],
+    "verification": "clang++ -std=c++20",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L2",
+    "claim": "Addable concept accepts std::string; add returns BUYSELL",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "_t aliases are C++14, _v variable templates are C++17",
+    "source_urls": [],
+    "verification": "__cpp_lib_transformation_trait_aliases (c++14) and __cpp_lib_type_trait_variable_templates (c++17 only); is_integral_v fails under -std=c++14",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "decay_t removes reference, array->pointer, function->pointer, otherwise drops top-level cv",
+    "source_urls": [],
+    "verification": "static_asserts compiled with -std=c++17; cppreference decay",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "plain if in a template instantiates both branches (\"no member named 'customSerialize' in 'Quote'\"); if constexpr parses both and discards one branch during template instantiation; outside a template discarded branches must be well formed",
+    "source_urls": [],
+    "verification": "compiled ser.cpp/serfix.cpp/nt.cpp",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "getValue(&value) returns int 5; getValue(42) const char*; with plain if: \"'auto' in return type deduced as 'const char *' here but deduced as 'int'\"",
+    "source_urls": [],
+    "verification": "compiled g8 and variant",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "missing typename: an ordinary dependent local-variable declaration requires typename; C++20 permits omission in type-only contexts including a block-scope using alias",
+    "source_urls": [],
+    "verification": "compiled tn.cpp/tn2.cpp at -std=c++11/17/20; P0634",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "right fold (a - ...) of 10,3,2 = 9; left fold = 5; empty unary + fold error \"unary fold expression has empty expansion for operator '+' with no fallback value\"; && -> true, || -> false, comma -> void",
+    "source_urls": [],
+    "verification": "compiled and ran fold samples with -std=c++17",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "INT2: consteval checked_tick(0) in a constexpr variable fails the build; concept rejects Bad (\"does not satisfy 'OrderMessage'\"); compile-time checks do not validate run-time message values",
+    "source_urls": [],
+    "verification": "compiled int2.cpp variants",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "C++03 was a minor revision (\"little more than a technical corrigendum\"); C++26 final draft n5050 dated 2026-06-01",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/language/history"
+    ],
+    "verification": "https://en.cppreference.com/w/cpp/language/history (read this session)",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "Feature years in primer timeline: rvalue refs/lambdas C++11; make_unique, generic lambdas C++14; if constexpr, fold expressions C++17; concepts, consteval C++20; std::expected C++23",
+    "source_urls": [],
+    "verification": "feature-test macros printed by Apple clang 21 under -std=c++11/14/17/20/23 (__cpp_rvalue_references, __cpp_lambdas, __cpp_lib_make_unique, __cpp_generic_lambdas, __cpp_if_constexpr, __cpp_fold_expressions, __cpp_concepts, __cpp_consteval, __cpp_lib_expected); std::thread compiled with -std=c++11",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "C++98 needs '> >' for nested template closers",
+    "source_urls": [],
+    "verification": "clang++ -std=c++98 error \"a space is required between consecutive right angle brackets\"",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "vector::swap hand-over compiles as C++98 and leaves the source empty",
+    "source_urls": [],
+    "verification": "clang++ -std=c++98 -pedantic, ran: result=10000 source=0",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "Buffer demo prints copy / move / b=1000 c=1000 a=0 (moved-from vector empty on libc++)",
+    "source_urls": [],
+    "verification": "compiled and ran, -std=c++20 -Wall -Wextra",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "std::move of a const object selects the copy constructor",
+    "source_urls": [],
+    "verification": "compiled and ran: prints \"copy\", source keeps 10 elements",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "vector growth moves a noexcept-move type and copies a type whose move may throw; a move-only type is still moved",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/container/vector/push_back"
+    ],
+    "verification": "ran demo: \"A move\" / \"B copy\"; https://en.cppreference.com/w/cpp/container/vector/push_back exception-safety paragraph",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "Moved-from standard-library objects are valid but unspecified",
+    "source_urls": [
+      "https://eel.is/c++draft/lib.types.movedfrom"
+    ],
+    "verification": "https://eel.is/c++draft/lib.types.movedfrom",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "f(std::move(v)) empties v only if f moves from it: by-value parameter -> a.size()=0 (libc++), && parameter not moved -> b.size()=3",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "NRVO is optional and permitted since C++98; prvalue return elision guaranteed since C++17; parameters not eligible for NRVO",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/language/copy_elision"
+    ],
+    "verification": "https://en.cppreference.com/w/cpp/language/copy_elision; __cpp_guaranteed_copy_elision=201606 under -std=c++17",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "Implicit move of a by-value parameter on return works in C++11",
+    "source_urls": [],
+    "verification": "unique_ptr pass(unique_ptr p){return p;} compiled and ran with -std=c++11",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "return std::move(local) prevents elision; clang -Wpessimizing-move text; plain return elided (no output), wrapped prints \"move\"; with -std=c++11 -fno-elide-constructors plain prints move twice",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "std::make_unique is C++14; C++11 build fails \"no member named 'make_unique' in namespace 'std'\"",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/memory/unique_ptr/make_unique"
+    ],
+    "verification": "https://en.cppreference.com/w/cpp/memory/unique_ptr/make_unique; clang++ -std=c++11 error; __cpp_lib_make_unique=201304 under -std=c++14",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "Dereferencing a null moved-from unique_ptr is undefined behavior; no particular crash or diagnostic is guaranteed",
+    "source_urls": [],
+    "verification": "https://eel.is/c++draft/defns.undefined; source code compiles; runtime outcome intentionally not claimed.",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "moved-from unique_ptr is null; demo output order executing / ~Order / order is null; sizeof(unique_ptr<Order>)==sizeof(Order*)==8 on arm64",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "shared_ptr use counts 1,3,1,1, ~Feed on reset, weak_ptr expired, lock() empty; sizeof(shared_ptr)=16",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "make_shared typically one allocation (recommended, not required); shared_ptr(new T) at least two; observed 1 vs 2 operator new calls, make_unique 1",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/memory/shared_ptr/make_shared"
+    ],
+    "verification": "https://en.cppreference.com/w/cpp/memory/shared_ptr/make_shared Notes; counting operator new, -O0 and -O2",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "shared_ptr count typically updated with atomic fetch_add; typical shared_ptr holds two pointers",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/memory/shared_ptr"
+    ],
+    "verification": "https://en.cppreference.com/w/cpp/memory/shared_ptr implementation notes",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "shared_ptr cycle: no destructor runs; weak_ptr back pointer: both run",
+    "source_urls": [],
+    "verification": "compiled and ran l2_cycle",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "auto deductions int/double/const char*/int (from const int&)/const int& (auto&)/const std::vector<int>&",
+    "source_urls": [],
+    "verification": "static_asserts compiled -std=c++20",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "range-for plain auto copies ordinary elements and changes to that copy are lost; vector<bool> proxy elements are an exception; auto& changes original",
+    "source_urls": [],
+    "verification": "compiled and ran (copy x2, 0.0 then 1.5)",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "auto& over a const container + non-const member call is a compile error",
+    "source_urls": [],
+    "verification": "clang error \"'this' argument to member function ... has type 'const BookEntry'\"",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "auto& cannot bind vector<bool> elements; auto&& can",
+    "source_urls": [],
+    "verification": "compiled both forms",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "Order order(); declares a function; clang -Wvexing-parse text",
+    "source_urls": [],
+    "verification": "compiled",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "lambda demo risky=2 biggest qty=300; remove_if with >= keeps the 50 order; std::erase_if is C++20 (__cpp_lib_erase_if=202002)",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "[s = std::move(symbol)] on const std::string& copies; on by-value param moves",
+    "source_urls": [],
+    "verification": "compiled and ran (caller string unchanged vs empty)",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "[=] implicit this capture deprecated in C++20 (clang -Wdeprecated-this-capture); init-capture C++14; [*this] C++17; [=, this] C++20",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/language/lambda"
+    ],
+    "verification": "https://en.cppreference.com/w/cpp/language/lambda; __cpp_init_captures=201304 (c++14), __cpp_capture_star_this=201603 (c++17); clang warning observed",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "[o = std::move(order)] with body using order fails: \"variable 'order' cannot be implicitly captured\"",
+    "source_urls": [],
+    "verification": "compiled",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "std::function: small lambda 0 allocations, 64-byte capture 1 allocation, template 0 (libc++)",
+    "source_urls": [],
+    "verification": "Current sample compiled and ran with clang++ -std=c++20 -Wall -Wextra at -O0 and -O2 in deleted system-temp scratch; outputs 0, 0, 1 scalar allocation calls.",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L4",
+    "claim": "C++98 duplicate enumerator: \"redefinition of enumerator 'BUY'\"; enum class to int and",
+    "source_urls": [],
+    "verification": "errors as quoted; enum struct valid; sizeof 1 with uint8_t; underlying_type_t C++14 | compiled (-std=c++98 and c++20); __cpp_lib_transformation_trait_aliases=201304 under c++14",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M1/L4",
+    "claim": "chrono: s->ms implicit, us->ms and bare int rejected, duration_cast truncates 1500us to 1ms; chrono literals need C++14",
+    "source_urls": [],
+    "verification": "compiled and ran; -std=c++11 build of literals fails; __cpp_lib_chrono_udls=201304",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M1/L4",
+    "claim": "high_resolution_clock aliases steady_clock on this libc++ toolchain; other implementations may choose differently",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/chrono/high_resolution_clock"
+    ],
+    "verification": "Current toolchain checked; portable rule from https://en.cppreference.com/cpp/chrono/high_resolution_clock.",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M1/L4",
+    "claim": "C array parameter is int*: sizeof 8 inside, 40 outside, std::array 40 and size()=10; clang -Wsizeof-array-argument text; std::array::at throws out_of_range",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M1/L4",
+    "claim": "vector<int>{5,1} size 2, (5,1) size 5; int{101.5} narrowing error text",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M1/L4",
+    "claim": "thread_local demo total=4000000, main's copy 0; on this macOS arm64 toolchain -O2 worker performs one TLV lookup through blr then collapses the source increment loop to one addition",
+    "source_urls": [],
+    "verification": "compiled and ran; clang++ -O2 -S output",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M1/L2",
+    "claim": "clang-tidy has a bugprone-use-after-move check",
+    "source_urls": [
+      "https://clang.llvm.org/extra/clang-tidy/checks/bugprone/use-after-move.html"
+    ],
+    "verification": "https://clang.llvm.org/extra/clang-tidy/checks/bugprone/use-after-move.html (read this session; clang-tidy not installed here, not run)",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M5/L1",
+    "claim": "with null_memory_resource() upstream, bad_alloc after 128 ints; reserve(250) fits",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1",
+    "claim": "deallocate is a no-op; memory released on destruction or release(); next buffer sizes grow geometrically",
+    "source_urls": [],
+    "verification": "cppreference.com/w/cpp/memory/monotonic_buffer_resource",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1",
+    "claim": "the arena aligns each request itself (misaligned buffer still returned an 8-aligned block)",
+    "source_urls": [],
+    "verification": "compiled and ran",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1",
+    "claim": "memory_resource::allocate calls virtual do_allocate",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/mem.res.public; libc++ __memory_resource/memory_resource.h",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1",
+    "claim": "before C++11 stateful allocator use in the library was implementation-defined",
+    "source_urls": [],
+    "verification": "cppreference.com/w/cpp/named_req/Allocator",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1",
+    "claim": "pmr::vector<T> is vector<T, polymorphic_allocator<T>>; a moved pmr::vector keeps the resource",
+    "source_urls": [],
+    "verification": "static_assert + run",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1",
+    "claim": "reinterpret_cast from byte storage needs std::launder (C++17); C++17 [basic.life]/8.3 const/reference-member restriction removed in C++20",
+    "source_urls": [],
+    "verification": "cppreference launder example case 2; eel.is/c++draft/basic.life; timsong-cpp n4659 basic.life; sample prints 2,2,2",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L2",
+    "claim": "vector<bool>(1) capacity 64 on libc++; &v[0] not convertible to bool*; reference is a proxy",
+    "source_urls": [],
+    "verification": "compiled and ran; cppreference vector_bool",
+    "lesson": "M5/L2"
+  },
+  {
+    "where": "M5/L2",
+    "claim": "y[0]=true can race with y[1]=true for vector<bool>",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/container.requirements.dataraces",
+    "lesson": "M5/L2"
+  },
+  {
+    "where": "M5/L3",
+    "claim": "consteval hash(\"AAPL\") = 2001436 stored as .quad in data, no function emitted (-O0 -S); square(argc) with 2 args = 9",
+    "source_urls": [],
+    "verification": "compiled, ran, -S",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L3",
+    "claim": "constexpr variable from non-const val: error text; consteval with argc: error text",
+    "source_urls": [],
+    "verification": "compiled (diagnostics quoted)",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L3",
+    "claim": "__has_cpp_attribute(likely) = 201803; likelihood attributes described only in a note",
+    "source_urls": [],
+    "verification": "ran; eel.is/c++draft/dcl.attr.likelihood",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L3",
+    "claim": "exception leaving noexcept -> std::terminate, unwinding implementation-defined; libc++abi message and exit 134; -Wexceptions warning",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/except.terminate; ran",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L3",
+    "claim": "dynamic exception specifications deprecated in C++11",
+    "source_urls": [],
+    "verification": "cppreference.com/w/cpp/language/except_spec",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L4",
+    "claim": "std::execution::par needs -fexperimental-library on Apple clang/libc++ (error text without it); libc++ configured with _LIBCPP_PSTL_BACKEND_LIBDISPATCH; ld warning may appear",
+    "source_urls": [],
+    "verification": "compiled both ways; __config_site",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L4",
+    "claim": "seq/par/par_unseq C++17, unseq C++20; par permits other threads; bad_alloc if temporary memory unavailable",
+    "source_urls": [],
+    "verification": "cppreference execution_policy_tag_t; eel.is/c++draft/algorithms.parallel.exceptions",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L4",
+    "claim": "chrono_literals and string_literals are C++14; std::chrono also exposes chrono literals; -std=c++11 error text; sleepFor(50) does not compile",
+    "source_urls": [],
+    "verification": "cppreference chrono_literals; compiled",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L4",
+    "claim": "1'000'000'000'000 into int: warning text, value -727379968; braces give narrowing error; digit separators C++14; conversion modulo 2^N",
+    "source_urls": [],
+    "verification": "compiled/ran; eel.is/c++draft/conv.integral",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L4",
+    "claim": "source_location::current() as a default argument reports the invocation using that default; explicitly passing current() also captures the caller",
+    "source_urls": [
+      "https://timsong-cpp.github.io/cppwp/n4861/support.srcloc.cons"
+    ],
+    "verification": "Read N4861 [support.srcloc.cons] paragraphs 1-2; ran the complete lesson logger under clang++ C++20.",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L5",
+    "claim": "pmr::list<Order> requests 40 bytes, alignment 8 on libc++; sizeof(Order)=24",
+    "source_urls": [],
+    "verification": "lab program output",
+    "lesson": "M5/L5"
+  },
+  {
+    "where": "M6/L1",
+    "claim": "head_ release store + acquire load make slot write happen-before slot read; starter with both relaxed passes value tests but TSan reports a data race at spsc_ring.hpp:43 and exits 134",
+    "source_urls": [],
+    "verification": "compiled lab/spsc/{starter,solution} with clang++ -std=c++20 -O1 -g -fsanitize=thread, ran 5x; checks/spsc_lab.check.sh MISS/HIT",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1",
+    "claim": "atomic<uint64_t>::is_always_lock_free is true; hardware_destructive_interference_size=256, sysctl hw.cachelinesize=128 on test Mac",
+    "source_urls": [],
+    "verification": "compiled probe program; sysctl",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1",
+    "claim": "c%1024 -> and; c%1000 -> umulh/msub; c%n -> udiv+msub (Apple clang 21 -O2 arm64)",
+    "source_urls": [],
+    "verification": "clang++ -O2 -S",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1",
+    "claim": "seq_cst store: stlr (arm64) vs xchg (x86-64); release store stlr/mov; acquire load ldapr/mov; seq_cst load ldar/mov",
+    "source_urls": [],
+    "verification": "clang++ -O2 -S, native and --target=x86_64-apple-macos13",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1",
+    "claim": "Vyukov-style bounded MPMC is \"not lock-free in the official meaning\"",
+    "source_urls": [],
+    "verification": "libcds.sourceforge.net VyukovMPMCCycleQueue doc; lab/mpmc test 4x4 threads PASS under TSan",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L2",
+    "claim": "64 MiB first touch = 4096 minor faults (16 KiB pages), second touch 0",
+    "source_urls": [],
+    "verification": "lab/hotpath/first_touch.cpp run; pagesize=16384",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L2",
+    "claim": "mlockall on macOS returns -1 \"Function not implemented\"; mlock on 1 MiB returns 0; cpu_set_t/pthread_setaffinity_np absent",
+    "source_urls": [],
+    "verification": "compiled and ran probes",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L2",
+    "claim": "throw -> __cxa_allocate_exception + __cxa_throw; virtual call -> ldr from object + br",
+    "source_urls": [],
+    "verification": "clang++ -O2 -S",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L2",
+    "claim": "pre-encoded message bytes printed as shown; hot/cold log prints 3 lines, clean under TSan",
+    "source_urls": [],
+    "verification": "ran lab/hotpath/*.cpp",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L2",
+    "claim": "THP defrag \"will stall on allocation failure and directly reclaim pages and compact memory\"; khugepaged; madvise mode",
+    "source_urls": [],
+    "verification": "kernel.org admin-guide/mm/transhuge.html",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "closed-loop n=9000 p99.9=0.5ms vs open-loop p99=950.5 p99.9=995.5",
+    "source_urls": [],
+    "verification": "ran lab/measure/coordinated_omission.cpp",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "RDTSC \"is not a serializing instruction\"; LFENCE before/after",
+    "source_urls": [],
+    "verification": "felixcloutier.com/x86/rdtsc",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "Linux reads cntvct_el0 after isb",
+    "source_urls": [],
+    "verification": "Linux arch/arm64/include/asm/arch_timer.h (master, fetched)",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "cntfrq_el0 = 24000000 on test Mac; ticks agree with steady_clock",
+    "source_urls": [],
+    "verification": "ran lab/measure/ticks.cpp; x86 branch -fsyntax-only only",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "SOF_TIMESTAMPING_RX_HARDWARE \"generated by the network adapter\"; RX_SOFTWARE after driver hands to kernel",
+    "source_urls": [],
+    "verification": "kernel.org networking/timestamping.html",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "DPDK PMDs \"designed to work without asynchronous, interrupt-based signaling\"",
+    "source_urls": [],
+    "verification": "doc.dpdk.org overview",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "AF_XDP tries zero-copy then falls back to copy; io_uring \"Linux-specific API for asynchronous I/O\"",
+    "source_urls": [],
+    "verification": "kernel.org af_xdp.html; man7 io_uring(7)",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "[[likely]] \"intended to allow implementations to optimize\"; excessive use \"liable to result in performance degradation\"; __has_cpp_attribute(likely)=201803",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/dcl.attr.likelihood; clang -E",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3",
+    "claim": "[[unlikely]] flips layout (cbz -> cbnz, common path falls through); PGO profile alone produces same flip",
+    "source_urls": [],
+    "verification": "lab/measure/branch_hint.cpp and pgo.cpp commands run",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L4",
+    "claim": "__builtin_prefetch rw 0/1/2 (GCC), locality 0..3 default 3, compile-time constants, address expression must be valid",
+    "source_urls": [],
+    "verification": "gcc.gnu.org Other-Builtins.html",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M6/L4",
+    "claim": "Clang 21 rejects rw=2 (\"outside the valid range [0, 1]\") and non-constant locality",
+    "source_urls": [],
+    "verification": "compiled probes",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M6/L4",
+    "claim": "prfm pldl1strm/pldl1keep/pldl3keep/pstl1strm; x86 prefetchnta/t0/t2/nta",
+    "source_urls": [],
+    "verification": "clang++ -O2 -S both targets",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M6/L4",
+    "claim": "gather ~4.1 ns no prefetch, slower at short distances, never faster; sequential 0.49 vs 0.57 ns; pointer chase 112-138 ns",
+    "source_urls": [],
+    "verification": "ran lab/prefetch/gather.cpp 4 times (busy machine)",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M7/L1",
+    "claim": "Apple clang 21 needs -fcxx-modules (driver passes -fno-cxx-modules); two-step --precompile + -fmodule-file build works; macro not visible; helper not exported error",
+    "source_urls": [],
+    "verification": "ran lab/modules commands; clang++ -###",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L1",
+    "claim": "comment-only edit changed .pcm bytes (same size)",
+    "source_urls": [],
+    "verification": "cmp of two precompiles",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L1",
+    "claim": "reachable vs visible: auto v=best_prices() OK; std::vector<int> w error \"'vector' must be declared before it is used\"",
+    "source_urls": [],
+    "verification": "lab/modules/use_ok.cpp, use_bad.cpp",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L1",
+    "claim": "implementation unit `module price;` builds and links",
+    "source_urls": [],
+    "verification": "scratch test",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L1",
+    "claim": "CMake 4.3.3 + AppleClang + Ninja: generation fails, no import-graph discovery; manual lists MSVC 14.34+, Clang 16+, GCC 14+, Ninja/VS generators",
+    "source_urls": [],
+    "verification": "cmake run; cmake --help-manual cmake-cxxmodules",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L1",
+    "claim": "BMI = \"the precompiled result of an importable module unit\", .pcm",
+    "source_urls": [],
+    "verification": "clang.llvm.org/docs/StandardCPlusPlusModules.html",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L2",
+    "claim": "ASan heap-use-after-free report; plain build printed 0.000000 exit 0; TSan race report race.cpp:11; UBSan overflow message",
+    "source_urls": [],
+    "verification": "ran lab/sanitizers/*.cpp",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L2",
+    "claim": "-fsanitize=memory unsupported on arm64-apple-darwin; detect_leaks not supported; ASan clean on uninitialised read; address+thread rejected; address+undefined OK",
+    "source_urls": [],
+    "verification": "compiled/ran probes",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L2",
+    "claim": "MSan supported on Linux, NetBSD, FreeBSD; needs all code instrumented",
+    "source_urls": [],
+    "verification": "clang.llvm.org/docs/MemorySanitizer.html",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L2",
+    "claim": "ASan ~2x, TSan 5x-15x slowdown 5x-10x memory; \"-fno-omit-frame-pointer\" for nicer stack traces",
+    "source_urls": [],
+    "verification": "clang AddressSanitizer.html, ThreadSanitizer.html",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L2",
+    "claim": "-O2 keeps x29 frame pointer on arm64 macOS; omits on x86_64-unknown-linux-gnu target",
+    "source_urls": [],
+    "verification": "clang++ -O2 -S",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "setup.sh --benchmark installs include/ and lib/libbenchmark.a in ~11 s; exact compile command works; BM_AddConstant 0.375 ns, BM_AddOpaque 0.374 ns, loop asm as quoted",
+    "source_urls": [],
+    "verification": "ran setup.sh in a scratch copy of the tutorial; built and ran bench_add.cpp; -S",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "DoNotOptimize \"does not prevent optimizations on <expr>\"; ClobberMemory forces pending writes; warm-up default 0 s",
+    "source_urls": [],
+    "verification": "google/benchmark v1.9.5 docs/user_guide.md",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "mini_bench prints min/median/max 0.374 ns",
+    "source_urls": [],
+    "verification": "ran lab/bench/mini_bench.cpp",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "flat_map defaults vector<Key>/vector<T> (libc++ header), keys sorted, single insert/erase linear; libc++ map uses __tree",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/flat.map.overview; libc++ headers",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "deducing this: Self=Derived& / Base&; fixed(this Base&) binds Derived",
+    "source_urls": [],
+    "verification": "ran lab/cpp23/deducing_this.cpp (-std=c++23)",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "expected sample prints 10125 / no",
+    "source_urls": [],
+    "verification": "ran lab/cpp23/expected.cpp",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "contracts: pre/post grammar, contract_assert statement, four semantics ignore/observe/enforce/quick-enforce, which one is implementation-defined; Apple clang 21 -std=c++2c rejects pre(), no __cpp_contracts",
+    "source_urls": [],
+    "verification": "eel.is basic.contract.eval, stmt.contract.assert, dcl.contract.func; P2900R14 title page; compiled probe",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3",
+    "claim": "Python dict iterates in insertion order, list keys unhashable; bisect on sorted keys",
+    "source_urls": [],
+    "verification": "ran python3",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L4",
+    "claim": "include_directories after add_executable still applies; CMAKE_CXX_FLAGS end-of-directory value applies in that dir, subdir gets value at add_subdirectory",
+    "source_urls": [],
+    "verification": "cmake 4.3.3 experiments with --verbose",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M7/L4",
+    "claim": "PRIVATE/PUBLIC/INTERFACE populate INCLUDE_DIRECTORIES / INTERFACE_INCLUDE_DIRECTORIES",
+    "source_urls": [],
+    "verification": "cmake --help-command target_include_directories",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M7/L4",
+    "claim": "starter fails 'book.h' file not found; PUBLIC fix builds after rerunning cmake --build only; prints best bid: 101; -std=gnu++20 propagated; CXX_EXTENSIONS ON by default",
+    "source_urls": [],
+    "verification": "ran lab commands; cmake --help-property CXX_EXTENSIONS",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M7/L4",
+    "claim": "genex \"evaluated during build system generation\"; -DCMAKE_BUILD_TYPE=Asan gives -fsanitize in compile+link (otool shows asan dylib); --config Asan ignored single-config; Ninja Multi-Config needs CMAKE_CONFIGURATION_TYPES",
+    "source_urls": [],
+    "verification": "cmake --help-manual cmake-generator-expressions; builds",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M7/L4",
+    "claim": "Release defaults add -O3 -DNDEBUG",
+    "source_urls": [],
+    "verification": "cmake --build --verbose",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M7/L4",
+    "claim": "cmake_minimum_required(VERSION 2.8): \"Compatibility with CMake < 3.5 has been removed\"; CMAKE_POLICY_VERSION_MINIMUM=3.5 configures",
+    "source_urls": [],
+    "verification": "cmake 4.3.3 run",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M3/L1",
+    "claim": "Destroying a joinable std::thread calls std::terminate; this toolchain prints \"libc++abi: terminating\" and aborts",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/thread.thread.destr; ran lab/terminate.cpp (exit 134)",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M3/L1",
+    "claim": "std::jthread (C++20) requests stop then joins in its destructor; __cpp_lib_jthread=201911 with -std=c++20",
+    "source_urls": [],
+    "verification": "cppreference jthread; feature-test probe; lab/jthread_stop.cpp under TSan, no report",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M3/L1",
+    "claim": "launch::async runs \"as if in a new thread\"; deferred runs on the thread that first waits; with no policy the implementation may choose",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/futures.async",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M3/L1",
+    "claim": "A discarded std::async future blocks at the end of the statement; libc++ marks std::async [[nodiscard]] (clang warning text quoted)",
+    "source_urls": [],
+    "verification": "ran lab/async_block.cpp (\"at least 200 ms\" / \"less than 200 ms\") and its -Wall output",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M3/L2",
+    "claim": "Data race definition (conflict, potentially concurrent, at least one non-atomic, no happens-before) and UB",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/intro.races p2, p17",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2",
+    "claim": "release store synchronizes with an acquire load that takes its value from it (or its release sequence); relaxed: \"no operation orders memory\"; seq_cst single total order",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/atomics.order p1.1, p2, p4",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2",
+    "claim": "x86 keeps stores in order with other stores; AArch64 may make independent stores visible out of order",
+    "source_urls": [],
+    "verification": "Intel SDM Vol. 3A memory-ordering section; Arm ARM memory model (not run: no x86 hardware here)",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2",
+    "claim": "clang -O2 codegen: arm64 str/stlr/stlr, ldr/ldapr/ldar; x86-64 mov/mov/xchg, mov/mov/mov for relaxed/release(acquire)/seq_cst store/load",
+    "source_urls": [],
+    "verification": "clang++ -O2 -S, -target arm64-apple-macos and x86_64-apple-macos (x86 not executed)",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2",
+    "claim": "compare_exchange_weak may fail spuriously; standard names no cause; note cites LL/SC machines; on failure expected receives the current value",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/atomics.types.operations p23, p27 and Note 5",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2",
+    "claim": "ARMv8.0 (-mcpu=generic -march=armv8-a): weak = one ldaxr/stlxr try, strong adds a cbnz retry; default Apple CPU: both casal",
+    "source_urls": [],
+    "verification": "clang++ -O2 -S",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2",
+    "claim": "update_max CAS loop is race-free",
+    "source_urls": [],
+    "verification": "built with -fsanitize=thread, ran (max = 899)",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L3",
+    "claim": "_mm_pause / <immintrin.h> fails on arm64 with \"This header is only meant to be used on x86 and x64 architecture\"; __builtin_arm_yield emits YIELD",
+    "source_urls": [],
+    "verification": "compiled; -S output grep yield (arm64) and pause (x86 target)",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L3",
+    "claim": "atomic_flag default-constructs clear and has test() since C++20",
+    "source_urls": [],
+    "verification": "cppreference atomic_flag; lab/spinlock.cpp TSan clean, total = 200000",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L3",
+    "claim": "sysctl hw.cachelinesize = 128; std::hardware_destructive_interference_size = 256, constructive = 64 with this toolchain",
+    "source_urls": [],
+    "verification": "ran sysctl and a probe program",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L3",
+    "claim": "latch count_down strongly happens before the unblocked waits",
+    "source_urls": [],
+    "verification": "cppreference latch/count_down; lab/latch_barrier.cpp TSan clean, line order varies",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L3",
+    "claim": "atomic_ref<int>::required_alignment == 4 == alignof(int) here; while an atomic_ref exists all accesses must go through atomic_ref",
+    "source_urls": [],
+    "verification": "static_assert compiled; cppreference atomic_ref",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L3",
+    "claim": "shared_mutex reader lock/unlock writes shared lock state (true sharing); benefit depends on section length",
+    "source_urls": [],
+    "verification": "cppreference shared_mutex (mechanism; no benchmark run, wording says \"measure\")",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L4",
+    "claim": "<generator> missing: \"fatal error: 'generator' file not found\" with -std=c++23 (also with -fexperimental-library); __cpp_lib_generator undefined",
+    "source_urls": [],
+    "verification": "compiled",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M3/L4",
+    "claim": "\"A coroutine shall not enclose a return statement\"; clang: \"return statement not allowed in coroutine; did you mean 'co_return'?\"",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/stmt.return.coroutine; compiled ret.cpp",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M3/L4",
+    "claim": "frame \"may need to allocate\"; promise operator new used if declared; elision allowed when lifetime nested and size known",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/dcl.fct.def.coroutine p9; cppreference coroutines",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M3/L4",
+    "claim": "lab/generator.cpp prints \"frames allocated: 1\" at -O0 and 0 at -O2",
+    "source_urls": [],
+    "verification": "built and ran both",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M3/L4",
+    "claim": "awaiter call sequence output of lab/awaiter.cpp",
+    "source_urls": [],
+    "verification": "built and ran (also ASan/UBSan clean)",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M4/L1",
+    "claim": "sizeof(optional<double>)=16, sizeof(optional<Point{3 doubles}>)=32; value() throws bad_optional_access",
+    "source_urls": [],
+    "verification": "ran lab/optional_demo.cpp",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L1",
+    "claim": "visit with a missing overload fails: \"`std::visit` requires the visitor to be exhaustive\"; C++17 needs the overloaded deduction guide, C++20 does not",
+    "source_urls": [],
+    "verification": "compiled variants of lab/variant_demo.cpp at -std=c++17/20",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L1",
+    "claim": "C++98 tagged union and out-parameter samples compile with -std=c++98",
+    "source_urls": [],
+    "verification": "compiled scratch b98opt.cpp",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L1",
+    "claim": "std::expected needs -std=c++23 here (__cpp_lib_expected 202211); value() on error throws bad_expected_access; ignoring the result gives no warning",
+    "source_urls": [],
+    "verification": "ran lab/expected_demo.cpp; -std=c++20 error quoted",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L2",
+    "claim": "std::sort(a.begin(), b.end()) compiles with -Wall -Wextra and no warning",
+    "source_urls": [],
+    "verification": "compiled",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2",
+    "claim": "lazy_views output (0, 6, 10 predicate calls); filter_view non-const begin caches; const begin only for input-not-forward ranges in current draft",
+    "source_urls": [],
+    "verification": "ran lab/lazy_views.cpp; eel.is/c++draft/range.filter.view",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2",
+    "claim": "const filter_view iteration error text quoted",
+    "source_urls": [],
+    "verification": "compiled const_view.cpp",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2",
+    "claim": "modifying an element so it fails the predicate can be UB",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/range.filter.iterator note",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2",
+    "claim": "lvalue",
+    "source_urls": [],
+    "verification": "filter borrows (ref_view, ASan error when returned); rvalue | filter owns (owning_view, prints 101.5 102.0) | ran lab/dangling.cpp with and without -DSHOW_BUG -fsanitize=address",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2",
+    "claim": "ranges::find on a temporary vector returns ranges::dangling; span is a borrowed range",
+    "source_urls": [],
+    "verification": "static_asserts compiled; error text quoted",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2",
+    "claim": "free begin/end via ADL make a range; reverse on forward_list fails (\"invalid operands to binary expression\")",
+    "source_urls": [],
+    "verification": "compiled adl.cpp, fl.cpp, lab/custom_range.cpp (105 103 101)",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L3",
+    "claim": "by-value structured binding loop copies and loses updates (copies=2, updates=0); auto& keeps them",
+    "source_urls": [],
+    "verification": "ran lab/bindings.cpp",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L3",
+    "claim": "if-init (C++17) and range-for init (C++20) compile",
+    "source_urls": [],
+    "verification": "compiled ifinit.cpp",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L3",
+    "claim": "std::format string checked at compile time (consteval error for {:d} with a string)",
+    "source_urls": [],
+    "verification": "compiled fe.cpp",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L3",
+    "claim": "libc++ SSO capacity 22; 23-char format result allocates once; format_to_n truncation output",
+    "source_urls": [],
+    "verification": "ran lab/alloc.cpp, lab/fmt.cpp",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L3",
+    "claim": "concurrent use of synchronized standard streams is not a data race but may interleave",
+    "source_urls": [],
+    "verification": "eel.is/c++draft/iostream.objects.overview p7",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L3",
+    "claim": "std::osyncstream (__cpp_lib_syncbuf) needs -fexperimental-library here",
+    "source_urls": [],
+    "verification": "probe with and without the flag",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L4",
+    "claim": "const std::string& from a 15-char literal: 0 allocations; 30-char: 1",
+    "source_urls": [],
+    "verification": "ran lab/alloc.cpp",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L4",
+    "claim": "atof on a view \"12\" into \"121275\" returns 121275; from_chars returns 12; floating from_chars works here",
+    "source_urls": [],
+    "verification": "ran lab/atof_bug.cpp; fcd.cpp",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L4",
+    "claim": "clang warnings for returning string_view/span to locals (-Wreturn-stack-address) and string_view from temporary (-Wdangling-gsl)",
+    "source_urls": [],
+    "verification": "compiled sv_bugs.cpp",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L4",
+    "claim": "std::byte + std::byte fails;",
+    "source_urls": [],
+    "verification": "works; sizeof(string_view)=sizeof(span<const byte>)=16 | compiled byte.cpp/byte2.cpp; ran lab/views_sv.cpp",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L4",
+    "claim": "CTAD: vector{v2} -> vector<int>; {v2,v2} -> vector<vector<int>>; (b,e) -> vector<int>; {b,e} -> vector<iterator>; lock_guard and pair deduce",
+    "source_urls": [],
+    "verification": "static_asserts compiled at -std=c++17",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L4",
+    "claim": "libc++ marks vector::empty() nodiscard; reason string shown; (void) silences",
+    "source_urls": [],
+    "verification": "compiled nd.cpp with -Wall",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M6/L1 story",
+    "claim": "LMAX's Disruptor paper motivates single-writer ownership, a preallocated ring and separation of sequence counters; this course's SPSC ring is a smaller design",
+    "source_urls": [
+      "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf"
+    ],
+    "verification": "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf (read design/cost sections); compared with lab/spsc/solution/spsc_ring.hpp.",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1 contrast",
+    "claim": "SPSC requires one caller on each side and can return full; the mutex and MPMC alternatives serve different caller counts and have different waiting/retry costs",
+    "source_urls": [
+      "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf",
+      "https://en.cppreference.com/cpp/thread/mutex"
+    ],
+    "verification": "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf (single-writer and CAS discussion); https://en.cppreference.com/cpp/thread/mutex (mutex contract); inspected lab/spsc and lab/mpmc.",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1 judgement",
+    "claim": "Two producers can read the same head and write the same plain slot; release on head does not assign unique claims",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/atomic/memory_order"
+    ],
+    "verification": "https://en.cppreference.com/cpp/atomic/memory_order (release/acquire and data races); compiled and ran M6-J1 at C++20 with -Wall -Wextra in a temporary directory (one producer only in run).",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L2 contrast",
+    "claim": "Drop/count permits a full-ring attempt to finish; spinning waits for a consumer; blocking may sleep",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/thread/condition_variable"
+    ],
+    "verification": "https://en.cppreference.com/cpp/thread/condition_variable (blocking); inspected lab/hotpath/hot_cold_log.cpp and lab/spsc/solution/spsc_ring.hpp.",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L2 judgement",
+    "claim": "A spin-until-success loop can delay the producer without a bound when the consumer is slow",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/thread/condition_variable"
+    ],
+    "verification": "https://en.cppreference.com/cpp/thread/condition_variable (waiting alternatives); compiled and ran M6-J2 without invoking the spinning function.",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L3 contrast",
+    "claim": "Mean, percentile and maximum retain different information from the same samples; a percentile needs its arrival model and sample count",
+    "source_urls": [],
+    "verification": "Checked the course simulation output logic.",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3 judgement",
+    "claim": "A send-and-wait loop stops offering requests during stalls, so it cannot establish an independent-arrival p99 promise",
+    "source_urls": [],
+    "verification": "Compiled and ran M6-J3 at C++20 with -Wall -Wextra.",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3 poll choice",
+    "claim": "DPDK's polling accesses descriptors without packet interrupts; yield is only a scheduler hint; condition-variable wait blocks",
+    "source_urls": [
+      "https://doc.dpdk.org/guides-18.02/prog_guide/poll_mode_drv.html",
+      "https://en.cppreference.com/cpp/thread/yield",
+      "https://en.cppreference.com/cpp/thread/condition_variable"
+    ],
+    "verification": "https://doc.dpdk.org/guides-18.02/prog_guide/poll_mode_drv.html; https://en.cppreference.com/cpp/thread/yield; https://en.cppreference.com/cpp/thread/condition_variable (opened and checked each).",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L4 story",
+    "claim": "Intel's optimization manual uses a vertex loop to illustrate prefetch overlap and warns that cached data or a poor distance can make the hint useless or slower",
+    "source_urls": [
+      "https://cdrdv2-public.intel.com/671488/248966-Software-Optimization-Manual-V1-048.pdf"
+    ],
+    "verification": "https://cdrdv2-public.intel.com/671488/248966-Software-Optimization-Manual-V1-048.pdf (read section 9.5.4–9.5.6); compared with lab/prefetch/gather.cpp.",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M6/L4 contrast",
+    "claim": "Layout can make future addresses computable; software prefetch adds a hint and work; neither is a guaranteed speedup",
+    "source_urls": [
+      "https://cdrdv2-public.intel.com/671488/248966-Software-Optimization-Manual-V1-048.pdf"
+    ],
+    "verification": "https://cdrdv2-public.intel.com/671488/248966-Software-Optimization-Manual-V1-048.pdf (read prefetch usage checklist); inspected lab/prefetch/gather.cpp.",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M6/L4 judgement",
+    "claim": "Guarded lookahead avoids an out-of-range index position, but table indices and measured benefit still need checking",
+    "source_urls": [
+      "https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html"
+    ],
+    "verification": "https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html (prefetch address expression); compiled and ran M6-J4 at C++20 with -Wall -Wextra (exit 0).",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M7/L1 story",
+    "claim": "Dos Reis and Curtis's 2015 paper states componentization, macro isolation, scalable builds and semantic tools as goals for modules",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0141r0.pdf"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0141r0.pdf (read abstract and introduction).",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L1 contrast",
+    "claim": "Named modules require a BMI and import build order, while headers textually include macros; local tool support must be checked",
+    "source_urls": [
+      "https://clang.llvm.org/docs/StandardCPlusPlusModules.html"
+    ],
+    "verification": "https://clang.llvm.org/docs/StandardCPlusPlusModules.html (read BMI/build guidance); compiled M7-J1 with Apple clang -fcxx-modules in a temporary directory.",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L1 judgement",
+    "claim": "A named module can export add without exporting its SECRET macro, but a project migration depends on the build graph",
+    "source_urls": [
+      "https://clang.llvm.org/docs/StandardCPlusPlusModules.html"
+    ],
+    "verification": "https://clang.llvm.org/docs/StandardCPlusPlusModules.html (macro/build sections); compiled and ran M7-J1 with a precompiled PCM and importer; checked local lab's manual module commands.",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L2 story",
+    "claim": "The AddressSanitizer authors describe poisoned regions and report more than 300 previously unknown Chromium bugs",
+    "source_urls": [
+      "https://research.google.com/pubs/archive/37752.pdf"
+    ],
+    "verification": "https://research.google.com/pubs/archive/37752.pdf (read abstract and implementation summary).",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L2 contrast",
+    "claim": "ASan detects invalid memory accesses, TSan data races, UBSan selected UB, while static analysis reasons about paths during a build",
+    "source_urls": [
+      "https://clang.llvm.org/docs/AddressSanitizer.html",
+      "https://clang.llvm.org/docs/ThreadSanitizer.html",
+      "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html",
+      "https://clang.llvm.org/docs/analyzer/user-docs/CommandLineUsage.html"
+    ],
+    "verification": "https://clang.llvm.org/docs/AddressSanitizer.html; https://clang.llvm.org/docs/ThreadSanitizer.html; https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html; https://clang.llvm.org/docs/analyzer/user-docs/CommandLineUsage.html (opened analyzer docs; sanitizer classes cross-checked against local labs).",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L2 judgement",
+    "claim": "Two threads writing a plain counter race; ASan alone is the wrong checker for that concern",
+    "source_urls": [
+      "https://clang.llvm.org/docs/ThreadSanitizer.html"
+    ],
+    "verification": "https://clang.llvm.org/docs/ThreadSanitizer.html (data-race class); compiled and ran M7-J2 at C++20 with -Wall -Wextra without relying on its undefined runtime result.",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L3 story",
+    "claim": "Google Benchmark's guide shows a constant expression folded and a pure call hoisted despite DoNotOptimize",
+    "source_urls": [
+      "https://github.com/google/benchmark/blob/main/docs/user_guide.md"
+    ],
+    "verification": "https://github.com/google/benchmark/blob/main/docs/user_guide.md (read Preventing Optimization examples).",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3 contrast",
+    "claim": "A microbenchmark can isolate local code but must be checked for optimizer changes; production-like replay covers interacting load",
+    "source_urls": [
+      "https://github.com/google/benchmark/blob/main/docs/user_guide.md"
+    ],
+    "verification": "https://github.com/google/benchmark/blob/main/docs/user_guide.md (optimization guidance).",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3 judgement",
+    "claim": "Fixed add(2,3) with only the final result used may be folded, so a timer alone cannot establish runtime-add cost",
+    "source_urls": [
+      "https://github.com/google/benchmark/blob/main/docs/user_guide.md"
+    ],
+    "verification": "https://github.com/google/benchmark/blob/main/docs/user_guide.md (constant-folding example); compiled and ran M7-J3 at C++20 with -Wall -Wextra.",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L4 contrast",
+    "claim": "CMake target_include_directories PRIVATE/PUBLIC/INTERFACE populate different target and consumer properties",
+    "source_urls": [
+      "https://cmake.org/cmake/help/latest/command/target_include_directories.html"
+    ],
+    "verification": "https://cmake.org/cmake/help/latest/command/target_include_directories.html (read scope definitions); checked lab/cmake starter and solution.",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M7/L4 judgement",
+    "claim": "PRIVATE include does not propagate book.h's directory to matcher; PUBLIC does",
+    "source_urls": [
+      "https://cmake.org/cmake/help/latest/command/target_include_directories.html"
+    ],
+    "verification": "https://cmake.org/cmake/help/latest/command/target_include_directories.html (read property definitions); configured, built and ran lab/cmake/solution in a temporary directory (best bid: 101).",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M3/L1 story",
+    "claim": "WG21 debated blocking async-future destructors; Boehm argued a non-waiting destructor could let a task outlive referenced objects, especially during exception unwinding; not all futures block this way",
+    "source_urls": [
+      "https://open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3679.html"
+    ],
+    "verification": "https://open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3679.html, opened and checked introduction and basic issue.",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M3/L1 contrast and M3-J1",
+    "claim": "launch::async starts work as if on a new thread; get waits for its result, so an immediate get gives no overlap in that call",
+    "source_urls": [
+      "https://eel.is/c++draft/futures.async"
+    ],
+    "verification": "https://eel.is/c++draft/futures.async; compiled and ran M3-J1 with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M3/L2 story",
+    "claim": "Boehm argued a thread library alone cannot control compiler-introduced races, and volatile is not a general fix",
+    "source_urls": [
+      "https://hboehm.info/c%2B%2Bmm/faq.html",
+      "https://research.google/pubs/threads-cannot-be-implemented-as-a-library/"
+    ],
+    "verification": "https://hboehm.info/c%2B%2Bmm/faq.html, opened and checked questions on libraries and volatile; https://research.google/pubs/threads-cannot-be-implemented-as-a-library/, opened via search result.",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2 contrast and M3-J2",
+    "claim": "relaxed flag access supplies no happens-before edge for a plain payload; release/acquire can supply one when the load reads the store",
+    "source_urls": [
+      "https://eel.is/c++draft/atomics.order",
+      "https://eel.is/c++draft/intro.races"
+    ],
+    "verification": "Current M3-J2 uses release/acquire and is data-race-free. Its synchronous output conflicts with the stated no-blocking requirement.",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L3 story",
+    "claim": "Pathfinder reset when a low-priority task holding a semaphore was preempted by medium-priority tasks, blocking a high-priority task; enabling priority inheritance fixed it after system-wide testing",
+    "source_urls": [
+      "https://retis.santannapisa.it/~giorgio/mars/reeves.html"
+    ],
+    "verification": "https://retis.santannapisa.it/~giorgio/mars/reeves.html, opened Glenn Reeves's account and checked failure, diagnosis and correction sections.",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L3 contrast and M3-J3",
+    "claim": "lock_guard releases at scope exit; mutex readers and writers must use the same synchronization for the plain shared value",
+    "source_urls": [
+      "https://eel.is/c++draft/thread.mutex.requirements",
+      "https://eel.is/c++draft/intro.races"
+    ],
+    "verification": "https://eel.is/c++draft/thread.mutex.requirements and https://eel.is/c++draft/intro.races; compiled and ran M3-J3 with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L4 story",
+    "claim": "Gor Nishanov described asynchronous tasks, generators and streams as intended coroutine uses; compiler builds a state machine while libraries give the return type meaning",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0978r0.html"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0978r0.html, opened and checked introduction.",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M3/L4 contrast and M3-J4",
+    "claim": "a coroutine frame may allocate and elision depends on the build/call pattern",
+    "source_urls": [
+      "https://eel.is/c++draft/dcl.fct.def.coroutine"
+    ],
+    "verification": "https://eel.is/c++draft/dcl.fct.def.coroutine; compiled and ran M3-J4 against the module's IntGen with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M4/L1 story",
+    "claim": "expected proposal credits Alexandrescu's 2012 idea, calls expected a supplement to optional when absence needs a reason, and records multiple revisions",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0323r11.html"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0323r11.html, opened and checked introduction and revision history.",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L1 contrast and M4-J1",
+    "claim": "optional::value_or returns the same fallback for an empty value as for a contained value equal to that fallback",
+    "source_urls": [
+      "https://eel.is/c++draft/optional.observe"
+    ],
+    "verification": "https://eel.is/c++draft/optional.observe; compiled and ran M4-J1 with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L2 story",
+    "claim": "Niebler described the eager algorithm/lazy view gap in the 2014 ranges proposal; range-v3 became the basis for C++20 ranges",
+    "source_urls": [
+      "https://ericniebler.com/2014/11/23/container-algorithms/",
+      "https://github.com/ericniebler/range-v3"
+    ],
+    "verification": "https://ericniebler.com/2014/11/23/container-algorithms/ and https://github.com/ericniebler/range-v3, opened and checked introduction and project description.",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2 contrast and M4-J2",
+    "claim": "a filter view over a named local vector borrows it, so returning the view dangles after the vector dies",
+    "source_urls": [
+      "https://eel.is/c++draft/range.ref.view",
+      "https://en.cppreference.com/w/cpp/ranges/owning_view"
+    ],
+    "verification": "Current M4-J2 main keeps the Book alive during iteration. The separate temporary-owner variant dangles.",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2 correction",
+    "claim": "borrowed_range means iterator validity is not tied to the range object's lifetime; an iterator still needs live underlying elements",
+    "source_urls": [
+      "https://eel.is/c++draft/range.range"
+    ],
+    "verification": "https://eel.is/c++draft/range.range, opened and checked paragraphs 4–5; corrected the existing overbroad span sentence.",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L3 story",
+    "claim": "Sutter, Stroustrup and Dos Reis proposed declaring names for returned tuple components together because std::tie needed previously declared variables, sometimes default-constructed pointlessly",
+    "source_urls": [
+      "https://open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf"
+    ],
+    "verification": "https://open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf, opened and checked motivation.",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L3 contrast and M4-J3",
+    "claim": "auto& structured binding refers to map element, so incrementing bound count updates the map; by-value binding would copy",
+    "source_urls": [
+      "https://eel.is/c++draft/dcl.struct.bind"
+    ],
+    "verification": "https://eel.is/c++draft/dcl.struct.bind; compiled and ran M4-J3 with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L4 story",
+    "claim": "span proposal argued for one typed contiguous view instead of pointer plus length, and specified non-owning storage",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0122r4.pdf"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0122r4.pdf, opened and checked motivation and view design.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L4 contrasts and M4-J4",
+    "claim": "string_view and span do not own their data; a view stored from a temporary string dangles after the statement",
+    "source_urls": [
+      "https://open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3921.html",
+      "https://eel.is/c++draft/string.view"
+    ],
+    "verification": "https://open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3921.html and https://eel.is/c++draft/string.view; compiled and ran M4-J4 without dereferencing the dangling view, clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M1/L1 story",
+    "claim": "Hinnant, Dimov and Abrahams described existing transfer idioms (`swap`, `splice`, `auto_ptr`, elision) and the lack of uniform move semantics for generic code",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2002/n1377.htm"
+    ],
+    "verification": "Checked N1377 Motivation and Copy vs Move against the lesson quotations.",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L2 story",
+    "claim": "N1856 was accepted in 2007, adding `unique_ptr` and deprecating `auto_ptr`; `auto_ptr` transferred from lvalues with copy syntax, unsafe for generic code",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4168"
+    ],
+    "verification": "Checked N4168 Introduction and quoted N1856 conclusion against the lesson story.",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L2 contrast",
+    "claim": "`shared_ptr` by value makes an additional owner; `const T&` and `T*` do not own; `unique_ptr` by value transfers ownership",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/memory/shared_ptr",
+      "https://en.cppreference.com/cpp/memory/unique_ptr"
+    ],
+    "verification": "https://en.cppreference.com/cpp/memory/shared_ptr and https://en.cppreference.com/cpp/memory/unique_ptr; compiled and ran M1-J2, exit 0.",
+    "lesson": "M1/L2"
+  },
+  {
+    "where": "M1/L3 story",
+    "claim": "N1968 argued that explicit functors made small standard-algorithm predicates verbose and proposed closures as local function objects with captured state; long reusable operations remained suitable for named functions/classes",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1968.pdf"
+    ],
+    "verification": "Checked N1968 Introduction and Proposal against the lesson story.",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L3 contrast",
+    "claim": "Value capture owns a copy; reference capture and `this` require a live referent; init-capture can move state into a closure",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/lambda"
+    ],
+    "verification": "Checked the lambda capture contract against cppreference; current M1-J3 specimen is recorded separately with its source hash.",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L4 story",
+    "claim": "N1579 identified implicit integer conversion, unspecified enum underlying type, and unscoped enumerator names as three problems; it included cross-enum comparison and packet-version examples",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2004/n1579.pdf"
+    ],
+    "verification": "Checked N1579 sections 2–3 against the lesson story.",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M1/L4 contrast",
+    "claim": "`steady_clock` is monotonic, `system_clock` is wall time, and `high_resolution_clock` may alias another clock",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/chrono/steady_clock",
+      "https://en.cppreference.com/cpp/chrono/high_resolution_clock"
+    ],
+    "verification": "https://en.cppreference.com/cpp/chrono/steady_clock and https://en.cppreference.com/cpp/chrono/high_resolution_clock; compiled and ran M1-J4, exit 0.",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M2/L1 story",
+    "claim": "Richard Smith's N3597 rewrote a bitset algorithm into recursion and conditionals because C++11 `constexpr` excluded loops, ordinary `if`, and lambdas; the proposal argued for more ordinary function bodies",
+    "source_urls": [
+      "https://open-std.org/JTC1/SC22/WG21/docs/papers/2013/n3597.html"
+    ],
+    "verification": "Checked N3597 Problem and Overview against the lesson quotations.",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L1 contrast",
+    "claim": "`constexpr` permits constant evaluation, `consteval` requires it at calls, `constinit` requires constant initialization of static/thread-local storage",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/consteval",
+      "https://en.cppreference.com/cpp/language/constinit"
+    ],
+    "verification": "https://en.cppreference.com/cpp/language/consteval and https://en.cppreference.com/cpp/language/constinit",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L2 contrast",
+    "claim": "C++20 concepts express named compile-time constraints; virtual interfaces dispatch at runtime; an expression requirement does not establish arithmetic meaning",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/constraints"
+    ],
+    "verification": "https://en.cppreference.com/cpp/language/constraints",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2/L3 story",
+    "claim": "Sutton and Smith's N4191 used multi-overload variadic sum as motivation for fold expressions and also proposed folds for pack-wide constraints",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4191.html"
+    ],
+    "verification": "Checked N4191 Introduction and Extra motivation against the lesson quotations.",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2/L3 contrast",
+    "claim": "Unary + fold rejects an empty pack; empty unary && fold has true identity",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/fold"
+    ],
+    "verification": "https://en.cppreference.com/cpp/language/fold",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M5/L1 story",
+    "claim": "Halpern's PMR proposal traces the allocator/type problem to his 2005 work; allocator template arguments make otherwise similar strings different types; `memory_resource` was proposed to separate allocation choice from container type",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3816.pdf"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3816.pdf, pp. 1, 4–5, opened and read this session.",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1 contrast",
+    "claim": "A monotonic resource retains individually released pieces until resource release/destruction; a pool recycles blocks and can refill upstream",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/memory/monotonic_buffer_resource",
+      "https://en.cppreference.com/cpp/memory/unsynchronized_pool_resource"
+    ],
+    "verification": "https://en.cppreference.com/cpp/memory/monotonic_buffer_resource and https://en.cppreference.com/cpp/memory/unsynchronized_pool_resource, opened this session; compared with the module's lab resource implementation.",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L1 judgement M5-Q2",
+    "claim": "A returned PMR vector over a local resource keeps a dead resource pointer; the function compiles but the design is rejected by lifetime",
+    "source_urls": [
+      "https://eel.is/c++draft/mem.res.public"
+    ],
+    "verification": "https://eel.is/c++draft/mem.res.public; compiled the exact function with clang++ -std=c++20 -Wall -Wextra -c.",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L2 story",
+    "claim": "LMAX's Disruptor paper reports queueing latency and jitter and identifies separate producer/consumer fields sharing a cache line as false sharing",
+    "source_urls": [
+      "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf"
+    ],
+    "verification": "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf, pp. 1–4, opened and read this session.",
+    "lesson": "M5/L2"
+  },
+  {
+    "where": "M5/L2 contrasts",
+    "claim": "A one-field scan benefits from contiguous field storage; 64-byte alignment can leave adjacent counters on a 128-byte line; `hardware_destructive_interference_size` is an implementation value for separation",
+    "source_urls": [
+      "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf",
+      "https://en.cppreference.com/cpp/thread/hardware_destructive_interference_size"
+    ],
+    "verification": "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf, section 3.4, and https://en.cppreference.com/cpp/thread/hardware_destructive_interference_size, opened this session; existing lesson sample gives the 120/32-byte layouts.",
+    "lesson": "M5/L2"
+  },
+  {
+    "where": "M5/L3 story",
+    "claim": "P1073R2 explains the gap between `constexpr` and required constant evaluation, records the change from `constexpr!` to `consteval`, and cites reflection motivation",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1073r2.html"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1073r2.html, introduction and revision notes, opened and read this session.",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L3 contrasts",
+    "claim": "`consteval` rejects run-time calls; `constexpr` permits them; branch likelihood attributes express compiler-facing expectations; escaping a `noexcept` function terminates",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/consteval",
+      "https://eel.is/c++draft/dcl.attr.likelihood",
+      "https://en.cppreference.com/cpp/language/noexcept_spec"
+    ],
+    "verification": "https://en.cppreference.com/cpp/language/consteval, https://eel.is/c++draft/dcl.attr.likelihood, and https://en.cppreference.com/cpp/language/noexcept_spec; opened/checked the cppreference pages and compiled M5-G5.",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L3 judgement M5-G5",
+    "claim": "Ordinary variables do not force constant evaluation of a `constexpr` call",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1073r2.html"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1073r2.html; compiled M5-G5 as written with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L4 story",
+    "claim": "NVIDIA and Microsoft/Intel groups independently proposed parallel algorithm libraries in 2012; P0024 describes their joint proposal and deliberately varied implementations",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0024r2.html"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0024r2.html, Introduction and Existing implementations, opened and read this session.",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L4 contrasts",
+    "claim": "`seq` invokes element functions in the calling thread; `par` permits library-created threads; shared plain-counter writes can race; a defaulted `source_location` records the call site",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/algorithm/execution_policy_tag_t",
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0024r2.html",
+      "https://en.cppreference.com/cpp/utility/source_location/current"
+    ],
+    "verification": "https://en.cppreference.com/cpp/algorithm/execution_policy_tag_t, https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0024r2.html, and https://en.cppreference.com/cpp/utility/source_location/current, opened and read this session.",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L4 units contrast",
+    "claim": "Chrono duration literals carry a unit in the resulting duration type",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/symbol_index/chrono_literals"
+    ],
+    "verification": "https://en.cppreference.com/w/cpp/symbol_index/chrono_literals, opened this session; the lesson's existing duration sample had already been compiled in the earlier truth pass.",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L5 story",
+    "claim": "Lakos and coauthors benchmarked several allocator usage patterns and attributed some local-allocator gains to better locality rather than fewer operations; their paper links benchmark code",
+    "source_urls": [
+      "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0089r0.pdf"
+    ],
+    "verification": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0089r0.pdf, abstract, opened and read this session.",
+    "lesson": "M5/L5"
+  },
+  {
+    "where": "M5/L5 contrasts",
+    "claim": "The lab's fixed pool binds to one size/alignment pair and forwards others; `unsynchronized_pool_resource` manages several size classes but is not safe for simultaneous use from multiple threads",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/memory/unsynchronized_pool_resource"
+    ],
+    "verification": "https://en.cppreference.com/cpp/memory/unsynchronized_pool_resource, opened and read this session; inspected `lab/solution/pool_lab.cpp` and compiled it.",
+    "lesson": "M5/L5"
+  },
+  {
+    "where": "M1/L1",
+    "claim": "Moved-from library objects remain valid under the usual library rule, while specific types can promise a stronger post-move state; NRVO can be blocked by return std::move(local).",
+    "source_urls": [
+      "https://eel.is/c++draft/lib.types.movedfrom",
+      "https://en.cppreference.com/cpp/language/copy_elision"
+    ],
+    "verification": "https://eel.is/c++draft/lib.types.movedfrom and https://en.cppreference.com/cpp/language/copy_elision",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M1/L3",
+    "claim": "Plain range-for `auto` copies each element; capture by reference requires the referent to outlive later callback use; callable templates retain the exact callable type while std::function erases it",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/range-for",
+      "https://en.cppreference.com/cpp/language/lambda",
+      "https://en.cppreference.com/cpp/utility/functional/function"
+    ],
+    "verification": "https://en.cppreference.com/cpp/language/range-for, https://en.cppreference.com/cpp/language/lambda, https://en.cppreference.com/cpp/utility/functional/function; compiled M1-J3.",
+    "lesson": "M1/L3"
+  },
+  {
+    "where": "M1/L4",
+    "claim": "C-array function parameters decay to pointers; vector brace initialization may choose initializer_list; thread-local counters avoid shared writes in the loop",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/container/array",
+      "https://en.cppreference.com/cpp/container/vector/vector",
+      "https://en.cppreference.com/cpp/language/storage_duration"
+    ],
+    "verification": "https://en.cppreference.com/cpp/container/array, https://en.cppreference.com/cpp/container/vector/vector, https://en.cppreference.com/cpp/language/storage_duration; original runnable lesson samples already verified in the preceding rewrite claims.",
+    "lesson": "M1/L4"
+  },
+  {
+    "where": "M2/L1",
+    "claim": "A constexpr declaration alone does not require constant evaluation at an ordinary runtime call site",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/constexpr"
+    ],
+    "verification": "https://en.cppreference.com/cpp/language/constexpr; compiled and ran M2-J1.",
+    "lesson": "M2/L1"
+  },
+  {
+    "where": "M2/L3",
+    "claim": "In a template, `if constexpr` selects one branch for instantiation; ordinary `if` still requires both branches to be valid",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/language/if"
+    ],
+    "verification": "https://en.cppreference.com/cpp/language/if; original lesson's sample and negative example verified in the preceding rewrite claims.",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M6/L2 M6-J2",
+    "claim": "Replaced the always-false stub with the actual SPSC lab header; the spinning hand-off compiles and runs when one slot is available, while the full-queue wait remains unbounded",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/thread/yield"
+    ],
+    "verification": "https://en.cppreference.com/cpp/thread/yield (wait-policy comparison); compiled and ran the exact new card with Apple clang C++20 -Wall -Wextra and the lab header in a temporary directory.",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M7/L1 M7-J1",
+    "claim": "Added an importer-side preprocessor error if the module's SECRET macro leaks; the import compiled and ran",
+    "source_urls": [
+      "https://clang.llvm.org/docs/StandardCPlusPlusModules.html"
+    ],
+    "verification": "https://clang.llvm.org/docs/StandardCPlusPlusModules.html (macro isolation); precompiled the exact new card's module and built its importer with Apple clang -fcxx-modules.",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L3 M7-J3",
+    "claim": "The fixed-input addition loop disappears at -O2 in the exact card, though the timed program compiles and runs",
+    "source_urls": [
+      "https://github.com/google/benchmark/blob/main/docs/user_guide.md"
+    ],
+    "verification": "https://github.com/google/benchmark/blob/main/docs/user_guide.md (constant-folding warning); compiled -S and checked _main contained no loop branch.",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L4 M7-J4",
+    "claim": "The PRIVATE include-directory version configures but its consumer fails to compile because book.h is missing; the PUBLIC solution builds and prints best bid: 101",
+    "source_urls": [
+      "https://cmake.org/cmake/help/latest/command/target_include_directories.html"
+    ],
+    "verification": "https://cmake.org/cmake/help/latest/command/target_include_directories.html (scope rule); configured/built starter and solution in temporary directories.",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M6/L4 Velox story",
+    "claim": "Velox's own hash table prefetches the row end during grouped probes but skips rows under 64 bytes because its microbenchmarks showed no gain; the Intel manual separately documents the overlap and cache-residency trade",
+    "source_urls": [
+      "https://github.com/facebookincubator/velox/blob/main/velox/exec/HashTable.cpp",
+      "https://cdrdv2-public.intel.com/671488/248966-Software-Optimization-Manual-V1-048.pdf"
+    ],
+    "verification": "https://github.com/facebookincubator/velox/blob/main/velox/exec/HashTable.cpp (opened and read groupProbeWithPrefetch and comments); https://cdrdv2-public.intel.com/671488/248966-Software-Optimization-Manual-V1-048.pdf (read section 9.5.4–9.5.6).",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M7/L3 Google Benchmark issue story",
+    "claim": "A 2022 issue against Benchmark 1.6.1 reported GCC 11 copying a million-int DoNotOptimize argument, with a different array-versus-pointer timing than Clang 13; maintainers discussed the inline-assembly constraint",
+    "source_urls": [
+      "https://github.com/google/benchmark/issues/1340",
+      "https://github.com/google/benchmark/blob/v1.9.5/docs/user_guide.md"
+    ],
+    "verification": "https://github.com/google/benchmark/issues/1340 (opened and read issue description and maintainer replies); current guide's foo(0) example checked at https://github.com/google/benchmark/blob/v1.9.5/docs/user_guide.md",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "Storytelling pass — modules 01–04",
+    "claim": "Sources re-opened this pass for retold stories (only facts and quotations found there were used): n1377 (Motivation, Copy vs Move); n4168 (Introduction, quoted N1856 conclusion); n1968.pdf pp. 1–3 (`less_than_i`, \"so verbose…\", Boost.Lambda support query); n1579.pdf pp. 2–4 (Stroustrup quote, `armWeapons` \"ok; oops\", Packet `Version`); n3597 (Problem/Overview, `bitset::all` rewrite); n2920 §1.10/§10.1 (2012 readiness remark, \"real harm\", time-to-FCD poll, \"fix and ship\"/\"yank and ship\", 28/9/10, unanimous consent); n4191 (Introduction); n3679 (Introduction, basic issue); Boehm FAQ (library and volatile answers, Butenhof quote); Reeves account (reset effects, lab reproduction under 18 hours, trace facility, bc_dist/ASI-MET, 8 Hz cycle, priority-inheritance flag, difference upload); p0978r0 (Introduction, zero-overhead objection); p0323r11 (credit, motivation table, history); Niebler 2014-11-23 post (Urbana-Champaign, \"Blech!\", eager vs lazy); p0144r2.pdf (Abstract, Motivation, R2 history).",
+    "source_urls": [],
+    "verification": "",
+    "lesson": "cross-module"
+  },
+  {
+    "where": "Storytelling pass — modules 01–04",
+    "claim": "Correction to the brief's example: Reeves says no collected data was lost in a reset; the remaining activities for that day were postponed to the next day. The M3/L3 story says that.",
+    "source_urls": [],
+    "verification": "",
+    "lesson": "cross-module"
+  },
+  {
+    "where": "M4/L4 story replaced",
+    "claim": "Heartbleed: a missing bounds check in the TLS heartbeat handling could reveal up to 64k of memory per heartbeat; repeated requests could expose secret keys, user names and passwords; 1.0.1g fixed it on 7 April 2014; the fix compares the payload length read from the message with the actual record length and silently discards on mismatch",
+    "source_urls": [
+      "https://openssl-library.org/news/secadv/20140407.txt",
+      "https://heartbleed.com/",
+      "https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3"
+    ],
+    "verification": "https://openssl-library.org/news/secadv/20140407.txt (CVE-2014-0160 section), https://heartbleed.com/ (impact, versions, dates), https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3 (commit message and t1_lib.c bounds-check lines), all opened this pass.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "Storytelling pass — modules 05–07",
+    "claim": "Sources re-opened this pass for retold stories (only facts and quotations found there were used): n3816.pdf pp. 1–5 (2005 N1850, \"time-consuming task\", missed 2011, `Alloc1`/`Alloc2` strings, shopping-list example, \"annoyingly difficult\"); Disruptor-1.0.pdf §§1–4 (queue latency \"same order of magnitude as ... disk\", head/tail \"generally occupy the same cache-line\", false-sharing quote, \"mechanical sympathy\", Table 1 lock/CAS costs 300 / 10,000 / 224,000 / 30,000 ms, power-of-two mask, single-producer \"no locks or CAS operations are required\"); p1073r2.html (Notes: Kona 2017 poll 8/13/2/0/0 and `do constexpr`, Rapperswil EWG `constexpr!`, reflector, `constfold`, Google codebase search, reflection impetus); p0024r2.html (Development History, Existing implementations, \"maximize flexibility of implementation\"); p0089r0.pdf pp. 1–3 (Bloomberg authors, \"done in some haste\", \"about the same\" operations, stall quote, tcmalloc/jemalloc, \"It isn't about how good the global allocator is\"); Intel manual 248966-048 §9.5.4–9.5.6 (L1-resident data quote); p0141r0.pdf §1–2 (\"40+ years\", copy-and-paste, PCH quote, preprocessor-fragmentation quote, import-introduces-no-macros rule); ASan paper 37752.pdf abstract, §§1, 3, 4.1–4.2, 6 (May 2011, 10 months, 300+ bugs, 210/73 breakdown, 73% vs Valgrind 20x / Dr. Memory 10x, shadow memory and redzones, unit tests and fuzzing, \"significantly slower tool\", security quote); google/benchmark issue 1340 description and comments via `gh api` (Feb 2022, GCC 11 81,655 ns vs 0.242 ns, Clang 13 ~0.24 ns, memcpy, \"Sounds like a GCC bug?\", GCC bug 105519 not treated as a bug, missed-optimization tag).",
+    "source_urls": [],
+    "verification": "",
+    "lesson": "cross-module"
+  },
+  {
+    "where": "M6/L4 story addition",
+    "claim": "Velox's AdaptivePrefetch times its first 16 iterations with a clock and then picks a look-ahead clamped between 4 and 32 iterations; HashTable.cpp uses it in another loop",
+    "source_urls": [
+      "https://github.com/facebookincubator/velox/blob/main/velox/exec/AdaptivePrefetch.h",
+      "https://github.com/facebookincubator/velox/blob/main/velox/exec/HashTable.cpp"
+    ],
+    "verification": "https://github.com/facebookincubator/velox/blob/main/velox/exec/AdaptivePrefetch.h (kMeasurementIterations, kMinLookAhead, kMaxLookAhead, computeLookAhead) and https://github.com/facebookincubator/velox/blob/main/velox/exec/HashTable.cpp (groupProbeWithPrefetch comment, `AdaptivePrefetch prefetch(numRows)` loop), both opened this pass.",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "Storytelling pass — modules 05–07",
+    "claim": "No story was replaced with a different story; all thirteen were retold from the sources above.",
+    "source_urls": [],
+    "verification": "",
+    "lesson": "cross-module"
+  },
+  {
+    "where": "M1/L1 and PROTOCOL learning method",
+    "claim": "Attempting retrieval before feedback, then correcting an error, can improve later recall",
+    "source_urls": [
+      "https://web.williams.edu/Psychology/Faculty/Kornell/Publications/Kornell.Hays.Bjork.2009.pdf"
+    ],
+    "verification": "Kornell, Hays and Bjork (2009), abstract and results; the lesson recommends attempt plus feedback without promising an individual outcome.",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M3/L1 release correction",
+    "claim": "For launch::async, releasing the last unfinished shared-state reference waits; a discarded deferred task need not run. N3679 uses hypothetical no_join_async.",
+    "source_urls": [
+      "https://eel.is/c++draft/futures.async"
+    ],
+    "verification": "Read async launch-policy and shared-state wording; ran lab/async_block.cpp and checked N3679 example.",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M3/L2 race correction",
+    "claim": "A memory location can be a scalar object or adjacent nonzero-width bit-fields; conflicts also cover object lifetime changes.",
+    "source_urls": [
+      "https://eel.is/c++draft/intro.memory"
+    ],
+    "verification": "Read memory-location definition and intro.races conflicting-action rule.",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2 publication correction",
+    "claim": "Acquire may synchronize with a release through a release sequence; relaxed alone does not publish this flag-protected payload.",
+    "source_urls": [
+      "https://eel.is/c++draft/atomics.order"
+    ],
+    "verification": "Read release-sequence rule; built and ran publish.cpp and M3-J2.",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L2 CAS correction",
+    "claim": "C++20 compare-exchange compares value representations; weak may fail spuriously and strong does not.",
+    "source_urls": [
+      "https://eel.is/c++draft/atomics.types.operations"
+    ],
+    "verification": "Read compare-exchange wording; compiled and ran update_max sample.",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M3/L3 atomic_ref correction",
+    "claim": "All accesses to the object must use atomic_ref while any atomic_ref refers to it.",
+    "source_urls": [
+      "https://eel.is/c++draft/atomics.ref.generic"
+    ],
+    "verification": "Read atomic_ref requirement; compiled and ran corrected example.",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L3 lock and cache correction",
+    "claim": "False sharing depends on actual cache-line placement and competing ownership; a lock-free atomic operation does not guarantee a deadline.",
+    "source_urls": [
+      "https://eel.is/c++draft/atomics.lockfree"
+    ],
+    "verification": "Read lock-free rule; built false_sharing.cpp and ran M3-J3.",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M3/L4 coroutine correction",
+    "claim": "Coroutine traits select the promise; frame state includes promise and parameters, and falling off the end requires return_void.",
+    "source_urls": [
+      "https://eel.is/c++draft/dcl.fct.def.coroutine"
+    ],
+    "verification": "Read coroutine wording; built generator.cpp and M3-J4.",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M4/L1 optional variant correction",
+    "claim": "Optional stores a contained object inline; variant can become valueless, and visit requires callability rather than separate overloads.",
+    "source_urls": [
+      "https://eel.is/c++draft/variant.visit"
+    ],
+    "verification": "Read visit mandate and variant rules; ran optional_demo.cpp and variant_demo.cpp; compiled conversion visitor.",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L1 optional index correction",
+    "claim": "Vector index values should remain size_t in an optional-index API.",
+    "source_urls": [
+      "https://eel.is/c++draft/conv.integral"
+    ],
+    "verification": "Read integral-conversion rule; ran m4-c2 checker with right and wrong answers.",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L1 benchmark correction",
+    "claim": "The supplied throw_cost.cpp averages a half-failure workload, including exception construction, rather than isolated failure latency.",
+    "source_urls": [
+      "https://eel.is/c++draft/expected"
+    ],
+    "verification": "Inspected denominator and work in throw_cost.cpp; built and ran program.",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M4/L2 views correction",
+    "claim": "Classic algorithms need no intermediate vector; filter_view caches begin over a forward range; forward_list::reverse can reverse links.",
+    "source_urls": [
+      "https://eel.is/c++draft/range.filter.view"
+    ],
+    "verification": "Read filter cache condition and forward_list operations; built and ran lazy_views.cpp.",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L3 bindings and formatting correction",
+    "claim": "A structured binding creates a hidden object from its initializer; format_to_n bounds destination writes, not all work or allocations.",
+    "source_urls": [
+      "https://eel.is/c++draft/dcl.struct.bind"
+    ],
+    "verification": "Read structured binding and format.functions; built bindings.cpp and fmt.cpp.",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M4/L4 literals byte and nodiscard correction",
+    "claim": "An ordinary string literal is a const char array; std::byte supports comparison and assignment; nodiscard recommends a diagnostic.",
+    "source_urls": [
+      "https://eel.is/c++draft/lex.string"
+    ],
+    "verification": "Read lex.string, cstddef.syn, and nodiscard wording; compiled literal and byte probes.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L4 Heartbleed boundary correction",
+    "claim": "A span must be built from the actual received buffer, and the untrusted claimed length checked against it.",
+    "source_urls": [
+      "https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3"
+    ],
+    "verification": "Read OpenSSL bounds-check commit and span constructor precondition; built views_sv.cpp.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M5/L1 F6/F10/F11",
+    "claim": "PMR string short-value construction configures an allocator but can use small-string storage; a null or counting arena upstream observes only requests routed through that resource; release resets an arena",
+    "source_urls": [
+      "https://eel.is/c++draft/mem.res.monotonic.buffer",
+      "https://en.cppreference.com/w/cpp/string/basic_string",
+      "https://eel.is/c++draft/mem.res.public"
+    ],
+    "verification": "Read draft monotonic release rule and PMR resource interface; compiled and ran completed M5-C1 in deleted system-temp scratch. No claim of an actual allocation from the short string.",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L2 F1/F2",
+    "claim": "Data race requires conflicting accesses with at least one non-atomic; false sharing includes a writer and reader of different fields; 128-byte object alignment fixes the example placement",
+    "source_urls": [
+      "https://eel.is/c++draft/intro.races",
+      "https://docs.kernel.org/kernel-hacking/false-sharing.html",
+      "https://timsong-cpp.github.io/cppwp/n4861/hardware.interference"
+    ],
+    "verification": "Read draft data-race definition, kernel writer/reader example and interference constant; compiled and ran corrected 128-aligned Counters experiment in deleted temp scratch.",
+    "lesson": "M5/L2"
+  },
+  {
+    "where": "M5/L3 F3/F4",
+    "claim": "Vector can relocate move-only elements with potentially throwing move; Clang likelihood attribute support is not proof of optimization at -O0 or with PGO",
+    "source_urls": [
+      "https://eel.is/c++draft/vector.modifiers",
+      "https://clang.llvm.org/docs/AttributeReference.html#likely-and-unlikely"
+    ],
+    "verification": "Read draft vector exception remarks and Clang attribute docs; compiled and ran complete lesson samples in deleted temp scratch.",
+    "lesson": "M5/L3"
+  },
+  {
+    "where": "M5/L4 F5/F9",
+    "claim": "seq execution-policy callbacks do not imply iterator order; par permits concurrent or sequential execution; source_location::current has a special default-argument call-site rule",
+    "source_urls": [
+      "https://timsong-cpp.github.io/cppwp/n4861/algorithms.parallel.exec",
+      "https://timsong-cpp.github.io/cppwp/n4861/support.srcloc.cons"
+    ],
+    "verification": "Read N4861 execution and source-location rules; compiled and ran the complete parallel and logger examples under clang++ C++20 in deleted temp scratch.",
+    "lesson": "M5/L4"
+  },
+  {
+    "where": "M5/L5 F6/F7/F8",
+    "claim": "Fixed pool forwards zero-size and other-class requests; size arithmetic is checked; chunk registration failure returns the upstream chunk; standard unsynchronized pool does not guarantee no further upstream calls after warm-up",
+    "source_urls": [
+      "https://timsong-cpp.github.io/cppwp/n4861/mem.res.private",
+      "https://timsong-cpp.github.io/cppwp/n4861/mem.res.pool"
+    ],
+    "verification": "Built and ran starter and solution; pool_lab check exercised zero-size, overflow, failed bookkeeping allocation, alignment and churn in deleted temp scratch. Read pool-resource draft.",
+    "lesson": "M5/L5"
+  },
+  {
+    "where": "M6/L1 capacity",
+    "claim": "MPMC ring requires a power-of-two capacity of at least two; a capacity-two ring reports full after two pushes and empty after two pops.",
+    "source_urls": [
+      "https://raw.githubusercontent.com/khizmax/libcds/master/cds/container/vyukov_mpmc_cycle_queue.h"
+    ],
+    "verification": "Opened libcds implementation; compiled capacity-one negative test (static assertion) and ran capacity-two full/empty test under TSan.",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1 progress",
+    "claim": "SPSC queue bookkeeping has no retry loop, but generic T copy assignment may block even when noexcept.",
+    "source_urls": [
+      "https://eel.is/c++draft/except.spec"
+    ],
+    "verification": "Compiled and ran SpscRing<X,2> with a noexcept assignment that locks a mutex.",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L1 false sharing",
+    "claim": "Competing writes to different counters in one cache line can transfer ownership; repeated writes by the same owner need not.",
+    "source_urls": [
+      "https://lmax-exchange.github.io/disruptor/files/Disruptor-1.0.pdf"
+    ],
+    "verification": "Opened Disruptor paper section 3.4; narrowed key to alternating writes.",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L2 page faults",
+    "claim": "Writing each pool page at startup moves initial demand faults but does not guarantee later residency.",
+    "source_urls": [
+      "https://man7.org/linux/man-pages/man2/mlock.2.html"
+    ],
+    "verification": "Ran first_touch lab: 4096 first-touch minor faults and zero second-touch faults; checked mlock documentation for separate residency control.",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L2 pre-encoded symbol",
+    "claim": "OrderTemplate rejects symbols longer than eight bytes before copying into its eight-byte field.",
+    "source_urls": [
+      "https://eel.is/c++draft/string.view"
+    ],
+    "verification": "Compiled and ran boundary probe for 8 and 9 bytes; 9 throws invalid_argument; normal example prints expected 24 bytes.",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L2 audit reservation",
+    "claim": "For mandatory audit records, a reservation failure must reject the order before transmission; after_send drop-and-count loses an already-sent order record.",
+    "source_urls": [],
+    "verification": "Reviewed the shown after_send function and the stated compliance requirement; revised answer to pre-send reservation and durability policy.",
+    "lesson": "M6/L2"
+  },
+  {
+    "where": "M6/L3 tail count",
+    "claim": "At a population p99.99 threshold, 10000 independent observations have one expected exceedance.",
+    "source_urls": [],
+    "verification": "Calculated 10000 * (1 - 0.9999) = 1; replaced incorrect boundary and clarified uncertainty.",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3 counter fences",
+    "claim": "An x86 RDTSC timing read uses LFENCE before and after for CPU execution ordering; supported CPUs may expose frequency via CPUID 0x15.",
+    "source_urls": [
+      "https://cdrdv2-public.intel.com/774492/325383-sdm-vol-2abcd.pdf"
+    ],
+    "verification": "Compiled updated ticks helper for arm64 and x86_64 target; ran arm64 binary; checked Intel RDTSC specification.",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L3 sockets",
+    "claim": "A usual interrupt-driven socket receive path starts from a hardware interrupt; NAPI can combine interrupts and polling.",
+    "source_urls": [
+      "https://www.kernel.org/doc/html/latest/networking/napi.html"
+    ],
+    "verification": "Opened Linux NAPI documentation; narrowed completion premise to usual interrupt-driven path.",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L4 prefetch overlap",
+    "claim": "A late prefetch can hide part of a cache miss even if demand arrives before the line.",
+    "source_urls": [
+      "https://cdrdv2-public.intel.com/671488/248966-Software-Optimization-Manual-V1-048.pdf"
+    ],
+    "verification": "Checked Intel optimization manual overlap model; compiled and ran bounded node-link prefetch probe.",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M6/L4 builtin arguments",
+    "claim": "GCC and Clang accept __builtin_prefetch in older language modes; address can be runtime-computed, while rw and locality are compile-time constants.",
+    "source_urls": [
+      "https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html"
+    ],
+    "verification": "Opened GCC builtins documentation; compiled and ran runtime-address call under -std=c++98.",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M6/L4 gather experiment",
+    "claim": "Gather uses a 256 MiB uint64_t table and pointer chase uses a separate 128 MiB uint32_t array; time per gather is amortized throughput.",
+    "source_urls": [],
+    "verification": "Read gather.cpp allocations and ran its documented command; removed fixed historical timing table.",
+    "lesson": "M6/L4"
+  },
+  {
+    "where": "M7/L1 module declaration",
+    "claim": "A global module fragment may precede an interface or implementation module declaration.",
+    "source_urls": [
+      "https://eel.is/c++draft/module.unit",
+      "https://eel.is/c++draft/module.global.frag"
+    ],
+    "verification": "Opened standard draft; built both lab module interfaces and importers with global fragments.",
+    "lesson": "M7/L1"
+  },
+  {
+    "where": "M7/L2 data-race ordering",
+    "claim": "Two conflicting non-atomic writes need happens-before even when they do not physically overlap; a clean TSan run is not proof.",
+    "source_urls": [
+      "https://eel.is/c++draft/intro.races",
+      "https://clang.llvm.org/docs/ThreadSanitizer.html"
+    ],
+    "verification": "Compiled and ran M7-J2; revised answer to atomic, common mutex, or join-before-write repair.",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L3 expected validation",
+    "claim": "Bounded isfinite guard prevents unrepresentable double-to-long conversion; expected.value() on an error throws.",
+    "source_urls": [
+      "https://eel.is/c++draft/conv.fpint",
+      "https://eel.is/c++draft/expected.object.obs"
+    ],
+    "verification": "Opened standard draft; compiled and ran probes for NaN, infinity, upper bound, and bad_expected_access.",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L3 benchmark runtime",
+    "claim": "Google Benchmark adjusts iteration count for runtime budget; it does not establish statistical stability.",
+    "source_urls": [
+      "https://github.com/google/benchmark/blob/v1.9.5/src/benchmark_runner.cc"
+    ],
+    "verification": "Read pinned runner behavior; removed unsupported convergence claim and historical local timing numbers.",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L4 CMake scopes",
+    "claim": "Compile usage requirements marked PRIVATE do not propagate, while a static library may pass private link dependencies through to its final consumer link.",
+    "source_urls": [
+      "https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#static-libraries"
+    ],
+    "verification": "Opened CMake build-system manual; built J4 fixture with PUBLIC and PRIVATE pricing links and ran both.",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M7/L3 benchmark licence",
+    "claim": "The adapted vector benchmark example is distributed with Google Benchmark Apache-2.0 licence text and attribution.",
+    "source_urls": [
+      "https://raw.githubusercontent.com/google/benchmark/v1.9.5/LICENSE"
+    ],
+    "verification": "Fetched complete upstream licence and placed it beside adapted function; benchmark executable remains optional when dependency is unavailable.",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M1-J1 source sha256:2b4cba7a315ad984ba5a57e1d01c6a12f07519cd834c91d04cde3903545a3d28",
+    "claim": "Current judgement specimen output: 3 0",
+    "source_urls": [],
+    "verification": "Hash is sha256 of the card's cpp block with its indentation removed plus a final newline. Compiled with clang++ -std=c++20 -Wall -Wextra (Apple clang 21) in a deleted system-temp directory; ran with exit 0 and no compiler warnings.",
+    "lesson": "01-foundations/lesson-01-move-semantics.md"
+  },
+  {
+    "where": "M1-J2 source sha256:b1fd00c95d5672c86aa16653061f5004eb85204f0865fa4b501ea9dbc452bd93",
+    "claim": "Current judgement specimen output: 100 1",
+    "source_urls": [],
+    "verification": "Hash is sha256 of the card's cpp block with its indentation removed plus a final newline. Compiled with clang++ -std=c++20 -Wall -Wextra (Apple clang 21) in a deleted system-temp directory; ran with exit 0 and no compiler warnings.",
+    "lesson": "01-foundations/lesson-02-smart-pointers.md"
+  },
+  {
+    "where": "M1-J3 source sha256:143e34123bb946f635cd79fac80e2829bcdf701c2b01728be547b5ce1330f529",
+    "claim": "Current judgement specimen output: 400",
+    "source_urls": [],
+    "verification": "Hash is sha256 of the card's cpp block with its indentation removed plus a final newline. Compiled with clang++ -std=c++20 -Wall -Wextra (Apple clang 21) in a deleted system-temp directory; ran with exit 0 and no compiler warnings.",
+    "lesson": "01-foundations/lesson-03-auto-lambdas.md"
+  },
+  {
+    "where": "M1-J4 source sha256:4851ad88f7f824d0b09e0081b0790bc32925d561eb8e7e578afb019dd367b2c2",
+    "claim": "Current judgement specimen output: wall-clock stamp (value varies)",
+    "source_urls": [],
+    "verification": "Hash is sha256 of the card's cpp block with its indentation removed plus a final newline. Compiled with clang++ -std=c++20 -Wall -Wextra (Apple clang 21) in a deleted system-temp directory; ran with exit 0 and no compiler warnings.",
+    "lesson": "01-foundations/lesson-04-enum-chrono-essentials.md"
+  },
+  {
+    "where": "M2-J1 source sha256:895d82b6a69b4c35b5c1b1bb3fce5624879439e6325d4ea0c959cd9b4d275ab2",
+    "claim": "Current judgement specimen output: 1500",
+    "source_urls": [],
+    "verification": "Hash is sha256 of the card's cpp block with its indentation removed plus a final newline. Compiled with clang++ -std=c++20 -Wall -Wextra (Apple clang 21) in a deleted system-temp directory; ran with exit 0 and no compiler warnings.",
+    "lesson": "02-type-system/lesson-01-constexpr.md"
+  },
+  {
+    "where": "M2-J2 source sha256:14565bb90073fa364889ed75503ae0a1a33a9d7db79dbd2ff3738f0e1afea4c1",
+    "claim": "Current judgement specimen output: 1",
+    "source_urls": [],
+    "verification": "Hash is sha256 of the card's cpp block with its indentation removed plus a final newline. Compiled with clang++ -std=c++20 -Wall -Wextra (Apple clang 21) in a deleted system-temp directory; ran with exit 0 and no compiler warnings.",
+    "lesson": "02-type-system/lesson-02-concepts.md"
+  },
+  {
+    "where": "M2-J3 source sha256:01a8b4870511b04d50a487311bc62dbc751347deab0e3a856eb1c0edbc281471",
+    "claim": "Current judgement specimen output: 1 0 1",
+    "source_urls": [],
+    "verification": "Hash is sha256 of the card's cpp block with its indentation removed plus a final newline. Compiled with clang++ -std=c++20 -Wall -Wextra (Apple clang 21) in a deleted system-temp directory; ran with exit 0 and no compiler warnings.",
+    "lesson": "02-type-system/lesson-03-type-traits-fold.md"
+  },
+  {
+    "where": "M4/L2 classic algorithms correction",
+    "claim": "copy_if and transform take output iterators; they do not mandate temporary vectors.",
+    "source_urls": [
+      "https://eel.is/c++draft/alg.copy",
+      "https://eel.is/c++draft/alg.transform"
+    ],
+    "verification": "Opened both algorithm clauses and checked output-iterator parameters; rebuilt lazy_views.cpp.",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L2 forward_list correction",
+    "claim": "views::reverse needs bidirectional iterators, while forward_list::reverse reverses links in place.",
+    "source_urls": [
+      "https://eel.is/c++draft/forward.list.ops"
+    ],
+    "verification": "Opened forward_list operations and compiled and ran a forward_list::reverse probe (front became 2).",
+    "lesson": "M4/L2"
+  },
+  {
+    "where": "M4/L4 nodiscard correction",
+    "claim": "The standard recommends a diagnostic for an ignored nodiscard result; it does not require a warning.",
+    "source_urls": [
+      "https://eel.is/c++draft/dcl.attr.nodiscard"
+    ],
+    "verification": "Opened nodiscard wording; compiled the course warning sample with Clang -Wall -Wextra.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M2-Q8 concept ordering recall",
+    "claim": "An otherwise-equivalent constrained overload wins when its constraint subsumes the other, with matching atomic-constraint origins and parameter mappings.",
+    "source_urls": [
+      "https://eel.is/c++draft/temp.constr.order",
+      "https://eel.is/c++draft/temp.constr.atomic"
+    ],
+    "verification": "Checked the standard-draft subsumption and atomic-constraint wording; concept overload specimen compiled and ran with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M2/L2"
+  },
+  {
+    "where": "M2-Q9 empty fold recall",
+    "claim": "Empty unary && folds to true, empty unary || to false, and empty unary comma to void(); other empty unary folds are ill-formed.",
+    "source_urls": [
+      "https://eel.is/c++draft/expr.prim.fold"
+    ],
+    "verification": "Compiled and ran empty-pack fold probe with clang++ -std=c++20 -Wall -Wextra; checked draft fold wording.",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M2-Q10 constraint boundary recall",
+    "claim": "A requires-expression tests the validity of expressions at compile time; a runtime message value still needs runtime validation.",
+    "source_urls": [
+      "https://eel.is/c++draft/expr.prim.req"
+    ],
+    "verification": "Checked standard-draft requires-expression wording and the lesson's compile-time/run-time example.",
+    "lesson": "M2/L3"
+  },
+  {
+    "where": "M1/L1 retrieval guidance",
+    "claim": "Repeated retrieval improves delayed recall more than repeated study in the cited experiment; learners’ acquisition performance and predictions did not distinguish their delayed results.",
+    "source_urls": [
+      "https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf"
+    ],
+    "verification": "Checked abstract and results, including acquisition, predicted recall and one-week delayed recall.",
+    "lesson": "M1/L1"
+  },
+  {
+    "where": "M5/L1 B1/T5",
+    "claim": "The byte-array-origin placement-new example must keep the returned Order pointer; an arena null upstream detects only overflow routed through the arena, while a counting upstream observes fallback requests.",
+    "source_urls": [
+      "https://eel.is/c++draft/basic.life",
+      "https://eel.is/c++draft/expr.reinterpret.cast",
+      "https://eel.is/c++draft/mem.res.monotonic.buffer"
+    ],
+    "verification": "Read the lifetime and reinterpret-cast draft rules; compiled the M5-G10 fragment and its repaired form with Apple clang 21 -std=c++20 -Wall -Wextra, ran the repaired form (id 2).",
+    "lesson": "M5/L1"
+  },
+  {
+    "where": "M5/L2 T6",
+    "claim": "vector<bool> returns proxy elements, so &flags[0] cannot supply bool*; unique_ptr<bool[]> supplies actual bool storage for that interface.",
+    "source_urls": [
+      "https://en.cppreference.com/cpp/container/vector_bool",
+      "https://en.cppreference.com/cpp/memory/unique_ptr"
+    ],
+    "verification": "Read cppreference vector<bool>; compiled negative &flags[0] specimen (conversion error) and compiled and ran unique_ptr<bool[]> specimen with Apple clang 21 -std=c++20 -Wall -Wextra.",
+    "lesson": "M5/L2"
+  },
+  {
+    "where": "M5/L5 B2",
+    "claim": "The lab fixed_pool forwards zero-byte requests upstream without binding its size/alignment class; the first ordinary request binds it.",
+    "source_urls": [
+      "https://eel.is/c++draft/mem.res.public"
+    ],
+    "verification": "Inspected the do_allocate zero-byte branch in both lab files; built and ran starter (RESULT: TODO, exit 1) and solution (RESULT: PASS, exit 0); pool check behavioral probe passed zero-size and class checks.",
+    "lesson": "M5/L5"
+  },
+  {
+    "where": "M3/L4 N1 coroutine return correction",
+    "claim": "Bare co_return and co_return of void expressions call return_void; non-void expressions call return_value.",
+    "source_urls": [
+      "https://eel.is/c++draft/stmt.return.coroutine"
+    ],
+    "verification": "Read paragraph 2; compiled a co_return finish() void-expression coroutine with clang++ -std=c++20 -Wall -Wextra.",
+    "lesson": "M3/L4"
+  },
+  {
+    "where": "M3/L1 N2 stop scheduling correction",
+    "claim": "The jthread_stop demonstration can report zero or some items depending on scheduling; neither output is a data race.",
+    "source_urls": [
+      "https://eel.is/c++draft/thread.jthread.class"
+    ],
+    "verification": "Read lab/jthread_stop.cpp control flow and jthread specification; documented lab command ran and reported some items.",
+    "lesson": "M3/L1"
+  },
+  {
+    "where": "M4/L4 N3 matching byte buffer correction",
+    "claim": "A vector<unsigned char> does not implicitly convert to span<const byte>; as_bytes(span{buffer}) creates the explicit byte view.",
+    "source_urls": [
+      "https://eel.is/c++draft/span.cons",
+      "https://eel.is/c++draft/span.objectrep"
+    ],
+    "verification": "Read span conversion constraints; clang++ -std=c++20 -Wall -Wextra rejected direct call and compiled and ran explicit as_bytes call.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M4/L3 N4 binding header correction",
+    "claim": "The named-map-entry binding example copies with auto and refers to the entry with auto&; a general structured binding need not copy its initializer.",
+    "source_urls": [
+      "https://eel.is/c++draft/dcl.struct.bind"
+    ],
+    "verification": "Read hidden-object rule; built and ran lab/bindings.cpp.",
+    "lesson": "M4/L3"
+  },
+  {
+    "where": "M3/L3 T6 spin polling correction",
+    "claim": "Polling atomic_flag::test while held avoids repeated read-modify-write attempts; a descheduled holder can still delay both spinlocks.",
+    "source_urls": [
+      "https://eel.is/c++draft/atomics.flag"
+    ],
+    "verification": "Read atomic_flag test and test_and_set operations; built and ran lab/spinlock.cpp; wording asks why polling might reduce contention rather than guaranteeing speed.",
+    "lesson": "M3/L3"
+  },
+  {
+    "where": "M4/L1 T7 optional storage correction",
+    "claim": "optional<Point> has greater inline size in this lab; size alone cannot establish proportional cache traffic.",
+    "source_urls": [
+      "https://eel.is/c++draft/optional"
+    ],
+    "verification": "Built and ran lab/optional_demo.cpp (Point 24 bytes, optional<Point> 32 bytes); revised questions require measuring under the access pattern.",
+    "lesson": "M4/L1"
+  },
+  {
+    "where": "M3/L2 N10 codegen reproduction",
+    "claim": "Apple clang 21 at -O2 emitted arm64 str/stlr/stlr and ldr/ldapr/ldar; the x86_64-apple-macos target emitted mov/mov/xchg and mov/mov/mov for relaxed/release-or-acquire/seq_cst.",
+    "source_urls": [],
+    "verification": "Compiled a six-function atomic load/store probe with -std=c++20 -Wall -Wextra -O2 -S for native arm64 and -target x86_64-apple-macos in deleted system-temp scratch; inspected instructions.",
+    "lesson": "M3/L2"
+  },
+  {
+    "where": "M6/L3 NUMA placement",
+    "claim": "rte_pktmbuf_pool_create accepts socket_id to choose packet-buffer pool allocation; polling-core location does not retroactively place an existing pool.",
+    "source_urls": [
+      "https://doc.dpdk.org/api/rte__mbuf_8h.html"
+    ],
+    "verification": "Opened API reference: rte_pktmbuf_pool_create signature and socket_id parameter description; corrected lesson and M6-G6.",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M6/L1 MPMC provenance",
+    "claim": "The teaching MPMC adaptation retains libcds Boost 1.0 notice and the original Dmitry Vyukov Simplified BSD notice, conditions and disclaimer.",
+    "source_urls": [
+      "https://raw.githubusercontent.com/khizmax/libcds/master/cds/container/vyukov_mpmc_cycle_queue.h",
+      "https://sites.google.com/site/1024cores/home/code-license"
+    ],
+    "verification": "Opened upstream libcds header and original Code License page; checked mpmc_ring.hpp and both local LICENSES files.",
+    "lesson": "M6/L1"
+  },
+  {
+    "where": "M6/L3 coordinated-omission simulation",
+    "claim": "The lesson explains coordinated omission with the runnable local simulation: the closed-loop client under-reports a one-second stall that the open-loop client records.",
+    "source_urls": [],
+    "verification": "Compiled and ran coordinated_omission.cpp in deleted system-temp scratch (closed n=9000, p99.9=0.5 ms; open n=10000, p99.9=995.5 ms).",
+    "lesson": "M6/L3"
+  },
+  {
+    "where": "M7/L2 sanitizer bridge correction",
+    "claim": "ASan instruments C++98 code as well as newer C++ code; it checks addressability, not initialized contents.",
+    "source_urls": [
+      "https://clang.llvm.org/docs/AddressSanitizer.html",
+      "https://www.usenix.org/system/files/conference/atc12/atc12-final39.pdf"
+    ],
+    "verification": "Compiled and ran a C++98 program with clang++ -std=c++98 -Wall -Wextra -fsanitize=address; checked ASan paper shadow-memory algorithm.",
+    "lesson": "M7/L2"
+  },
+  {
+    "where": "M7/L3 deduced this correction",
+    "claim": "Deduced explicit object parameter follows the call expression static type and value category; Base& bound to Derived deduces Base&.",
+    "source_urls": [
+      "https://eel.is/c++draft/temp.deduct.call"
+    ],
+    "verification": "Read draft deduction rule; compiled and ran C++23 Base&/Derived probe with clang++ -std=c++23 -Wall -Wextra.",
+    "lesson": "M7/L3"
+  },
+  {
+    "where": "M7/L4 policy override correction",
+    "claim": "CMAKE_POLICY_VERSION_MINIMUM externally selects a policy version for old projects without updating their own minimum; supported configurations must be tested before raising it.",
+    "source_urls": [
+      "https://cmake.org/cmake/help/latest/variable/CMAKE_POLICY_VERSION_MINIMUM.html"
+    ],
+    "verification": "Opened official CMake variable documentation; CMake 4.3.3 refused VERSION 2.8 and configured with -DCMAKE_POLICY_VERSION_MINIMUM=3.5 in deleted temporary build.",
+    "lesson": "M7/L4"
+  },
+  {
+    "where": "M4/L4 contiguous matching elements sweep",
+    "claim": "A span over T requires contiguous compatible elements; vector<bool> is a special vector without contiguous bool elements.",
+    "source_urls": [
+      "https://eel.is/c++draft/span.cons",
+      "https://eel.is/c++draft/vector.bool"
+    ],
+    "verification": "Read span conversion constraints and vector<bool> specialization; narrowed the lesson and pretest wording.",
+    "lesson": "M4/L4"
+  },
+  {
+    "where": "M5/L6 C16 table and M5-LPA1",
+    "claim": "Burst of 2,000,000 push_backs into std::pmr::list<Order>, batches of 16, 125,000 samples/run, 7 runs (median [min-max] ns): heap p50 335, p99 1631 [1599-1727], p99.9 3711 [3327-5375], p99.99 14591 [8703-32767]; lazy pool p50 83, p99 125 [125-211], p99.9 16895 [16383-17407], p99.99 22527 [20479-27647]; prepared pool p50 83, p99 167 [125-211], p99.9 423 [375-463], p99.99 591 [503-14847]; p99.9 lazy/prepared ~40x; an earlier preserved 7-run set gave 17407/423 (~41x) and p99.99 33791 lazy, 1503 prepared",
+    "source_urls": [],
+    "verification": "measured: lab/solution/pool_tail.cpp, clang++ -std=c++20 -Wall -Wextra -O2, Apple M1 Max, macOS 27.0.1, Apple clang 21.0.0, one thread, no pinning, shared machine (load avg 11 at start), tmutil BackupNotRunning; raw ingest/lpa/evidence/m5-pool-tail-20261114-230017.txt (+ .summary); earlier set m5-pool-tail-20261114-221049.txt",
+    "lesson": "M5/L6"
+  },
+  {
+    "where": "M5/L6 C16 counters, M5-LPA2, M5-LPA3",
+    "claim": "Heap calls while timed: heap 2,000,000, lazy 499 (489 chunk fetches = ceil(2,000,000 / 4096 blocks per chunk), plus 10 growth steps of the chunk-bookkeeping vector: 1,2,4,...,512 entries), prepared 0; minor page faults while timed: heap ~5,895, lazy ~4,917, prepared 0 (heap and lazy vary by 1-3 faults across runs; heap-call counters identical)",
+    "source_urls": [],
+    "verification": "measured: counting global operator new and getrusage ru_minflt in lab/solution/pool_tail.cpp; raw ingest/lpa/evidence/m5-pool-tail-20261114-230017.txt; 489 + 10 = 499 checked against kBlocksPerChunk = 4096 and pool_lab.cpp refill()",
+    "lesson": "M5/L6"
+  },
+  {
+    "where": "M5/L6 C16",
+    "claim": "Page size on the course Mac is 16 KB; steady_clock advances in ~41-42 ns steps there",
+    "source_urls": [],
+    "verification": "measured: `pagesize` printed 16384; lat::clock_floor_ns() printed 41 in every run; TUTORIAL-MAP §5 records the 24 MHz counter",
+    "lesson": "M5/L6"
+  },
+  {
+    "where": "M5/L6 C16 side result",
+    "claim": "Warming the general heap (fill 2M nodes, clear, then time) cut minor faults from 5893 to 4 but did not lower its tail: p99 median 1567 ns cold vs 3007 ns warm, p50 211 both, 5 runs each",
+    "source_urls": [],
+    "verification": "measured: ingest/lpa/evidence/heap_warm_probe.cpp, clang++ -std=c++20 -O2; raw in ingest/lpa/evidence/m5-heap-warm-*.txt/.summary; cause inside the allocator not determined",
+    "lesson": "M5/L6"
+  },
+  {
+    "where": "M5/L6 C16 rule, M5-LPA4",
+    "claim": "A cost hitting fraction f of samples appears only in nearest-rank percentiles above 1-f; with 1 in 400 slow of 1,000,000, p99 is fast and p99.9 is slow; p99.99 needs >= 100,000 samples under the 10-samples-beyond-rank rule",
+    "source_urls": [],
+    "verification": "arithmetic on the nearest-rank definition; enforced and unit-tested in modules/06-hft-patterns/lab/measure/test_lat_hist.cpp (case 4: 1 in 1000 slow; case 5: min_samples)",
+    "lesson": "M5/L6"
+  },
+  {
+    "where": "M5/L6 C17, M5-LPA5",
+    "claim": "std::pmr::null_memory_resource()'s allocate always throws std::bad_alloc, so a monotonic_buffer_resource with it as upstream throws when its buffer is exhausted; new_delete_resource()/get_default_resource() upstreams succeed silently",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/memory/null_memory_resource"
+    ],
+    "verification": "run: checks/m5-lpa5.check.sh HIT for null_memory_resource(), MISS (allocation succeeded) for new_delete_resource() and get_default_resource(), crash for nullptr; https://en.cppreference.com/w/cpp/memory/null_memory_resource opened 2026-11-14: \"its allocate() function always throws std::bad_alloc\"",
+    "lesson": "M5/L6"
+  },
+  {
+    "where": "modules/06-hft-patterns/lab/measure/lat_hist.hpp",
+    "claim": "Log-linear histogram with 32 sub-buckets per power of two: exact below 64, reported value at most 1/32 above the truth, no allocation in record()",
+    "source_urls": [],
+    "verification": "unit test test_lat_hist.cpp ALL PASS (also under -fsanitize=address,undefined); tools/test_lat_hist.py shows floor-rank and kTailSamples=1 mutants fail",
+    "lesson": "M5/L6"
+  },
+  {
+    "lesson": "M6/L3",
+    "where": "M6/L3 C11, M6-LPA1",
+    "claim": "lat_hist prints p99.99 only with n >= 100,000 (10 samples beyond the rank; p99.9 10,000; p99 1,000)",
+    "source_urls": [],
+    "verification": "enforced in lat_hist.hpp min_samples; unit-tested in test_lat_hist.cpp; printed by clock_tail.cpp (7 runs, ingest/lpa/evidence/clock-tail-20261114-222516.txt)"
+  },
+  {
+    "lesson": "M6/L3",
+    "where": "M6/L3 C11",
+    "claim": "Empty interval x 1e6: p50 0, p99 42, p99.99 85 [85-167] ns, max 19.0 us [14.1-30.3 us]; 5,000-sample run max 84 ns; clock floor 41 ns",
+    "source_urls": [],
+    "verification": "measured: lab/measure/clock_tail.cpp, 7 runs, Apple M1 Max, macOS 27.0.1, Apple clang 21.0.0, -O2, no pinning, shared machine, tmutil BackupNotRunning, load ~11; raw ingest/lpa/evidence/clock-tail-20261114-222516.txt"
+  },
+  {
+    "lesson": "M6/L3",
+    "where": "M6-LPA2",
+    "claim": "Calls per batch = ceil(ticks x tick_ns / call_ns): with 10 ticks of 42 ns and an 8 ns call, 420 / 8 = 52.5, so 53 (52 spans 416 ns, under ten ticks); every input is stated in the card",
+    "source_urls": [],
+    "verification": "arithmetic on values given in the card; no machine-specific input"
+  },
+  {
+    "lesson": "M1/L5",
+    "where": "M1/L5 C17 table, M1-LPA1",
+    "claim": "2,000,000 moved orders, batches of 16, 125,000 samples, 7 runs (median [min-max] ns): p50 42 in all four runs; p99.99 copy-growth 49151 [43007-57343], move-growth 30207 [27135-41983], reserve only 21503 [19455-26111], prepared 6655 [3647-7295]; max 42.9 ms [41.7-46.4], 8.3 ms [8.1-8.8], 44583 [28542-340250], 28542 [19167-237417]",
+    "source_urls": [],
+    "verification": "measured: lab/solution/push_tail.cpp, Apple M1 Max, macOS 27.0.1, Apple clang 21.0.0, -O2, no pinning, shared machine, tmutil BackupNotRunning, load ~11; raw ingest/lpa/evidence/m1-push-tail-20261114-222518.txt; summary via summarize2.py"
+  },
+  {
+    "lesson": "M1/L5",
+    "where": "M1/L5 C17 counters, M1-LPA2/3",
+    "claim": "Copies while timed 2,097,151 / 0 / 0 / 0 and heap calls 2,097,173 / 22 / 0 / 0 identical in all 7 runs; minor faults vary by at most 2: copy-growth 14,647-14,649 (median 14,648), move-growth 10,014-10,015 (median 10,014), reserve-only 4,883 and prepared 0 in every run",
+    "source_urls": [],
+    "verification": "measured: counting global operator new, copy-constructor counter, getrusage ru_minflt; raw ingest/lpa/evidence/m1-push-tail-20261114-222518.txt; 2,097,151 = 2^21-1 = sum of libc++ doubling growth sizes"
+  },
+  {
+    "lesson": "M1/L5",
+    "where": "M1-LPA4",
+    "claim": "unordered_map::reserve(n) sets the bucket count so that n elements fit without exceeding max_load_factor, so inserts up to n do not rehash; rehash(n) sets only a bucket count of at least n, so it needs n / max_load_factor() buckets",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/container/unordered_map/reserve"
+    ],
+    "verification": "sourced; run: checks/m1-lpa4.check.sh inserts 500,000 elements at max_load_factor 1.0 and 0.5 and requires bucket_count() unchanged: reserve(500'000) and rehash(ceil(500'000 / max_load_factor())) HIT, rehash(500'000) MISS at 0.5"
+  },
+  {
+    "lesson": "M2/L4",
+    "where": "M2/L4 C8 LPA lens, M2-LPA1/2",
+    "claim": "At -O2 a block-scope static with a run-time initialiser compiles to __cxa_guard_acquire/release (+abort); a static constexpr local and a constinit global have no guard; an extern thread_local is accessed through a TLS wrapper call (_ZTW), a constinit thread_local is not",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/language/constinit"
+    ],
+    "verification": "compiled: clang++ -std=c++20 -O2 -S ingest/lpa/evidence/constinit_guard.cpp; assembly kept in ingest/lpa/evidence/m2-constinit-guard-20261114-223139.txt; no timing claim"
+  },
+  {
+    "lesson": "M3/L5",
+    "where": "M3/L5 C14 table, M3-LPA1",
+    "claim": "200,000 round trips, 20 us gaps, 7 runs (median [min-max]): condvar p50 5759, p99 38911, p99.9 311295, p99.99 1.25 ms [0.14-3.7 ms]; atomic::wait p50 6783, p99.99 0.74 ms; spin p50 125, p99 463, p99.9 16895, p99.99 0.35 ms [0.03-3.0 ms]; spin with background-QoS responder p50 423, p99.99 8.1 ms, one max 7.1 s; cores busy 0.94/1.17/1.98/1.67",
+    "source_urls": [],
+    "verification": "measured: lab/handoff_tail.cpp, Apple M1 Max, macOS 27.0.1, Apple clang 21.0.0, -O2, no pinning, shared machine, tmutil BackupNotRunning, load 10-11; raw ingest/lpa/evidence/m3-handoff-tail-20261114-222526.txt"
+  },
+  {
+    "lesson": "M3/L5",
+    "where": "M3/L5 C14 atomic::wait note",
+    "claim": "Without gaps (5 runs) libc++ atomic::wait matched the spin (p50 125 ns, p99.99 335 ns) with 2.0 cores busy, i.e. it polled and did not sleep",
+    "source_urls": [],
+    "verification": "measured: ingest/lpa/evidence/handoff_nogap.cpp (lab file with kGapNs = 0), raw ingest/lpa/evidence/m3-handoff-nogap-20261114-223256.txt"
+  },
+  {
+    "lesson": "M3/L5",
+    "where": "M3/L5 C14 E-core caveat",
+    "claim": "Background QoS steers threads toward the efficiency cores",
+    "source_urls": [
+      "https://developer.apple.com/library/archive/documentation/Performance/Conceptual/power_efficiency_guidelines_osx/PrioritizeWorkAtTheTaskLevel.html"
+    ],
+    "verification": "sourced: Apple Energy Efficiency Guide for Mac Apps, task-level prioritization (quality-of-service classes; background work is low priority and energy-efficient); the page does not name core placement, so the lesson words it as steering plus the measured effect (row above); placement not observable"
+  },
+  {
+    "lesson": "M3/L5",
+    "where": "M3-LPA3",
+    "claim": "Relaxed spin load then plain-int read is reported as a data race by ThreadSanitizer; acquire load is clean; memory_order_consume is refused because it orders only dependent reads and payload does not depend on turn; a relaxed spin followed by an acquire fence is valid C++ but ThreadSanitizer does not model fences, so the check refuses any fence form (m3-lpa3.impl.sh) and the key says to use the acquire load as the loop condition",
+    "source_urls": [],
+    "verification": "run: checks/m3-lpa3.check.sh HIT for acquire and seq_cst, MISS for relaxed, consume, every fence form (including relaxed+acquire fence), and a non-waiting if; M3-LPA6 (checks/m3-lpa6.check.sh) HIT for acquire, MISS for relaxed and consume under TSan; https://eel.is/c++draft/atomics.order"
+  },
+  {
+    "lesson": "M4/L5",
+    "where": "M4/L5 C15 table, M4-LPA1",
+    "claim": "1,000,000 calls each timed, 7 runs: p50/p99/p99.9 equal for throw and expected at every rate except throw 1% (p99 5631); p99.99 at 0.01%: throw 5759 [5759-5887] vs expected 167 [85-167]; throw 1% p99.99 6143; mean ns/call 1.3/1.1 (0%), 1.9/1.1 (0.01%), 59.9/1.1 (1%); heap calls = number of throws (std::invalid_argument message); the mean column is a second, uninstrumented pass (one clock pair around all 1,000,000 calls), not the average of the timed samples",
+    "source_urls": [],
+    "verification": "measured: lab/expected_tail.cpp, Apple M1 Max, macOS 27.0.1, Apple clang 21.0.0, -O2, no pinning, shared machine, tmutil BackupNotRunning, load ~11; raw ingest/lpa/evidence/m4-expected-tail-20261114-222522.txt"
+  },
+  {
+    "lesson": "M4/L5",
+    "where": "M4-LPA3, M4-LPA5",
+    "claim": "std::unexpected(e) constructs an expected holding the error; operator* without a value is undefined behaviour",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/utility/expected",
+      "https://en.cppreference.com/w/cpp/utility/expected/operator*"
+    ],
+    "verification": "sourced + run: checks/m4-lpa3.check.sh (-fno-exceptions) HIT for return std::unexpected(reject::bad_qty)/{...}, MISS for throw, return reject::bad_qty (no conversion), return {} (value 0), unexpected(0)"
+  },
+  {
+    "lesson": "M7/L5",
+    "where": "M7/L5 C10 table, M7-LPA1",
+    "claim": "1e6 keys shuffled insert order, 1e6 random lookups, 7 runs, the same compiler barrier after every lookup in both views: median of 5 means map 601 vs flat_map 101 ns (5.9x); per lookup p50 591 vs 125 (4.7x), p99 1183 vs 503 (2.4x), p99.99 6143 [5247-11263] vs 4351 [1151-4479] (1.4x); 1,000 inserts p50 map 1215 vs flat_map 196607 ns (160x); an earlier set with the barrier only in the per-lookup rows gave 6.2x, 4.3x, 3.0x",
+    "source_urls": [],
+    "verification": "measured: lab/bench/map_tail.cpp, Apple M1 Max, macOS 27.0.1, Apple clang 21.0.0, -O2, no pinning, shared machine, tmutil BackupNotRunning, 1-minute load 8.7-9.2; raw ingest/lpa/evidence/m7-map-tail-20261114-230312.txt (+ .summary); earlier set m7-map-tail-20261114-222735.txt (load 19-23)"
+  },
+  {
+    "lesson": "M7/L5",
+    "where": "M7-LPA3",
+    "claim": "Nearest-rank p99.99 of sorted s = s[(n*9999+9999)/10000 - 1]; floor form returns s[9999] for n = 10,000",
+    "source_urls": [],
+    "verification": "run: checks/m7-lpa3.check.sh on 11 sample counts (ASan/UBSan) with a non-identity sorted vector s[i] = 100*(i+1)+7, so an expression that only computes the rank cannot pass; ceil-of-double form also passes those counts"
+  },
+  {
+    "lesson": "M6/L5",
+    "where": "M6/L5 C12 tables, M6-LPA4/6",
+    "claim": "Capstone, 1e6 msgs every 2 us, 10 x 300 us snapshots, budget p99.9<=20 us & p99.99<=50 us, each run in a fresh process, 7 runs: closed loop p99.9 4479, p99.99 20479, over-50us 17 [10-59], budget met 7/7; open loop p99.9 98303, p99.99 286719, over-50us 1284 [1198-3301], met 0/7; sliced p99.9 14847, p99.99 34815, over-50us 52 [0-853], met 4/7; open-loop service p99.99 167 ns but max 300084 ns every run; queue wait p99.9 92159",
+    "source_urls": [],
+    "verification": "measured: lab/budget/solution/tail_budget.cpp, Apple M1 Max, macOS 27.0.1, Apple clang 21.0.0, -O2, no pinning, shared machine, tmutil BackupNotRunning, two busy threads, load 10-13; raw ingest/lpa/evidence/m6-tail-budget-forked-20261114-223524.txt; 1,250 expected over-50us = 10 stalls x 125 (arithmetic)"
+  },
+  {
+    "lesson": "M6/L5",
+    "where": "M6/L5 C12 surprise",
+    "claim": "With all runs in one process, the second open-loop run was much worse (sliced p99.9 655 us median of 7 runs when second vs 11 us median of 5 runs when first); cause (scheduler deprioritising long-busy threads) NOT confirmed",
+    "source_urls": [],
+    "verification": "measured: ingest/lpa/evidence/m6-tail-budget-20261114-223306.txt (one process, 7 runs) and m6-tail-budget-swapped-20261114-223431.txt (order swapped, 5 runs); an earlier one-process set at load ~25 is kept as m6-tail-budget-20261114-222819.txt"
+  },
+  {
+    "lesson": "M2/L4",
+    "where": "M2-LPA2/3/4",
+    "claim": "For `static std::uint64_t seq = start_value();` inside a function the -O2 assembly has 1 __cxa_guard_acquire and the counter is shared by all threads; `constinit thread_local std::uint64_t seq = 0;` at namespace scope has 0 and one copy per thread",
+    "source_urls": [
+      "https://en.cppreference.com/w/cpp/language/constinit"
+    ],
+    "verification": "compiled and run: modules/02-type-system/lab/starter and lab/solution constinit_guard.cpp (starter: guard count 1, thread B starts at 4, RESULT: TODO; solution: guard count 0, both threads 1..3, RESULT: PASS); checks/constinit_lab.check.sh and checks/m2-lpa2.check.sh; counts only, no timing claim"
+  }
+]

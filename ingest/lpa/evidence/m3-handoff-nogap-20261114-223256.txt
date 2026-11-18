@@ -1,0 +1,57 @@
+# m3-handoff-nogap: 5 runs; built with: clang++ -std=c++20 -Wall -Wextra -O2 -I modules/06-hft-patterns/lab/measure ingest/lpa/evidence/handoff_nogap.cpp
+# machine: Apple M1 Max, 10 cores, macOS 27.0.1, Apple clang version 21.0.0 (clang-2100.4.1.1)
+# run 1: 22:32:56, load 10.82 12.82 12.97, tmutil BackupNotRunning
+ping-pong x 200000 round trips per row, one every 0 ns; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, 10 hardware threads, no core pinning (macOS), shared machine
+condvar        n=200000  p50=5887  p99=26111  p99.9=96255  p99.99=606207  max=2419250 ns  (clock floor 41 ns)
+               CPU time / wall time = 0.99 cores
+atomic wait    n=200000  p50=125  p99=503  p99.9=543  p99.99=18431  max=45292 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.98 cores
+spin           n=200000  p50=125  p99=423  p99.9=503  p99.99=2559  max=12667 ns  (clock floor 41 ns)
+               CPU time / wall time = 2.00 cores
+spin, E-core   n=200000  p50=423  p99=503  p99.9=28671  p99.99=671743  max=153266125 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.14 cores
+# exit 0
+# run 2: 22:32:58, load 10.82 12.82 12.97, tmutil BackupNotRunning
+ping-pong x 200000 round trips per row, one every 0 ns; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, 10 hardware threads, no core pinning (macOS), shared machine
+condvar        n=200000  p50=5247  p99=15871  p99.9=23551  p99.99=37887  max=59459 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.07 cores
+atomic wait    n=200000  p50=125  p99=125  p99.9=211  p99.99=335  max=45292 ns  (clock floor 41 ns)
+               CPU time / wall time = 2.00 cores
+spin           n=200000  p50=125  p99=375  p99.9=423  p99.99=503  max=30792 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.98 cores
+spin, E-core   n=200000  p50=423  p99=463  p99.9=9983  p99.99=200703  max=97526625 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.26 cores
+# exit 0
+# run 3: 22:33:00, load 10.82 12.82 12.97, tmutil BackupNotRunning
+ping-pong x 200000 round trips per row, one every 0 ns; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, 10 hardware threads, no core pinning (macOS), shared machine
+condvar        n=200000  p50=4735  p99=12031  p99.9=23039  p99.99=39935  max=711250 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.07 cores
+atomic wait    n=200000  p50=125  p99=125  p99.9=211  p99.99=335  max=22166 ns  (clock floor 41 ns)
+               CPU time / wall time = 2.00 cores
+spin           n=200000  p50=125  p99=375  p99.9=375  p99.99=463  max=20542 ns  (clock floor 41 ns)
+               CPU time / wall time = 2.00 cores
+spin, E-core   n=200000  p50=423  p99=463  p99.9=29695  p99.99=933887  max=334885792 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.06 cores
+# exit 0
+# run 4: 22:33:02, load 10.75 12.77 12.95, tmutil BackupNotRunning
+ping-pong x 200000 round trips per row, one every 0 ns; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, 10 hardware threads, no core pinning (macOS), shared machine
+condvar        n=200000  p50=4735  p99=13055  p99.9=22527  p99.99=38911  max=164667 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.06 cores
+atomic wait    n=200000  p50=125  p99=423  p99.9=463  p99.99=6399  max=24417 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.99 cores
+spin           n=200000  p50=125  p99=125  p99.9=211  p99.99=295  max=11916 ns  (clock floor 41 ns)
+               CPU time / wall time = 2.00 cores
+spin, E-core   n=200000  p50=423  p99=463  p99.9=14335  p99.99=270335  max=152066708 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.15 cores
+# exit 0
+# run 5: 22:33:04, load 10.75 12.77 12.95, tmutil BackupNotRunning
+ping-pong x 200000 round trips per row, one every 0 ns; environment: clang 21.0.0 (clang-2100.4.1.1), optimised, 10 hardware threads, no core pinning (macOS), shared machine
+condvar        n=200000  p50=4735  p99=12031  p99.9=20991  p99.99=37887  max=487500 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.07 cores
+atomic wait    n=200000  p50=125  p99=125  p99.9=167  p99.99=295  max=7667 ns  (clock floor 41 ns)
+               CPU time / wall time = 2.00 cores
+spin           n=200000  p50=125  p99=125  p99.9=211  p99.99=335  max=11667 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.97 cores
+spin, E-core   n=200000  p50=423  p99=463  p99.9=18943  p99.99=376831  max=194868250 ns  (clock floor 41 ns)
+               CPU time / wall time = 1.18 cores
+# exit 0

@@ -1,0 +1,436 @@
+{
+ "m1-c1": [
+  "&&, noexcept, move, move",
+  "noexcept, &&, move, move",
+  [
+   "move, noexcept, &&",
+   "&&, noexcept, move",
+   "I deny: &&, noexcept, move, move"
+  ]
+ ],
+ "m1-c3": [
+  "int, double, const char*, const std::vector<int>&",
+  "double, int, const char*",
+  [
+   "a=double b=int c=char* d=int",
+   "int, double, char*, const std::vector<int>&",
+   "int, double, const char*",
+   "int, double, const char*, const std::vector<Order>&",
+   "int, double, const char*, const std::vector<double>&",
+   "INT, double, const char*, const std::vector<int>&"
+  ]
+ ],
+ "m1-c5": [
+  "class, uint8_t",
+  "class, int",
+  [
+   "struct, int"
+  ]
+ ],
+ "m1-c6": [
+  "steady_clock",
+  "system_clock"
+ ],
+ "m2-c1": [
+  "concept, requires, double",
+  "requires, concept, double",
+  [
+   "double, requires, concept"
+  ]
+ ],
+ "m2-c2": [
+  "consteval",
+  "constexpr",
+  [
+   "not consteval",
+   "consteval extra"
+  ]
+ ],
+ "m2-c3": [
+  "args, if constexpr, T",
+  "T, if constexpr, args",
+  [
+   "T, if constexpr, args"
+  ]
+ ],
+ "m2-c4": [
+  "Message, MarketDataMessage, constrained",
+  "MarketDataMessage, Message, constrained",
+  [
+   "I deny every claim: Message, MarketDataMessage, constrained"
+  ]
+ ],
+ "m3-c1": [
+  "jthread, stop_token, stop_requested",
+  "stop_token, jthread, stop_requested",
+  [
+   "stop_requested, stop_token, jthread",
+   "std::jthread, stop_token, stop_requested",
+   "Jthread, stop_token, stop_requested"
+  ]
+ ],
+ "m3-c2": [
+  "release, acquire",
+  "acquire, release",
+  [
+   "acquire, release",
+   "std::release, std::acquire",
+   "std::release, acquire",
+   "Release, acquire",
+   "std::memory_order_release, acquire"
+  ]
+ ],
+ "m3-c3": [
+  "atomic_ref",
+  "atomic",
+  [
+   "not atomic_ref",
+   "atomic_ref extra",
+   "do not use atomic_ref",
+   "Atomic_ref",
+   "std::atomic_ref",
+   "\"atomic_ref\""
+  ]
+ ],
+ "m3-c4": [
+  "promise_type, coroutine_handle, awaitable",
+  "coroutine_handle, promise_type, awaitable",
+  [
+   "I deny every claim: promise_type, coroutine_handle, awaitable"
+  ]
+ ],
+ "m3-c5": [
+  "generator, co_yield",
+  "co_yield, generator",
+  [
+   "I deny every claim: generator, co_yield",
+   "std::generator, co_yield",
+   "Generator, co_yield"
+  ]
+ ],
+ "m4-c1": [
+  "filter, transform",
+  "transform, filter",
+  [
+   "transform, filter",
+   "std::views::filter, transform",
+   "Filter, transform"
+  ]
+ ],
+ "m4-c2": [
+  "optional, nullopt, idx",
+  "nullopt, optional, idx",
+  [
+   "idx, nullopt, optional",
+   "optional, nullopt, *idx",
+   "optional, nullopt, IDX",
+   "std::optional, nullopt, idx",
+   "optional, std::nullopt, idx",
+   "Optional, nullopt, idx"
+  ]
+ ],
+ "m4-c3": [
+  "visit, v",
+  "v, visit",
+  [
+   "v, visit",
+   "std::visit, v",
+   "Visit, v"
+  ]
+ ],
+ "m4-c4": [
+  "ranges, sort",
+  "sort, ranges",
+  [
+   "sort, ranges",
+   "std::ranges, sort",
+   "Ranges, sort"
+  ]
+ ],
+ "m4-c5": [
+  "string_view, string_view",
+  "string, string_view",
+  [
+   "string_view",
+   "std::string_view, string_view",
+   "String_view, string_view"
+  ]
+ ],
+ "m4-c6": [
+  "span, byte",
+  "byte, span",
+  [
+   "byte, span",
+   "std::span, byte",
+   "Span, byte"
+  ]
+ ],
+ "m5-c1": [
+  "monotonic_buffer_resource, string, resource",
+  "string, monotonic_buffer_resource, resource",
+  [
+   "monotonic_buffer_resource, string",
+   "resource, string, monotonic_buffer_resource",
+   "monotonic_buffer_resource, string, wrong"
+  ]
+ ],
+ "m5-c2": [
+  "alignas, alignas",
+  "aligned, alignas",
+  [
+   "alignas",
+   "alignas, wrong",
+   "not alignas, alignas"
+  ]
+ ],
+ "m5-c3": [
+  "consteval, [[unlikely]]",
+  "[[unlikely]], consteval",
+  [
+   "constexpr, [[unlikely]]",
+   "consteval, [[likely]]",
+   "not consteval, [[unlikely]]"
+  ]
+ ],
+ "m5-c4": [
+  "execution, execution, par",
+  "execution, par, execution",
+  [
+   "I deny every claim: execution, execution, par",
+   "par, execution, execution",
+   "execution, execution, seq",
+   "execution, execution, par, extra"
+  ]
+ ],
+ "m5-c5": [
+  "chrono_literals",
+  "string_literals",
+  [
+   "string_literals",
+   "not chrono_literals",
+   "chrono_literals; string_literals",
+   "chrono_literals extra"
+  ]
+ ],
+ "m5-c6": [
+  "next, free_, free_",
+  "free_, next, free_",
+  [
+   "next, n, free_",
+   "next, free_, free_, extra",
+   "next, free_, n"
+  ]
+ ],
+ "m6-c1": [
+  "release, acquire",
+  "acquire, release",
+  [
+   "acquire, release",
+   "std::release, std::acquire"
+  ]
+ ],
+ "m6-c2": [
+  "array, SpscRing",
+  "SpscRing, array",
+  [
+   "I deny every claim: array, SpscRing",
+   "fixed size array, lock-free queue",
+   "std::array, SpscRing"
+  ]
+ ],
+ "m6-c4": [
+  "__builtin_prefetch, 0, 0",
+  "__builtin_prefetch(&buckets[h], 1, 0)",
+  [
+   "__builtin_prefetch(&buckets[0], 0, 3)",
+   "__builtin_prefetch, 1, 0"
+  ]
+ ],
+ "m7-c1": [
+  "export, export, import",
+  "import, export, export",
+  [
+   "import, export, export"
+  ]
+ ],
+ "m7-c2": [
+  "target_compile_features, target_link_libraries, PRIVATE",
+  "target_link_libraries, target_compile_features, PRIVATE",
+  [
+   "target_link_libraries, target_compile_features, PRIVATE"
+  ]
+ ],
+ "m7-c3": [
+  "sanitize, address",
+  "address, sanitize",
+  [
+   "sanitize, leak",
+   "sanitize, thread",
+   "sanitize, address but use thread"
+  ]
+ ],
+ "m7-c4": [
+  "DoNotOptimize",
+  "DoNotOptimizeWrong",
+  [
+   "DoNotOptimizeWrong",
+   "DoNotOptimize does not prevent dead-code elimination",
+   "donotoptimize"
+  ]
+ ],
+ "pool_lab": [
+  "modules/05-memory-perf/lab/solution/pool_lab.cpp",
+  "modules/05-memory-perf/lab/starter/pool_lab.cpp",
+  [
+   "modules/05-memory-perf/checks/fixtures/pool_size_only.cpp"
+  ]
+ ],
+ "spsc_lab": [
+  "modules/06-hft-patterns/lab/spsc/solution",
+  "modules/06-hft-patterns/lab/spsc/starter"
+ ],
+ "pool_tail": [
+  "modules/05-memory-perf/lab/solution/pool_tail.cpp",
+  "modules/05-memory-perf/lab/starter/pool_tail.cpp",
+  [
+   "modules/05-memory-perf/checks/fixtures/pool_tail_half/pool_tail.cpp",
+   "modules/05-memory-perf/checks/fixtures/pool_tail_noclear/pool_tail.cpp",
+   "modules/05-memory-perf/checks/fixtures/pool_tail_wrongresource/pool_tail.cpp",
+   "modules/05-memory-perf/checks/fixtures/pool_tail_hardcoded/pool_tail.cpp"
+  ]
+ ],
+ "m5-lpa5": [
+  "std::pmr::null_memory_resource()",
+  "std::pmr::new_delete_resource()",
+  [
+   "std::pmr::get_default_resource()",
+   "nullptr",
+   "std::pmr::null_memory_resource",
+   "null_memory_resource(); system(\"true\")",
+   "new std::pmr::monotonic_buffer_resource(std::pmr::null_memory_resource())"
+  ]
+ ],
+ "push_tail": [
+  "modules/01-foundations/lab/solution/push_tail.cpp",
+  "modules/01-foundations/lab/starter/push_tail.cpp",
+  [
+   "modules/01-foundations/checks/fixtures/push_tail_nonoexcept/push_tail.cpp",
+   "modules/01-foundations/checks/fixtures/push_tail_copynoexcept/push_tail.cpp",
+   "modules/01-foundations/checks/fixtures/push_tail_half/push_tail.cpp",
+   "modules/01-foundations/checks/fixtures/push_tail_hardcoded/push_tail.cpp",
+   "modules/01-foundations/checks/fixtures/push_tail_otherbook/push_tail.cpp"
+  ]
+ ],
+ "tail_budget": [
+  "modules/06-hft-patterns/lab/budget/solution/tail_budget.cpp",
+  "modules/06-hft-patterns/lab/budget/starter/tail_budget.cpp",
+  [
+   "modules/06-hft-patterns/checks/fixtures/tail_budget_maxprev/tail_budget.cpp",
+   "modules/06-hft-patterns/checks/fixtures/tail_budget_fromnow/tail_budget.cpp",
+   "modules/06-hft-patterns/checks/fixtures/tail_budget_offbyone/tail_budget.cpp"
+  ]
+ ],
+ "m4-lpa3": [
+  "return std::unexpected(reject::bad_qty)",
+  "throw reject::bad_qty",
+  [
+   "return reject::bad_qty",
+   "return {}",
+   "return std::unexpected(0)",
+   "return std::unexpected(reject::bad_px)",
+   "return std::unexpected(reject::bad_qty); system(\"true\")",
+   "return {std::unexpect}",
+   "return std::unexpected{reject{}}"
+  ]
+ ],
+ "m3-lpa3": [
+  "while (turn.load(std::memory_order_acquire) != 1) {}",
+  "while (turn.load(std::memory_order_relaxed) != 1) {}",
+  [
+   "turn.wait(0)",
+   "while (turn.load(std::memory_order_acquire) != 1) std::this_thread::yield();",
+   "while (turn.load(std::memory_order_acquire) == 0) {} payload = 0;",
+   "if (turn.load(std::memory_order_acquire) != 1) {}",
+   "while (turn.load(std::memory_order_consume) != 1) {}",
+   "std::atomic_thread_fence(std::memory_order_acquire); while (turn.load(std::memory_order_relaxed) != 1) {}",
+   "while (turn.load(std::memory_order_relaxed) != 1) {} std::atomic_thread_fence(std::memory_order_release);",
+   "while (turn.load(std::memory_order_relaxed) != 1) {} if (0) std::atomic_thread_fence(std::memory_order_acquire);",
+   "while (turn.load(std::memory_order_relaxed) != 1) { std::atomic_thread_fence(std::memory_order_acquire); }",
+   "while (turn.load(std::memory_order_relaxed) != 1) {} std::atomic_thread_fence(std::memory_order_acquire);",
+   "while (turn.load(std::memory_order_acquire) != 1) { return; }"
+  ]
+ ],
+ "m7-lpa3": [
+  "s[(s.size() * 9999 + 9999) / 10000 - 1]",
+  "s[s.size() * 9999 / 10000]",
+  [
+   "s[s.size() / 2]",
+   "s.back()",
+   "s[(s.size() * 9999) / 10000 - 1]",
+   "s[s.size() * 9999 / 10000 + 1]",
+   "(s.size() * 9999 + 9999) / 10000",
+   "std::ceil(0.9999 * s.size())",
+   "s.size() - s.size() / 10000"
+  ]
+ ],
+ "m1-lpa4": [
+  "live.reserve(500'000);",
+  "live.rehash(500'000);",
+  [
+   "live.reserve(500 000);",
+   "live.reserve(400'000);",
+   "live.rehash(500'000)",
+   "live.reserve(500'000); live.clear()",
+   "(live.max_load_factor(1e9f), live.rehash(1))",
+   "live.rehash(7'000'000)"
+  ]
+ ],
+ "m2-lpa2": [
+  "constinit thread_local std::uint64_t seq = 0;",
+  "thread_local std::uint64_t seq = 0;",
+  [
+   "constinit thread_local constinit std::uint64_t seq = 0;",
+   "constinit std::uint64_t seq = 0;",
+   "constexpr thread_local std::uint64_t seq = 0;",
+   "constinit thread_local std::uint32_t seq = 0;",
+   "constinit thread_local std::uint64_t seq = 5;",
+   "thread_local std::uint64_t seq = (sizeof(\"constinit\") == 0);",
+   "thread_local std::uint64_t seq = []{ return sizeof(\"constinit\") - 8; }();",
+   "thread_local std::uint64_t seq = 0; // constinit"
+  ]
+ ],
+ "constinit_lab": [
+  "modules/02-type-system/lab/solution/constinit_guard.cpp",
+  "modules/02-type-system/lab/starter/constinit_guard.cpp",
+  [
+   "modules/02-type-system/checks/fixtures/constinit_shared/constinit_guard.cpp",
+   "modules/02-type-system/checks/fixtures/constinit_noword/constinit_guard.cpp",
+   "modules/02-type-system/checks/fixtures/constinit_localstatic/constinit_guard.cpp",
+   "modules/02-type-system/checks/fixtures/constinit_comment/constinit_guard.cpp",
+   "modules/02-type-system/checks/fixtures/constinit_wrongvar/constinit_guard.cpp"
+  ]
+ ],
+ "m3-lpa6": [
+  "acquire",
+  "relaxed",
+  [
+   "consume",
+   "seq_cst",
+   "release",
+   "memory_order_acquire extra",
+   "acquire, acquire",
+   "std::atomic_thread_fence(acquire)"
+  ]
+ ],
+ "m7-lpa6": [
+  "9999, 9999",
+  "9999, 0",
+  [
+   "0, 9999",
+   "9999",
+   "10000, 9999",
+   "9999, 9999, 9999",
+   "1, 9999"
+  ]
+ ]
+}
