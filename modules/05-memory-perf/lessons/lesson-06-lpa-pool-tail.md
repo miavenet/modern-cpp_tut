@@ -38,7 +38,7 @@ Key:
 
 In this lab, 2,000,000 orders at 4,096 blocks per chunk need 489 refills, so they hit at most 489 of 125,000 samples, which is 0.39%. So p99 (the slowest 1%) cannot see them, but p99.9 (the slowest 0.1%) is made of them.
 
-**What these numbers are, honestly.** They come from the course Mac: an Apple M1 Max, macOS 27, Apple clang 21 with `-O2`. One thread, no core pinning (macOS offers only hints), on a shared machine, 125,000 samples per run. The values are median [lowest to highest] over 7 runs, in ns per batch of 16 `push_back`s (raw output: `ingest/lpa/evidence/m5-pool-tail-20261114-230017.txt` and its `.summary`, private edition).
+**What these numbers are, honestly.** They come from the course Mac: an Apple M1 Max, macOS 27, Apple clang 21 with `-O2`. One thread, no core pinning (macOS offers only hints), on a shared machine, 125,000 samples per run. The values are median [lowest to highest] over 7 runs, in ns per batch of 16 `push_back`s (raw output: `ingest/lpa/evidence/m5-pool-tail-20261114-230017.txt` and its `.summary`).
 
 | Run | p50 | p99 | p99.9 | p99.99 | heap calls while timed | page faults while timed |
 |---|---|---|---|---|---|---|

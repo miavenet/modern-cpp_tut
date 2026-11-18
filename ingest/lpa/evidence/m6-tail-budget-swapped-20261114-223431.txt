@@ -1,0 +1,117 @@
+# m6-tail-budget-swapped: 5 runs; built with: clang++ -std=c++20 -Wall -Wextra -O2 -I modules/06-hft-patterns/lab/measure -I modules/06-hft-patterns/lab/spsc/solution ingest/lpa/evidence/tail_budget_swapped.cpp
+# machine: Apple M1 Max, 10 cores, macOS 27.0.1, Apple clang version 21.0.0 (clang-2100.4.1.1)
+# run 1: 22:34:31, load 12.47 13.20 13.12, tmutil BackupNotRunning
+1000000 messages, one every 2000 ns, snapshot 300000 ns every 100000 messages
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, two busy threads, no core pinning (macOS), shared machine
+== closed loop (feed waits for each reply)
+end-to-end     n=1000000  p50=211  p99=671  p99.9=4223  p99.99=21503  max=300667 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=42  p99.9=125  p99.99=16895  max=125917 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=167  p99=591  p99.9=3583  p99.99=16383  max=155375 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=42  p99.9=125  p99.99=167  max=300084 ns  (clock floor 41 ns)
+               messages over 50 us = 19; budget (p99.9 <= 20 us, p99.99 <= 50 us): MET
+== open loop, snapshot sliced
+end-to-end     n=1000000  p50=211  p99=19455  p99.9=1015807  p99.99=2162687  max=2315292 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=125  p99.9=589823  p99.99=2162687  max=2314958 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=167  p99=3455  p99.9=409599  p99.99=1441791  max=1619542 ns  (clock floor 41 ns)
+service        n=1000000  p50=41  p99=42  p99.9=1055  p99.99=1087  max=16375 ns  (clock floor 41 ns)
+               messages over 50 us = 8212; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+== open loop (your intended_send_ns)
+end-to-end     n=1000000  p50=211  p99=1087  p99.9=131071  p99.99=303103  max=426459 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=42  p99.9=5887  p99.99=22015  max=58500 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=167  p99=639  p99.9=129023  p99.99=294911  max=426417 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=42  p99.9=125  p99.99=167  max=300083 ns  (clock floor 41 ns)
+               messages over 50 us = 1443; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+RESULT: PASS - the feed keeps its own schedule (open loop)
+# exit 0
+# run 2: 22:34:38, load 12.83 13.27 13.14, tmutil BackupNotRunning
+1000000 messages, one every 2000 ns, snapshot 300000 ns every 100000 messages
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, two busy threads, no core pinning (macOS), shared machine
+== closed loop (feed waits for each reply)
+end-to-end     n=1000000  p50=211  p99=719  p99.9=7679  p99.99=30719  max=1424042 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=85  p99.9=1439  p99.99=19967  max=1423667 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=167  p99=639  p99.9=3519  p99.99=20991  max=766792 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=125  p99.9=125  p99.99=167  max=300084 ns  (clock floor 41 ns)
+               messages over 50 us = 70; budget (p99.9 <= 20 us, p99.99 <= 50 us): MET
+== open loop, snapshot sliced
+end-to-end     n=1000000  p50=211  p99=799  p99.9=8447  p99.99=27647  max=110625 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=41  p99=83  p99.9=4735  p99.99=14335  max=47541 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=639  p99.9=4863  p99.99=24063  max=110125 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=125  p99.9=1055  p99.99=1087  max=7875 ns  (clock floor 41 ns)
+               messages over 50 us = 49; budget (p99.9 <= 20 us, p99.99 <= 50 us): MET
+== open loop (your intended_send_ns)
+end-to-end     n=1000000  p50=211  p99=4587519  p99.9=20447231  p99.99=22020095  max=22122083 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=41  p99=4325375  p99.9=14417919  p99.99=15466495  max=15504458 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=368639  p99.9=6684671  p99.99=7542959  max=7542959 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=125  p99.9=125  p99.99=167  max=7538834 ns  (clock floor 41 ns)
+               messages over 50 us = 15495; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+RESULT: PASS - the feed keeps its own schedule (open loop)
+# exit 0
+# run 3: 22:34:44, load 12.53 13.19 13.12, tmutil BackupNotRunning
+1000000 messages, one every 2000 ns, snapshot 300000 ns every 100000 messages
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, two busy threads, no core pinning (macOS), shared machine
+== closed loop (feed waits for each reply)
+end-to-end     n=1000000  p50=211  p99=719  p99.9=3647  p99.99=13055  max=300666 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=83  p99.9=591  p99.99=9983  max=56875 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=639  p99.9=3007  p99.99=10751  max=98416 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=83  p99.9=125  p99.99=167  max=300083 ns  (clock floor 41 ns)
+               messages over 50 us = 13; budget (p99.9 <= 20 us, p99.99 <= 50 us): MET
+== open loop, snapshot sliced
+end-to-end     n=1000000  p50=211  p99=879  p99.9=11263  p99.99=50175  max=169625 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=125  p99.9=6655  p99.99=26111  max=68250 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=639  p99.9=7807  p99.99=36863  max=169584 ns  (clock floor 41 ns)
+service        n=1000000  p50=41  p99=125  p99.9=1055  p99.99=1151  max=12834 ns  (clock floor 41 ns)
+               messages over 50 us = 99; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+== open loop (your intended_send_ns)
+end-to-end     n=1000000  p50=211  p99=751  p99.9=108543  p99.99=286719  max=300708 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=41  p99=83  p99.9=11263  p99.99=71679  max=191458 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=167  p99=639  p99.9=94207  p99.99=286719  max=299041 ns  (clock floor 41 ns)
+service        n=1000000  p50=41  p99=42  p99.9=125  p99.99=167  max=300084 ns  (clock floor 41 ns)
+               messages over 50 us = 1413; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+RESULT: PASS - the feed keeps its own schedule (open loop)
+# exit 0
+# run 4: 22:34:51, load 12.57 13.19 13.12, tmutil BackupNotRunning
+1000000 messages, one every 2000 ns, snapshot 300000 ns every 100000 messages
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, two busy threads, no core pinning (macOS), shared machine
+== closed loop (feed waits for each reply)
+end-to-end     n=1000000  p50=211  p99=671  p99.9=4351  p99.99=20479  max=300666 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=42  p99.9=167  p99.99=14591  max=56042 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=639  p99.9=3583  p99.99=14591  max=39750 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=42  p99.9=125  p99.99=167  max=300084 ns  (clock floor 41 ns)
+               messages over 50 us = 11; budget (p99.9 <= 20 us, p99.99 <= 50 us): MET
+== open loop, snapshot sliced
+end-to-end     n=1000000  p50=211  p99=1183  p99.9=9727  p99.99=24575  max=67834 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=85  p99.9=5759  p99.99=15615  max=66375 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=639  p99.9=6527  p99.99=17919  max=56583 ns  (clock floor 41 ns)
+service        n=1000000  p50=41  p99=125  p99.9=1087  p99.99=1087  max=13375 ns  (clock floor 41 ns)
+               messages over 50 us = 15; budget (p99.9 <= 20 us, p99.99 <= 50 us): MET
+== open loop (your intended_send_ns)
+end-to-end     n=1000000  p50=211  p99=4479  p99.9=159743  p99.99=294911  max=379167 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=125  p99.9=38911  p99.99=135167  max=255875 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=1471  p99.9=139263  p99.99=286719  max=346583 ns  (clock floor 41 ns)
+service        n=1000000  p50=41  p99=125  p99.9=125  p99.99=211  max=300083 ns  (clock floor 41 ns)
+               messages over 50 us = 2739; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+RESULT: PASS - the feed keeps its own schedule (open loop)
+# exit 0
+# run 5: 22:34:57, load 11.96 13.05 13.07, tmutil BackupNotRunning
+1000000 messages, one every 2000 ns, snapshot 300000 ns every 100000 messages
+environment: clang 21.0.0 (clang-2100.4.1.1), optimised, two busy threads, no core pinning (macOS), shared machine
+== closed loop (feed waits for each reply)
+end-to-end     n=1000000  p50=211  p99=671  p99.9=4351  p99.99=13311  max=300667 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=83  p99.9=503  p99.99=10239  max=33416 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=591  p99.9=3135  p99.99=10751  max=161875 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=42  p99.9=125  p99.99=167  max=300084 ns  (clock floor 41 ns)
+               messages over 50 us = 12; budget (p99.9 <= 20 us, p99.99 <= 50 us): MET
+== open loop, snapshot sliced
+end-to-end     n=1000000  p50=211  p99=88063  p99.9=1409023  p99.99=2621439  max=2757959 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=42  p99=5247  p99.9=1081343  p99.99=2621439  max=2756292 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=12543  p99.9=835583  p99.99=1572863  max=1740417 ns  (clock floor 41 ns)
+service        n=1000000  p50=0  p99=125  p99.9=1055  p99.99=1087  max=137583 ns  (clock floor 41 ns)
+               messages over 50 us = 11286; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+== open loop (your intended_send_ns)
+end-to-end     n=1000000  p50=211  p99=1471  p99.9=147455  p99.99=327679  max=515125 ns  (clock floor 41 ns)
+send lateness  n=1000000  p50=41  p99=125  p99.9=9215  p99.99=327679  max=514791 ns  (clock floor 41 ns)
+queue wait     n=1000000  p50=125  p99=639  p99.9=106495  p99.99=286719  max=301209 ns  (clock floor 41 ns)
+service        n=1000000  p50=41  p99=125  p99.9=125  p99.99=211  max=300084 ns  (clock floor 41 ns)
+               messages over 50 us = 1642; budget (p99.9 <= 20 us, p99.99 <= 50 us): BROKEN
+RESULT: PASS - the feed keeps its own schedule (open loop)
+# exit 0
