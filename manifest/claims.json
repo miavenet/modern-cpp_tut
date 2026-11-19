@@ -3600,5 +3600,120 @@
     "claim": "-ftrivial-auto-var-init=pattern gives 0xaaaaaaaa on Apple clang 21 and 0xfefefefe on GCC 13.3; the pattern is not a contract",
     "source_urls": [],
     "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/autoinit_pick.cpp printed 0xaaaaaaaa; Linux part re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC 0xfefefefe"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB9",
+    "claim": "vector growth: 11 allocations to 1000 elements; 1023 copies without noexcept move, 1023 moves with it; reserve(1000) gives 1 allocation and no copies or moves",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: modules/01-foundations/lab/practice/vector_grow.cpp printed caps 1..1024, allocations=11, copies=1023/moves=0, copies=0/moves=1023, reserve: allocations=1; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same with GCC 13.3 libstdc++; [vector.modifiers] p1, [vector.capacity] p4, p7 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB10",
+    "claim": "gcd(1071,462): plain call not folded on 5 toolchains; constexpr function folded only by GCC; constexpr variable initializer folded everywhere",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: gcd_fold.cpp -O2 -S: ask_optimizer and ask_constexpr_fn keep udiv, ask_forced is mov w0, #21; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC returns 21 in ask_constexpr_fn and ask_forced, udiv in ask_optimizer (-O2, -O3); clang 18 as Apple clang; x86-64 gcc 14.3 / clang 19.1 from an earlier Compiler Explorer run, 2026-11-18 (not re-run here); [dcl.constexpr] p10 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M3/L6",
+    "where": "M3-PB15",
+    "claim": "three successive stores: plain int keeps 1 store, volatile 3, relaxed atomic 3 (a compiler choice; P0062R1)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: stage_stores.cpp -O1/-O2 -S: str counts plain 1, volatile 3, atomic 3; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same 1/3/3 with GCC 13.3 and clang 18.1.3 at -O1 and -O2; x86-64 from an earlier Compiler Explorer run, 2026-11-18 (not re-run here); [intro.abstract]/6.1, [dcl.type.cv]/5, [intro.races]/22 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB24",
+    "claim": "a variable whose address is passed to an opaque call inside the loop is stored and reloaded every step; escaping a copy, or escaping once before the loop, does not force that",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: escape_opaque.cpp -O2 -S: sum_escape_each ldr/str [sp,#12] around bl observe; sum_snapshot stores snap only; sum_escape_before one reload then add.4s; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC 13.3 ldr/str [sp,...] in sum_escape_each, sum_escape_before vectorized only at -O3; x86-64 from an earlier Compiler Explorer run, 2026-11-18 (not re-run here)"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB25",
+    "claim": "__builtin_nontemporal_store is clang-only, lowers differently per target and compiler, and a C++ release operation does not emit sfence after movnti on x86-64 clang 19.1",
+    "source_urls": [
+      "https://clang.llvm.org/docs/LanguageExtensions.html#non-temporal-load-store-builtins"
+    ],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: stream_store.cpp -O2 -S: four stnp sites, str q0 and str w1 tails; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC 13.3 error \"'__builtin_nontemporal_store' was not declared in this scope\", clang 18 two stnp sites and str w1 tail; x86-64 movnti 9/9 and stream_publish.cpp fence results from an earlier Compiler Explorer run, 2026-11-18 (not re-run here) (clang 19.1); Intel SDM Vol. 2B MOVNTI (use SFENCE or MFENCE)"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB26",
+    "claim": "line size by reporter: macOS 128, Linux guest 64; interference constants 256/64 (Apple clang, GCC aarch64), 64/64 (x86-64 gcc 13.3), undefined on clang 18 + libstdc++",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: sysctl hw.cachelinesize 128; interference_macro.cpp printed 201703 destructive=256 constructive=64; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): getconf LEVEL1_DCACHE_LINESIZE 64, GCC 256/64, clang 18 'not defined'; x86-64 values from an earlier Compiler Explorer run, 2026-11-18 (not re-run here); [hardware.interference] p1 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB26",
+    "claim": "64 UDP datagrams: 64 sendto vs 1 sendmmsg (accepted in full), 1 recvmmsg drains all 64 (Linux, loopback)",
+    "source_urls": [],
+    "verification": "re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): udp_batch.cpp printed send_calls=64 / 1, recv_calls=1, empty_recv_calls=0 in 3 runs per mode; strace -f -c: 64 sendto + 1 recvmmsg vs 1 sendmmsg + 1 recvmmsg; sendmmsg(2), recvmmsg(2), recv(2) on man7.org"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB27",
+    "claim": "blocking recv: about one voluntary switch per message, no empty calls; spinning: 0 voluntary switches, hundreds of thousands of empty polls, one recvfrom syscall per attempt (Linux)",
+    "source_urls": [],
+    "verification": "re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): recv_wakeups.cpp untraced 5 runs per mode: block voluntary=199 empty=0; spin voluntary=0, involuntary 0 or 1, empty 236305-237616; traced spin 1560 recvfrom (1360 errors) vs 200 for block; recv(2), getrusage(2) on man7.org"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB28",
+    "claim": "Linux aarch64 container: REALTIME/MONOTONIC/MONOTONIC_RAW/BOOTTIME clock_gettime make 0 syscalls (vDSO); the two CPU-time clocks and getppid make 1000 each",
+    "source_urls": [],
+    "verification": "re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): strace -c on clock_ids.cpp ids 0-3 no clock_gettime row, ids 4 and 5 1000 calls; clock_vs_getppid.cpp 1000 getppid, no clock_gettime; current_clocksource arch_sys_counter; vdso(7) on man7.org"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB29",
+    "claim": "write prefetch becomes prefetchw on x86-64 only with -mprfchw, -march=skylake or -march=znver3; plain -O2 and x86-64-v3 silently give a read prefetch; arm64 keeps pstl1keep/pstl1strm",
+    "source_urls": [
+      "https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html"
+    ],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: prefetch_six.cpp -O2 -S: pldl1keep pldl2keep pldl3keep pldl1strm pstl1keep pstl1strm; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same six on GCC 13.3 and clang 18.1.3; x86-64 flag-set results from an earlier Compiler Explorer run, 2026-11-18 (not re-run here) (gcc 13.3, clang 18.1); Intel SDM PREFETCHW; GCC Other Builtins"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB30",
+    "claim": "__AVX2__ is a build property: each binary holds only one branch; __builtin_cpu_supports calls __cpu_indicator_init and reads __cpu_model at run time",
+    "source_urls": [
+      "https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html"
+    ],
+    "verification": "x86-64 only, not runnable on this Mac: carried from an earlier Compiler Explorer run, 2026-11-18 (not re-run here) (gcc 13.3, -O2 and -O2 -mavx2: one string per binary, call __cpu_indicator_init, read __cpu_model+12); GCC manual, x86 Built-in Functions"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB31",
+    "claim": "cache-partitioning report layers: Intel CPUID asymmetric-first (leaf 28H, then RDT_A leaf 10H), AMD PQE; kernel flags and resctrl; an arm64 container exposes none of it (exposure probe only)",
+    "source_urls": [
+      "https://docs.kernel.org/filesystems/resctrl.html"
+    ],
+    "verification": "x86 parts are citations only: Intel SDM Table 21-40, section 20.20.3 Tables 20-22/20-23 and following text; AMD APM Vol. 2 Table 19-1, 19.4.2; docs.kernel.org resctrl; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): rdt_probe.sh printed 0 RDT flags, resctrl 0, no /sys/fs/resctrl"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB27",
+    "claim": "an opaque call in another file stops being opaque under -flto: 0 calls and 0 stack accesses in the linked loop",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: lto_sum.cpp + lto_observe.cpp without -flto 1 bl observe and [sp accesses in sum_escape_each, with -flto 0 calls, 0 [sp, add.4s; both print 499500; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC 13.3 same, LTO symbol sum_escape_each(int const*, int) [clone .constprop.0]"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB28",
+    "claim": "ASan's quarantine stops immediate address reuse (0/257) that glibc plain builds show (257/257); quarantine_size_mb=0 restores it; the probe keeps its 4 shim calls",
+    "source_urls": [
+      "https://clang.llvm.org/docs/AddressSanitizer.html"
+    ],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: reuse_check.sh clang++: 4/4 shim calls, plain 58/257 (varies, not graded), ASan 0/257, quarantine_size_mb=0 257/257, 3 runs each; reuse_inline.cpp 0 new/delete calls; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): GCC and clang 18 plain 257/257, ASan 0/257, quarantine 0 257/257, 4/4 shim calls; reuse_inline.cpp GCC 4 calls, clang 18 0; [basic.stc]/4 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB29",
+    "claim": "int rolling hash overflows for abcdefghijkl (92599395 * 31), found only by UBSan; no compile-time warning",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: rolling_hash.cpp under -fsanitize=undefined: abc 96354/96354 no report; abcdefghijkl 'signed integer overflow: 92599395 * 31 cannot be represented in type 'int'', then 306089158/306089158; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same text with GCC 13.3 and clang 18.1.3; [expr.pre] p4, [basic.fundamental] p2 in C++20 draft N4861"
   }
 ]

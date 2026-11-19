@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Pages, Clocks, Percentiles and Manuals
 
-**Time: about 193 minutes** for 23 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 266 minutes** for 29 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 + 20 + 15 + 10 + 12 + 6 + 10 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a guard page at `base + 4096` that `mprotect` refuses, because this Mac's page is 16384 bytes.
 
@@ -382,6 +382,112 @@ Key:
   - (c) error: "'clang::musttail' attribute requires that the return value is the result of a function call" (a cast is extra work after the call).
   - Design rule: give every handler in a tail-call chain the same signature, and return the call's result unchanged.
   - Holds for / re-check: Apple clang 21.0.0, `-std=c++20 -O2 -Wall -Wextra`. Clang's rules for musttail have changed across versions; re-check by compiling the same four functions.
+</details>
+
+### Card M6-PB26 · Apply
+Q: (Linux only: run it on Linux or in a Linux container.) Write a program that sends 64 small UDP datagrams over loopback, either one `sendto()` per datagram or one `sendmmsg()` with 64 entries, then drains them with `recvmmsg(..., MSG_DONTWAIT)`, and prints how many send and receive calls it made. Your receive loop must (1) treat `EINTR` and `EAGAIN`/`EWOULDBLOCK` as retryable, any other error as fatal, and (2) give up after an overall deadline, because UDP can lose datagrams and the loop would otherwise hang. Your send loop must handle `sendmmsg` accepting fewer entries than asked. Compare with the reference `udp_batch.cpp`, then count kernel entries with strace:
+   ```sh
+   g++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/udp_batch.cpp -o "${TMPDIR:-/tmp}/udp_batch" && strace -f -c -e trace=sendto,sendmmsg,recvmmsg "${TMPDIR:-/tmp}/udp_batch" && strace -f -c -e trace=sendto,sendmmsg,recvmmsg "${TMPDIR:-/tmp}/udp_batch" batch
+   ```
+   Answer format: send and receive calls for each mode, the strace counts, then how to grade the send count and the error handling.
+<details><summary>Answer</summary>
+Key:
+
+  - One-by-one: 64 `sendto` calls. Batched: 1 `sendmmsg` call, accepted in full. Both: 64 datagrams arrive, and 1 `recvmmsg` call drained all 64, with 0 empty receive calls (3 runs each, identical).
+  - strace agrees: 64 sendto + 1 recvmmsg, versus 1 sendmmsg + 1 recvmmsg.
+  - Technique: count kernel entries with `strace -c` before and after a change. When the batch is accepted in full, the number of send calls falls from the datagram count to 1. If `sendmmsg` accepts only part of the batch, you need more calls (sendmmsg(2): it returns the number of messages sent, and if that is less than requested the caller can retry with the rest), so grade the send-call count against the number of batches actually accepted, not a fixed factor.
+  - Error handling: `recvmmsg` returns -1 with `errno` set on error (recvmmsg(2)); a non-blocking receive with nothing queued gives `EAGAIN`/`EWOULDBLOCK` (recv(2)), which is retryable; an overall deadline turns a lost datagram into a reported failure instead of a hang.
+  - Holds for / re-check: Linux only (`sendmmsg`/`recvmmsg` are Linux calls; macOS has neither): Ubuntu 24.04 aarch64 container, GCC 13.3, loopback only. A real NIC and full socket buffers can return partial batches, so only the full-acceptance case was measured. Re-check with strace on the target host.
+</details>
+
+### Card M6-PB27 · Apply
+Q: (Linux only.) `recv_wakeups.cpp`: a sender thread sends 200 one-byte datagrams about 0.2 ms apart. The receiver thread either calls blocking `recv()` or spins on `recv(..., MSG_DONTWAIT)`. Each mode prints the receiver thread's voluntary context switches (the thread gave up the CPU itself, usually to sleep) and involuntary ones (`getrusage(RUSAGE_THREAD)`), and how many `recv` calls came back empty. Predict the relationship between the modes, then run each mode several times untraced. In a separate run under strace, count the receive syscalls:
+   ```sh
+   g++ -std=c++20 -O2 -Wall -Wextra -pthread modules/06-hft-patterns/lab/practice/recv_wakeups.cpp -o "${TMPDIR:-/tmp}/recv_wakeups" && for i in 1 2 3 4 5; do "${TMPDIR:-/tmp}/recv_wakeups"; "${TMPDIR:-/tmp}/recv_wakeups" spin; done
+   strace -f -c -e trace=recvfrom "${TMPDIR:-/tmp}/recv_wakeups" spin
+   ```
+   Answer format: the relationship between modes (not exact figures), the traced syscall count, then why the two runs are kept separate.
+<details><summary>Answer</summary>
+Key:
+
+  - Relationship, not exact figures: blocking has many voluntary switches (about one per message here: 199 in 5 of 5 runs) and no empty calls; a blocking `recv` can also return datagrams already queued without sleeping, so do not expect exactly one sleep per message. Spinning has zero voluntary switches and a very large number of empty polls (hundreds of thousands here: 237090 to 239794 over 5 runs on this one machine; the number depends on CPU speed and gap).
+  - Spinning still consumes CPU while runnable, so it can still be switched out: involuntary switches were 0 in four of five runs and 1 in one run. Do not grade on an exact 0.
+  - Mechanism: spinning removes the sleeps but not the kernel. Under strace the spinning receiver made one `recvfrom` syscall per attempt (in one run 1869 calls = 200 received + 1669 errors), versus 200 for blocking. Polling a socket is not kernel bypass; removing the calls takes a different interface, verified separately with `strace -c`.
+  - Tracing changes the thing measured: that traced spin run showed 3740 voluntary switches and only 1669 empty polls, because tracing itself perturbs scheduling. Collect context-switch deltas untraced and count syscalls in a separate traced run.
+  - If another thread shares the spinning thread's core, a rise in the involuntary count is possible; check on a busy machine.
+  - Holds for / re-check: Linux only (`RUSAGE_THREAD` is Linux-specific): Ubuntu 24.04 aarch64 container, loopback, idle 10 CPUs, one machine. The example counts are not graded; the empty-poll count scales with message gap and CPU speed, so compare modes, not numbers across machines. Re-check on the target host with the same program.
+</details>
+
+### Card M6-PB28 · Apply
+Q: (Linux only.) A wiki says "reading the clock is free on Linux: `clock_gettime` never enters the kernel." `clock_ids.cpp` makes 1000 `clock_gettime` calls with one clock id chosen by index on the command line: 0 REALTIME, 1 MONOTONIC, 2 MONOTONIC_RAW, 3 BOOTTIME, 4 PROCESS_CPUTIME_ID, 5 THREAD_CPUTIME_ID. `clock_vs_getppid.cpp` also makes 1000 `getppid()` calls. Count the system calls for each (the vDSO is a small library the kernel maps into every process so some calls can run without entering the kernel). Which claims hold, and what else could break them?
+   ```sh
+   g++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/clock_ids.cpp -o "${TMPDIR:-/tmp}/clock_ids" && for id in 0 1 2 3 4 5; do strace -c -e trace=clock_gettime "${TMPDIR:-/tmp}/clock_ids" $id; done
+   g++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/clock_vs_getppid.cpp -o "${TMPDIR:-/tmp}/clock_vs_getppid" && strace -c "${TMPDIR:-/tmp}/clock_vs_getppid"
+   ```
+   Answer format: syscalls per clock id and for `getppid`, then what the claim depends on and how to re-check.
+<details><summary>Answer</summary>
+Key:
+
+  - REALTIME, MONOTONIC, MONOTONIC_RAW, BOOTTIME: 0 syscalls (served by the vDSO). PROCESS_CPUTIME_ID and THREAD_CPUTIME_ID: 1000 syscalls each. `getppid()`: 1000 syscalls.
+  - So the claim depends on the clock id. It also depends on the kernel and the clock source: the vdso(7) man page records kernels and architectures where some clocks fall back to the real system call. This container's clock source was `arch_sys_counter`.
+  - Re-check on the target host: run the same strace count, and read `/sys/devices/system/clocksource/clocksource0/current_clocksource`.
+  - Holds for / re-check: Linux only: kernel 7.0.12-linuxkit, aarch64, glibc (Ubuntu 24.04 container). Results can differ on other kernels, architectures, clock sources and under some virtualization; re-measure there.
+</details>
+
+### Card M6-PB29 · Apply
+Q: `prefetch_six.cpp` has six one-line functions, each calling `__builtin_prefetch(p, rw, locality)` with (rw, locality) = (0,3), (0,2), (0,1), (0,0), (1,3), (1,0). Before you look, predict the instruction for each on arm64 and on x86-64. Then compile for arm64, and on Compiler Explorer for x86-64 with these flag sets: `-O2`, `-O2 -march=x86-64-v3`, `-O2 -mprfchw`, `-O2 -march=skylake`, `-O2 -march=znver3`. Which flag sets keep the write intent (a request made in anticipation of a write), and how would you notice if yours did not?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra -S modules/06-hft-patterns/lab/practice/prefetch_six.cpp -o - | grep -E 'prefetch|prfm'
+   ```
+   Answer format: the arm64 list, the x86-64 read list, which flag sets give `prefetchw`, then why and how you notice.
+<details><summary>Answer</summary>
+Key:
+
+  - arm64 (Apple clang 21 and GCC 13.3 agree): reads become `prfm pldl1keep`, `pldl2keep`, `pldl3keep`, `pldl1strm`; writes become `prfm pstl1keep` and `pstl1strm`. Write intent is kept.
+  - x86-64 reads (gcc 13.3 and clang 18.1, all flag sets): `prefetcht0`, `prefetcht1`, `prefetcht2`, `prefetchnta`.
+  - x86-64 writes: `prefetchw` only with `-mprfchw`, `-march=skylake` or `-march=znver3`. With plain `-O2` and with `-march=x86-64-v3` the write prefetch silently becomes a read prefetch (`prefetcht0` / `prefetchnta`). No warning.
+  - Why: `PREFETCHW` has its own CPUID feature flag, so the compiler only emits it when the target says the CPU has it. GCC documents no generated prefetch and no warning when the target lacks data-prefetch support entirely. The read-prefetch fallback for these write requests is an observation of these compiler/flag combinations.
+  - The trap: `x86-64-v3` includes AVX2, so "we build for modern CPUs" does not imply write prefetch. You notice only by grepping the assembly for `prefetchw`.
+  - Write intent does not guarantee that the line is fetched with, or keeps, exclusive ownership.
+  - Holds for / re-check: gcc 13.3 and clang 18.1 (x86-64, Compiler Explorer, compile only), Apple clang 21 and GCC 13.3 (arm64), checked 2026-11-18. The flag-to-instruction mapping can change with compiler version or `-march` level definitions. The Intel manual says locality hints are implementation-dependent and may be ignored, so the instruction you get says nothing about the speed you get: that needs a measurement on the target CPU. Re-check: rerun the six functions with your real build flags and `grep -E 'prefetch|prfm'`.
+</details>
+
+### Card M6-PB30 · Spot the trap
+Q: A library chooses its fast path like this:
+   ```cpp
+   #ifdef __AVX2__
+     use_fast_path();
+   #else
+     use_portable_path();
+   #endif
+   ```
+   The team says "this picks the right path for whatever CPU the binary lands on." Is that true? Build `modules/06-hft-patterns/lab/practice/avx2_macro.cpp` (prints which branch the preprocessor chose, then calls `__builtin_cpu_supports("avx2")`) on Compiler Explorer with x86-64 gcc, flags `-O2` and then `-O2 -mavx2`, and compare the assembly.
+   Answer format: true or false, what each binary contains, what the runtime call does, then the fix.
+<details><summary>Answer</summary>
+Key:
+
+  - False. `__AVX2__` is set by the build flags, not by the CPU that runs the binary. With `-O2` the binary contains only the string "built without __AVX2__"; with `-O2 -mavx2` it contains only "built with __AVX2__ defined". The other branch is not in the binary at all.
+  - `__builtin_cpu_supports("avx2")` is different: the assembly calls `__cpu_indicator_init` and reads `__cpu_model` at run time, so it answers for the CPU it runs on.
+  - Consequences: a plain build never takes the fast path, even on a CPU that has AVX2; in a `-mavx2` build the AVX2 branch is selected at compilation, and execution on an incompatible CPU is not guaranteed.
+  - Fix: decide at run time once (for example with `__builtin_cpu_supports` at start-up, stored in a function pointer), or build both paths and dispatch. Compile the dispatcher and fallback for the deployment baseline; compile the AVX2 implementation separately with `-mavx2` or a supported per-function target attribute, then dispatch after the runtime feature check. Adding a check to a translation unit globally built with `-mavx2` does not make it portable to non-AVX2 CPUs, because the compiler may emit AVX2 instructions anywhere in it. A compile-time macro only says what you allowed the compiler to use.
+  - Holds for / re-check: x86-64 gcc 13.3 on Compiler Explorer (its runs show behaviour on that host only, not on an incompatible CPU). `__builtin_cpu_supports` is a GCC/clang extension for x86 (Arm targets have different names and feature sets). Re-check: grep your release binary's assembly for the string or symbol of each path.
+</details>
+
+### Card M6-PB31 · Recall
+Q: Write the layers of a read-only compatibility report for "can this Linux box reserve part of the L3 for one thread?" (cache partitioning: Intel calls it Cache Allocation Technology, AMD L3 Cache Allocation Enforcement; *resctrl* is the Linux filesystem that exposes it). Keep four things apart: CPU enumeration, kernel support, mount exposure and permissions. Give the CPUID order for Intel, including the asymmetric case. Then run `rdt_probe.sh` (it counts RDT flags in `/proc/cpuinfo`, checks `/proc/filesystems` for resctrl, and lists `/sys/fs/resctrl`) in an arm64 Linux container and say what it can and cannot show.
+   ```sh
+   bash modules/06-hft-patterns/lab/practice/rdt_probe.sh
+   ```
+   Answer format: Intel CPUID order, AMD check, kernel checks, the container result, then what the probe cannot show.
+<details><summary>Answer</summary>
+Key:
+
+  - CPU, Intel (check leaf and sub-leaf availability first; query per logical processor): asymmetric first. If CPUID.(7,1):ECX[1] is set, leaf 28H is the selected leaf and may differ between logical processors. Otherwise, if CPUID.(7,0):EBX[15] (`RDT_A`) is set, leaf 10H is selected. In the selected leaf's resource bitmap, test the L3 bit (leaf 10H sub-leaf 0 EBX[1] `CAT_L3`; leaf 28H has the same definitions). Asymmetric leaves can exist without informative symmetric ones, and symmetric platforms can enumerate asymmetric leaves, so neither set alone decides.
+  - CPU, AMD: CPUID Fn0000_0007 EBX bit 15 (`PQE`), then leaf 10H for the L3 resource; the class count is MAX_COS+1 and the mask length CBM_LEN+1.
+  - Kernel: flags such as `rdt_a`, `cat_l3`, `cdp_l3`, `mba` in `/proc/cpuinfo`; `resctrl` listed in `/proc/filesystems`; mount it (`mount -t resctrl resctrl /sys/fs/resctrl`) and read `info/L3/cbm_mask`, `num_closids` and `sparse_masks` for the real limits.
+  - Container result: 0 RDT flags, no resctrl filesystem, no `/sys/fs/resctrl`. This container exposes no listed RDT flags or resctrl interface; the probe alone cannot distinguish absent hardware, unavailable kernel support/modules, or hidden/unmounted/inaccessible interfaces. It is an exposure probe, not proof of CPU incapability, and a mounted resctrl is not proof of an exclusive reservation. It shows nothing about any x86 server.
+  - Report each layer separately, and run it in the environment you deploy on: a VM or container may hide what the host CPU has.
+  - Holds for / re-check: the x86 parts (Intel CPUID, AMD, kernel resctrl) are citations from the Intel SDM, the AMD APM and kernel.org, not results: nothing was run on x86. The only run is the arm64 Linux container (Ubuntu 24.04, linuxkit kernel 7.0.12), as an exposure result. The asymmetric enumeration shows the CPUID recipe itself changes over time. Arm has its own partitioning architecture (not covered by these sources, not checked). Re-check: rerun `rdt_probe.sh` on the target and reread the current SDM CPUID tables.
 </details>
 
 ---

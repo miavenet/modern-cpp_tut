@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Fair Benchmarks and What the Build Really Did
 
-**Time: about 220 minutes** for 26 cards (12 + 10 + 3 + 5 + 12 + 15 + 5 + 15 + 12 + 8 + 10 + 10 + 10 + 10 + 5 + 5 + 8 + 6 + 5 + 3 + 15 + 15 + 6 + 4 + 8 + 3 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 248 minutes** for 29 cards (12 + 10 + 3 + 5 + 12 + 15 + 5 + 15 + 12 + 8 + 10 + 10 + 10 + 10 + 5 + 5 + 8 + 6 + 5 + 3 + 15 + 15 + 6 + 4 + 8 + 3 + 10 + 12 + 6 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a hash table over 30x slower at lookup because its hash has only 787 distinct values; the bucket counts show it before any timer does.
 
@@ -432,6 +432,57 @@ Key:
   - GCC's docs say the current byte is 0xFE and that the pattern may change in the future, so it is not a contract.
   - Use the pattern to make bugs visible (it is an unlikely value), not as a value to test for.
   - Holds for / re-check: Apple clang 21.0.0 arm64, GCC 13.3 aarch64, `-O0`. Re-check with the same one-line run on a new compiler; read the compiler's docs for `pattern` (gcc.gnu.org, Optimize-Options).
+</details>
+
+### Card M7-PB27 · Apply
+Q: A teammate writes in a review: "`observe()` is in another `.cpp` file, so the loop in `sum_escape_each` will always keep `acc` in memory; that is a fixed property of the source." `sum_escape_each` (in `lto_sum.cpp`) adds each element to a local `acc` and calls `observe(&acc)` every step; `observe` is defined in `lto_observe.cpp` as an empty function. Which build setting breaks the teammate's claim, and how do you show it from the final binary (not from `-S`)?
+   ```sh
+   clang++ -std=c++20 -O2 modules/07-architecture/lab/practice/lto_sum.cpp modules/07-architecture/lab/practice/lto_observe.cpp -o "${TMPDIR:-/tmp}/lto_off" && objdump -d "${TMPDIR:-/tmp}/lto_off"
+   clang++ -std=c++20 -O2 -flto modules/07-architecture/lab/practice/lto_sum.cpp modules/07-architecture/lab/practice/lto_observe.cpp -o "${TMPDIR:-/tmp}/lto_on" && objdump -d "${TMPDIR:-/tmp}/lto_on"
+   ```
+   Answer format: the setting, how you show it, calls and stack accesses with and without it, then the rule.
+<details><summary>Answer</summary>
+Key:
+
+  - Link-time optimization (`-flto`). With it the "other file" is visible at link time, the empty `observe` is inlined, and the loop needs no stack slot and no call.
+  - Show it: build both files with and without `-flto`, then `objdump -d` the linked binary and read `sum_escape_each`.
+  - Observed: without LTO, 1 call to `observe` and stack loads/stores in the loop (Apple clang 21 and GCC 13.3). With LTO, 0 calls, 0 stack accesses, and a vector loop (`add.4s` / `add v0.4s`) on both; GCC even made a constant-propagated copy (`.constprop.0`).
+  - So "opaque" is a property of the build (separate compilation, LTO, inlining limits), not of the source. A benchmark or a barrier that relies on an opaque call must state the build flags and be re-checked when they change.
+  - Holds for / re-check: Apple clang 21 + ld64 (arm64) and GCC 13.3 + GNU ld (aarch64), `-O2`. LTO inlining decisions depend on size heuristics; a large `observe` might not be inlined. Re-check with `objdump -d` of the final binary.
+</details>
+
+### Card M7-PB28 · Spot the trap
+Q: A bug only shows when a freed address is handed straight back to the next same-size allocation (for example, code that caches a raw pointer value after the object died). Your normal test fails sometimes; the AddressSanitizer (ASan) build passes every time. A teammate concludes "ASan is clean, so there is no such bug". Measure why. `reuse_probe.cpp` allocates through `reuse_shim.cpp` (it wraps `malloc`/`free` in a separate file so the optimizer cannot delete the allocations), records each address as an integer before freeing it, then allocates again and counts how often the address matches, over 257 rounds. The script builds and runs (1) a plain `-O2` build, (2) an ASan build, (3) the ASan build with `ASAN_OPTIONS=quarantine_size_mb=0`, 3 runs each, and first checks in the listing that the probe still contains the allocation calls. (ASan's *quarantine* holds freed blocks for a while before they can be handed out again, so use-after-free reads can be caught.)
+   ```sh
+   bash modules/07-architecture/lab/practice/reuse_check.sh clang++
+   ```
+   (On Linux, also `g++`. The single-file control `reuse_inline.cpp` gives its own command on line 3.)
+   Answer format: reuse counts per build, what that means for the teammate, then the listing check and the habit.
+<details><summary>Answer</summary>
+Key:
+
+  - Reuse counts (3 of 3 runs): glibc plain build 257/257 on both GCC 13.3 and clang 18; macOS malloc plain build varies from run to run (57 to 257 of 257 seen in 15 runs); not graded; ASan default 0/257 on all three; ASan with `quarantine_size_mb=0` 257/257 on all three.
+  - Reading: ASan's quarantine removes the very condition the bug needs. A pass under ASan does not show the bug is absent; it can mean the trigger never happened. Fix the method: first check that the sanitizer build can still produce the condition, then use sanitizers for what they detect (bad reads and writes), not as proof about reuse-dependent logic.
+  - The probe's call sites are verified: 4 calls to the shim remain in the listing in both plain and ASan builds on all three toolchains. Control for why: the single-file probe `reuse_inline.cpp` (`new`/`delete` inline) had zero allocation calls at `-O2` on Apple clang and clang 18 (printing 0 reuse by construction), and kept all 4 on GCC. A zero count means nothing until the listing shows the allocations survived.
+  - Habit: capture the address as an integer before `free`; do not use the freed pointer value in comparisons (a freed pointer's value is an invalid pointer value, whose non-dereferencing uses are implementation-defined, [basic.stc]/4).
+  - Holds for / re-check: Apple clang 21 ASan on macOS, GCC 13.3 and clang 18.1.3 on Ubuntu 24.04 aarch64. Quarantine size and defaults differ between versions and platforms. Re-check with the probe on your toolchain; the macOS plain count varies from run to run and is not graded.
+</details>
+
+### Card M7-PB29 · Spot the trap
+Q: A benchmark hashes symbols with `int h = 0; for (...) h = h * 31 + c;` and prints the hash so the work is not deleted. It compiles cleanly with `-Wall -Wextra`, and for short symbols it matches a `uint32_t` version. What is wrong? Build `rolling_hash.cpp` with UBSan (`-fsanitize=undefined`, which checks some kinds of undefined behaviour while the program runs) and run it with exactly the inputs `abc` and `abcdefghijkl`:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra -fsanitize=undefined modules/07-architecture/lab/practice/rolling_hash.cpp -o "${TMPDIR:-/tmp}/rolling_hash" && "${TMPDIR:-/tmp}/rolling_hash" abc && "${TMPDIR:-/tmp}/rolling_hash" abcdefghijkl
+   ```
+   Answer format: warnings, the result for each input, then the rule and the fix.
+<details><summary>Answer</summary>
+Key:
+
+  - No compile-time warning on any of the three compilers.
+  - 3 characters: no report, both hashes equal (96354).
+  - `abcdefghijkl`: the first report is `signed integer overflow: 92599395 * 31 cannot be represented in type 'int'` at the multiply (Apple clang 21, GCC 13.3, clang 18.1.3; 3 runs each). With these recovering builds the program goes on and prints signed and unsigned 306089158. Treat that value as incidental: after UB the program has no guaranteed result. Matching bits hide the bug in the output.
+  - Rule: a result outside the range of the type is undefined behaviour for signed integers ([expr.pre] p4); unsigned arithmetic is defined modulo 2^N ([basic.fundamental] p2). Once UB is possible the optimizer may assume it never happens, so the timed code may not be the code you wrote.
+  - Fix: for a hash that is meant to wrap, use `uint32_t` or `uint64_t` (defined modulo 2^N). A counter that must detect overflow is a different problem: check its range before the add, do not rely on wrapping. Run benchmarks once under UBSan with realistic input, because the overflow appears only for some inputs.
+  - Holds for / re-check: the rule is in the language (C++20 draft; C++20 still leaves signed overflow undefined). Sanitizer wording checked on Apple clang 21, GCC 13.3 and clang 18.1.3. Re-check: rerun `rolling_hash.cpp` under `-fsanitize=undefined` on your compiler.
 </details>
 
 ---

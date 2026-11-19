@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Atomics on Real Hardware, Waiting and Waking
 
-**Time: about 135 minutes** for 14 cards (12 + 4 + 20 + 6 + 6 + 10 + 10 + 10 + 12 + 8 + 15 + 10 + 8 + 4 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 143 minutes** for 15 cards (12 + 4 + 20 + 6 + 6 + 10 + 10 + 10 + 12 + 8 + 15 + 10 + 8 + 4 + 8 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: an atomic wait that never sleeps at a 2 us gap because it burns a whole core, and an acquire load that compiles to the same instruction as seq_cst on three of the four ARM targets tried here.
 
@@ -249,6 +249,24 @@ Key:
   - Linux (an aarch64 container): `thread_siblings_list` for cpu0 is `0` (only itself) and `lscpu` says `Thread(s) per core: 1`. On an SMT box the list would name two CPUs.
   - Re-check per box: SMT can be switched off in firmware or by the kernel, so a model name is not enough.
   - Holds for / re-check: checked on Apple M1 Max (macOS) and an Ubuntu 24.04 aarch64 container. The sysfs path is documented under `/sys/devices/system/cpu/cpuX/topology/` (kernel.org, admin-guide/cputopology). An SMT x86 machine was not available, so its two-CPU sibling list is not shown here.
+</details>
+
+### Card M3-PB15 · Spot the trap
+Q: `stage_stores.cpp` writes a "stage" variable three times in a row (1, then 2, then 3), in three versions: a plain `int`, a `volatile int`, and a `std::atomic<int>` with `memory_order_relaxed`. Two separate questions. (a) In the abstract machine, how many writes does each function perform that the standard requires to be preserved? (b) How many store instructions does each function actually contain at `-O1` and `-O2` with clang and with GCC (`g++` on Linux)? Then: a teammate says "volatile guarantees my debugger, signal handler or device sees 1, 2 and 3". Is that right?
+   ```sh
+   clang++ -std=c++20 -O1 -Wall -Wextra -S modules/03-concurrency/lab/practice/stage_stores.cpp -o -
+   ```
+   (Repeat with `-O2`, then with `g++`.)
+   Answer format: (b) store counts for plain / volatile / atomic, then (a), then yes or no for the teammate with the reason.
+<details><summary>Answer</summary>
+Key:
+
+  - (b) Observed: plain = 1 store (only the 3), volatile = 3, relaxed atomic = 3. Same on Apple clang 21, clang 18 and GCC 13.3 at -O1 and -O2 (arm64/aarch64), and at -O2 on gcc 14.3 and clang 19.1 x86-64.
+  - (a) Abstract machine: accesses through volatile glvalues are part of the observable behaviour, so the program has three abstract volatile assignments ([intro.abstract]/6.1); what an access physically is is implementation-defined ([dcl.type.cv]/5). Say it as: "three abstract volatile assignments; three store instructions observed here". The standard does not specify a store-instruction count.
+  - The plain count is allowed by the as-if rule: no other code can see the 1 and 2 without a data race.
+  - The atomic count is a compiler choice. [intro.abstract]/6.1 names only volatile, and the standards committee has discussed why successive atomic updates may legally be combined (WG21 P0062R1). Today's compilers keep all three; do not build a "progress signal" on that.
+  - The teammate is wrong. Preserved volatile accesses do not make a debugger stop at each one, do not stop a signal handler running only after all three writes, and a device needs platform-specific access rules. For a flag shared with a same-thread signal handler, the standard's type is `volatile std::sig_atomic_t` ([intro.races]/22, with its restrictions). To observe every stage you need a protocol (for example, the observer acknowledges each stage), not a store count.
+  - Holds for / re-check: Apple clang 21 (arm64), GCC 13.3 and clang 18.1.3 (aarch64 Linux) at -O1 and -O2; gcc 14.3 and clang 19.1 (x86-64, Compiler Explorer) at -O2. The atomic count is a compiler choice and could change in a future release. Re-check by counting `str`/`stlr` (arm64) or `mov` to the variable (x86) in `-S` output.
 </details>
 
 ---

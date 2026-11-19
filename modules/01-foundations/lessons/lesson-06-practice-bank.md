@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Clocks and Passing by Value
 
-**Time: about 58 minutes** for 8 cards (8 + 12 + 5 + 5 + 10 + 6 + 4 + 8 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 70 minutes** for 9 cards (8 + 12 + 5 + 5 + 10 + 6 + 4 + 8 + 12 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a function that takes 15 ns, and a per-call log that says it took 0 ns most of the time.
 
@@ -133,6 +133,24 @@ Key:
   - (c) Error: "cannot assign to a variable captured by copy in a non-mutable lambda" (because `operator()` is `const`; `mutable` removes that).
   - Technique: when you are unsure what a language feature becomes, look at the lowered C++ with C++ Insights before reasoning about speed.
   - Holds for / re-check: Apple clang 21 arm64 for (a) to (c). Closure layout is implementation-specific, so re-check `sizeof` per target. C++ Insights output is clang-based.
+</details>
+
+### Card M1-PB9 · Apply
+Q: `vector_grow.cpp` builds a `std::vector<T, CountingAlloc<T>>` and makes 1000 `emplace_back` calls. It prints every new capacity, the number of allocations, and how many times `T` was copy- or move-constructed. It runs three ways: (a) `T` whose move constructor is *not* `noexcept`; (b) the same type with a `noexcept` move constructor; (c) type (b) with `reserve(1000)` first. Predict all three counts first, then run it:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/01-foundations/lab/practice/vector_grow.cpp -o "${TMPDIR:-/tmp}/vector_grow" && "${TMPDIR:-/tmp}/vector_grow"
+   ```
+   Answer format: capacities and allocations, copies and moves for (a), (b), (c), then why (a) copies and why (c) works.
+<details><summary>Answer</summary>
+Key:
+
+  - (a) and (b): capacities 1 2 4 8 16 32 64 128 256 512 1024, so 11 allocations. Same on libc++ (Apple clang 21) and libstdc++ (GCC 13.3, clang 18).
+  - (a): 1023 copies, 0 moves. (b): 0 copies, 1023 moves. 1023 = 1+2+...+512, the elements carried over at each growth.
+  - (c): 1 allocation, capacity 1000, 0 copies and 0 moves.
+  - Why (a) copies: when one element is added at the end, the standard requires "no effects" if an exception is thrown, as long as `T` is copyable or has a non-throwing move ([vector.modifiers] p1). A move that may throw could leave the old block half-emptied. For these copyable test types on the named libraries, removing `noexcept` changes relocation from moves to copies.
+  - Why (c) works: after `reserve(n)`, capacity is at least n and no reallocation happens until the size would exceed the capacity ([vector.capacity] p4, p7).
+  - The growth factor (doubling here) is not in the standard; it is a library choice. Count it, do not assume it.
+  - Holds for / re-check: libc++ (Apple clang 21) and libstdc++ (GCC 13.3 and clang 18.1.3, Ubuntu 24.04 container), checked 2026-11-18, 3 runs each, identical. Another standard library may grow by a different factor (so a different allocation count) or choose differently between copy and move. The exception guarantee is standardized; these exact copy/move counts are observations. Noncopyable types with potentially throwing moves can still be moved, with unspecified effects if such a move throws. Re-check: run `vector_grow.cpp` against the library you ship.
 </details>
 
 ---

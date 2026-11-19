@@ -17,7 +17,7 @@
       "minutes": 26
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 58
+      "minutes": 70
     }
   },
   "cards": {
@@ -861,6 +861,20 @@
         "mode": "self"
       },
       "source": "[expr.prim.lambda.closure] p5 and [expr.prim.lambda.capture] p10-15 (C++23 draft N4950); C++ Insights (cppinsights.io); measured in this course: lambda_snapshot.cpp",
+      "concepts": []
+    },
+    "M1-PB9": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[vector.modifiers] p1, [vector.capacity] p4 and p7 (C++20 draft N4861); measured in this course: vector_grow.cpp",
       "concepts": []
     }
   },

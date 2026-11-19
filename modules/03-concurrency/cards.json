@@ -17,7 +17,7 @@
       "minutes": 27
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 135
+      "minutes": 143
     }
   },
   "cards": {
@@ -857,6 +857,20 @@
         "mode": "self"
       },
       "source": "kernel.org admin-guide/cputopology (/sys/devices/system/cpu/cpuX/topology/); sysctl hw.physicalcpu / hw.logicalcpu on macOS",
+      "concepts": []
+    },
+    "M3-PB15": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "atomics",
+      "objective": 3,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[intro.abstract]/6.1, [dcl.type.cv]/5, [intro.races]/22 (C++20 draft N4861); WG21 P0062R1 (open-std.org); measured in this course: stage_stores.cpp",
       "concepts": []
     }
   },

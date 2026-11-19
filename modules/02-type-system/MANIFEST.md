@@ -20,8 +20,8 @@ type traits, `if constexpr` and fold expressions (lesson 03), and the LPA lens o
 - **First pass:** about 119 minutes over four lessons (29 + 35 + 41 + 14 min):
   4 pretests, 4 completion cards, 26 recall, apply, gotcha and synthesis cards,
   and one short lab (the `constinit` lab, about 8 minutes of lesson 04).
-- **Optional practice bank:** lesson 05 (`lesson-05-practice-bank.md`), about 65 minutes,
-  9 self-graded cards on measurement, research and C++ techniques and on how
+- **Optional practice bank:** lesson 05 (`lesson-05-practice-bank.md`), about 75 minutes,
+  10 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.
 - **Reviews:** a missed card returns the next day; after hits a card returns

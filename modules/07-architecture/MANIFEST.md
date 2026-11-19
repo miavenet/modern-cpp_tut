@@ -31,8 +31,8 @@ contracts are not implemented), the lesson says so next to the sample.
   38 cards (5 pretests, 5 completions, 28 recall/apply/gotcha/synthesis).
   That includes the module build, sanitizer runs and CMake lab. The optional
   Google Benchmark download depends on the network and is not included.
-- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 220 minutes,
-  26 self-graded cards on measurement, research and C++ techniques and on how
+- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 248 minutes,
+  29 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.
 - **Reviews:** cards come back on the driver's schedule (see the README); a

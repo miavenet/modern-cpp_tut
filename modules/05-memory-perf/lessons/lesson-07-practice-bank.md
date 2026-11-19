@@ -1,6 +1,6 @@
 # Lesson 07 — Practice Bank (optional): What Memory Really Costs, What the Compiler Assumes
 
-**Time: about 185 minutes** for 23 cards (6 + 6 + 10 + 10 + 10 + 3 + 5 + 8 + 8 + 8 + 6 + 6 + 12 + 8 + 6 + 4 + 12 + 10 + 10 + 12 + 5 + 8 + 12 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 219 minutes** for 26 cards (6 + 6 + 10 + 10 + 10 + 3 + 5 + 8 + 8 + 8 + 6 + 6 + 12 + 8 + 6 + 4 + 12 + 10 + 10 + 12 + 5 + 8 + 12 + 12 + 12 + 10 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: an 8-byte value that takes a 32-byte block in a `std::list`, and a range mask the compiler deleted because you promised it was not needed.
 
@@ -406,6 +406,59 @@ Key:
   - At K=10 the limit is the load units: the two `CyUnitLS` resources show 5.00 per iteration each (10 loads on 2 units), while the three vector units show 3.33.
   - Method: add chains until cost per element stops falling as latency / K; then read the resource-pressure view to see which unit limits you next (here the loads, before the three add units are full).
   - Holds for / re-check: model output from LLVM 22.1.6 (Homebrew `llvm-mca`; another LLVM version may print other figures), `apple-m1` model. A model name is not a hardware claim: real hardware can differ, so time it on the target before trusting a ratio.
+</details>
+
+### Card M5-PB24 · Apply
+Q: `escape_opaque.cpp` declares `void observe(const int*);` with no body (an *opaque* call: the compiler cannot see what it does) and has four functions that sum an `int` array into a local `acc`: `sum_local` (no call), `sum_escape_each` (calls `observe(&acc)` inside the loop), `sum_escape_before` (calls `observe(&acc)` once, before the loop), `sum_snapshot` (copies `acc` into `int snap` and calls `observe(&snap)` inside the loop). Predict, for each, whether `acc` is loaded from and stored to the stack on every loop step. Then check the loop bodies (and with GCC, `g++` on Linux, the same way):
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra -S modules/05-memory-perf/lab/practice/escape_opaque.cpp -o -
+   ```
+   Answer format: yes or no for each of the four functions, then the rule.
+<details><summary>Answer</summary>
+Key:
+
+  - `sum_escape_each`: yes. Each step stores `acc` to its stack slot before the call and reads it back after (Apple clang `str`/`ldr [sp,#12]`; GCC `str`/`ldr [sp,4]`; x86 clang 19.1 does `addl %eax, 4(%rsp)`). The callee might have kept the pointer and changed `acc` (the `const` in the parameter does not stop that, because `acc` itself is not const).
+  - `sum_snapshot`: no. `acc` stays in a register; only `snap` is stored, and never read back. Escaping a copy protects the original.
+  - `sum_escape_before`: no. One reload after the single call, then the loop runs on registers (Apple clang and GCC -O3 even vectorize it). With no opaque call inside the loop, nothing can observe `acc` there.
+  - `sum_local`: no memory traffic for `acc` at all.
+  - Rule to keep: what blocks optimization is a call to unseen code while the variable's address is out, not the variable's type or the syntax around it.
+  - Holds for / re-check: Apple clang 21 arm64, GCC 13.3 aarch64 (-O2 and -O3), gcc 14.3 and clang 19.1 x86-64 (Compiler Explorer) at -O2. Whether the loop also vectorizes depends on compiler and -O level (GCC 13.3 -O2 did not vectorize `sum_escape_before`; -O3 did). Re-check by reading the loop body after any compiler upgrade.
+</details>
+
+### Card M5-PB25 · Spot the trap
+Q: To fill a large output buffer without polluting the cache, a teammate rewrites `dst[i] = v` as `__builtin_nontemporal_store(v, &dst[i])` and says "now every store is non-temporal, on any platform." (A *non-temporal* or streaming store carries a hint not to keep the line in cache; on x86 it uses the weakly ordered *write-combining*, WC, protocol.) `stream_store.cpp` has both versions (runtime length `n`). Build it for arm64, for x86-64 (Compiler Explorer, clang), and with GCC (`g++` on Linux). What do you find, and what extra step does x86 need before another thread may read the buffer? Then build `stream_publish.cpp` (x86-64 clang on Compiler Explorer, `-std=c++20 -O2`): which of its three publication patterns emits the hardware fence?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra -S modules/05-memory-perf/lab/practice/stream_store.cpp -o - | grep -E 'stnp|str'
+   g++ -std=c++20 -O2 -Wall -Wextra -S modules/05-memory-perf/lab/practice/stream_store.cpp -o -
+   ```
+   Answer format: GCC result, x86-64 count, arm64 result per compiler, then the fence finding and the habit.
+<details><summary>Answer</summary>
+Key:
+
+  - GCC (13.3 here, gcc 15.3 on Compiler Explorer) rejects it: `'__builtin_nontemporal_store' was not declared`. It is a clang builtin, not portable C++.
+  - x86-64 clang 19.1: every store in `fill_stream` is `movnti` (9 of 9, including the scalar tail).
+  - arm64 differs by compiler. Apple clang 21: four `stnp` sites in the main loop (16 ints per step), then ordinary `str q0` (vector) and `str w1` (scalar) tail loops. Linux clang 18: two `stnp` sites (8 ints per step) and only a scalar `str w1` tail. So a fill shorter than the main-loop step gets zero streaming stores. Clang's documentation says the builtin is a hint and does not guarantee a non-temporal instruction.
+  - x86 ordering: non-temporal stores use the WC protocol, which is weakly ordered, so the Intel manual says to use `SFENCE` or `MFENCE` with `MOVNTI` when other processors may read the data. In `stream_publish.cpp`, a C++ release fence followed by a flag store, and a release store of the flag, both compile (clang 19.1 x86-64) to `movnti; mov; ret` with no fence. Only the version with an explicit `_mm_sfence()` emits `sfence`. So: do the fill, `_mm_sfence()` (or the target's equivalent), then publish with a release store, and have the reader use an acquire load. The builtin and a C++ release operation alone did not add the fence here.
+  - Habit: after using any "hint" builtin, grep the listing for the instruction you expected and count how many stores actually carry it.
+  - Holds for / re-check: clang 18, 19 and 21; GCC up to 15.3 lacks the builtin. The arm64 lowering follows from STNP being a pair instruction and differs by compiler version; re-check with `-S` and a grep for `movnt`/`stnp`. The fence result is one clang version on x86-64 (Compiler Explorer, compile only); it is about emitted instructions, not a proof about the C++ memory model. Whether the Intel ordering text applies to your memory type depends on the platform manual.
+</details>
+
+### Card M5-PB26 · Apply
+Q: You are writing a read-only hardware report for a tool, and one line must say "cache line size". Gather six answers on one Apple M1 Max: (1) `sysctl hw.cachelinesize` on macOS; (2) `getconf LEVEL1_DCACHE_LINESIZE` in a Linux VM on the same Mac; (3) `interference_macro.cpp`, which prints `__cpp_lib_hardware_interference_size` and both `std::hardware_*_interference_size` constants, built with Apple clang; (4) the same with GCC 13.3 (aarch64 Linux); (5) the same with clang 18.1 and libstdc++; (6) the same with x86-64 gcc 13.3 on Compiler Explorer. Classify each answer as an OS or guest report, a compile-time recommendation, or unavailable. What can the report honestly say?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/05-memory-perf/lab/practice/interference_macro.cpp -o "${TMPDIR:-/tmp}/interference_macro" && "${TMPDIR:-/tmp}/interference_macro"
+   ```
+   Answer format: the six values with their class, then what the report should print.
+<details><summary>Answer</summary>
+Key:
+
+  - (1) 128, an OS report on the host. (2) 64, a report by the guest Linux. Same chip, different reporters, different numbers.
+  - (3) and (4): destructive 256, constructive 64: compile-time recommendations for that target, fixed when the program is built. (6) x86-64 gcc 13.3 gives 64 / 64. Same compiler family, different target, different constants.
+  - (5): clang 18.1 with libstdc++ does not define `__cpp_lib_hardware_interference_size` (aarch64 Linux and x86-64 both): unavailable, and code using the constant does not compile there. Test the feature macro.
+  - The standard calls the destructive value an implementation-defined "minimum recommended offset" ([hardware.interference] p1); it is not a measurement of any cache.
+  - Lesson: a reported line size (what the OS or guest says the cache uses) and a recommended interference spacing (what the implementation suggests for avoiding sharing) are different quantities that need not be equal. A report should print each with its source and say which are unavailable. Reading one does not invalidate the other.
+  - Limit: a compile-time constant describes the compiled target and says nothing about the CPU the program later runs on; the probe above does not decide which number a program should use.
+  - Holds for / re-check: one M1 Max (macOS host and a Linux VM on it), Apple clang 21, GCC 13.3, clang 18.1.3, and x86-64 gcc 13.3 / clang 18.1 on Compiler Explorer, re-run 2026-11-18. Values differ per CPU, OS, VM and library version; a newer clang may define the constant (not checked here). Re-check: run the probes on each target.
 </details>
 
 ---

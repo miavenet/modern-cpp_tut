@@ -20,7 +20,7 @@
       "minutes": 28
     },
     "lesson-07-practice-bank.md": {
-      "minutes": 185
+      "minutes": 219
     }
   },
   "cards": {
@@ -1132,6 +1132,48 @@
         "mode": "self"
       },
       "source": "llvm-mca (LLVM 22.1.6) apple-m1 model; measured in this course: mca/acc1.s ... acc10.s",
+      "concepts": []
+    },
+    "M5-PB24": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "optimizer-assumptions",
+      "objective": 5,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: escape_opaque.cpp (Apple clang 21, GCC 13.3; x86-64 gcc 14.3 and clang 19.1 on Compiler Explorer)",
+      "concepts": []
+    },
+    "M5-PB25": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "gotcha",
+      "topic": "cache-lines",
+      "objective": 4,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Clang Language Extensions, non-temporal load/store builtins (https://clang.llvm.org/docs/LanguageExtensions.html#non-temporal-load-store-builtins); Intel 64 and IA-32 Architectures Software Developer's Manual, Vol. 2B, MOVNTI; measured in this course: stream_store.cpp, stream_publish.cpp",
+      "concepts": []
+    },
+    "M5-PB26": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "interference-size",
+      "objective": 4,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[hardware.interference] p1 (C++20 draft N4861); measured in this course: interference_macro.cpp, sysctl hw.cachelinesize (macOS), getconf LEVEL1_DCACHE_LINESIZE (Linux)",
       "concepts": []
     }
   },

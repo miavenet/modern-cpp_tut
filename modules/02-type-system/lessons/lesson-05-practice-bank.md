@@ -1,6 +1,6 @@
 # Lesson 05 — Practice Bank (optional): What Moves to Build Time, and What a Conversion Costs
 
-**Time: about 65 minutes** for 9 cards (4 + 6 + 5 + 8 + 12 + 12 + 4 + 6 + 8 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 75 minutes** for 10 cards (4 + 6 + 5 + 8 + 12 + 12 + 4 + 6 + 8 + 10 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a table built by the compiler that gives 30 wrong answers the moment its limits change, and a `float` column that turns row 16777217 into row 16777216.
 
@@ -179,6 +179,24 @@ Key:
   - x86-64 with `-mavx512f`: one `vcvttsd2usi` for unsigned and one `vcvttsd2si` for signed (clang and GCC 13.3). The Intel SDM lists it under CPUID flag "AVX512F OR AVX10.1".
   - Habit: for any "it's just a cast" on a hot path, read the listing for the `-march` you really ship; signedness alone can change the code.
   - Holds for / re-check: arm64 and clang x86-64 from Apple clang 21 (clang 18.1 on Compiler Explorer gives the same 7); GCC 13.3 / 15.3 x86-64 on Compiler Explorer, compile only; nothing x86 was run. Counts exclude `ret`. Moving the build baseline to an AVX-512 or AVX10 target removes the sequence. Re-check with `-S` after a compiler or `-march` change.
+</details>
+
+### Card M2-PB10 · Apply
+Q: `gcd_fold.cpp` computes `gcd(1071, 462)` with a recursive function four ways: `ask_optimizer` (plain static function, literal arguments), `ask_constexpr_fn` (same body declared `constexpr`, called in a `return` statement), `ask_forced` (the `constexpr` function used to initialise a `constexpr unsigned r`), and `ask_runtime(a, b)`. For each, predict: is a recursive call left? Is a divide left? Does the function just return 21? Check with `-O2 -S` on two compilers (GCC is `g++` on Linux):
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra -S modules/02-type-system/lab/practice/gcd_fold.cpp -o -
+   g++ -std=c++20 -O2 -Wall -Wextra -S modules/02-type-system/lab/practice/gcd_fold.cpp -o -
+   ```
+   Answer format: recursion yes/no, then per function: divide left or returns 21, by compiler; then what would make "the compiler folds it" wrong.
+<details><summary>Answer</summary>
+Key:
+
+  - No function keeps a recursive call: tail recursion became a loop everywhere. Recursion is no barrier to optimization.
+  - `ask_optimizer`: a divide loop remains on all five toolchains (Apple clang 21, clang 18, GCC 13.3, gcc 14.3, clang 19.1) at -O2, and also at -O3 on the three Arm toolchains. Literal inputs did NOT make the compilers fold it.
+  - `ask_constexpr_fn`: GCC (13.3 and 14.3) returns 21; the clangs still run the loop. Marking a function `constexpr` allows compile-time evaluation but does not require it in a run-time context.
+  - `ask_forced`: returns 21 with no divide on all five toolchains. The initializer of a `constexpr` variable is required to be a constant expression ([dcl.constexpr] p10). Returning 21 without a divide is the observed code generation on these toolchains, not an ISO guarantee about instruction selection.
+  - What would make a "the compiler folds it" claim wrong: a different compiler, -O level or version, or a loop the optimizer gives up on. If you need the value at compile time, force it (`constexpr` variable, `consteval`, template argument) instead of hoping.
+  - Holds for / re-check: Apple clang 21 (arm64), GCC 13.3 and clang 18.1.3 (aarch64 Linux), gcc 14.3 and clang 19.1 (x86-64, Compiler Explorer) at -O2; -O3 checked on the three Arm toolchains. Optimizer folding limits change between releases; the requirement that a `constexpr` initializer be a constant expression does not. Re-check with `-S` and a grep for the divide (`udiv` on arm64, `div` on x86-64).
 </details>
 
 ---

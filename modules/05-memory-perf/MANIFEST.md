@@ -30,8 +30,8 @@ algorithms need `-fexperimental-library` there.
   49 cards (7 pretests, 7 completions, 33 recall/apply/gotcha/synthesis, two labs). The
   lesson 05 lab is about 20 minutes of that and the lesson 06 lab about 10. Running the lesson
   samples is optional and not counted.
-- **Optional practice bank:** lesson 07 (`lesson-07-practice-bank.md`), about 185 minutes,
-  23 self-graded cards on measurement, research and C++ techniques and on how
+- **Optional practice bank:** lesson 07 (`lesson-07-practice-bank.md`), about 219 minutes,
+  26 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.
 - **Reviews:** cards come back on the driver's schedule (see the README);

@@ -17,7 +17,7 @@
       "minutes": 30
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 193
+      "minutes": 266
     }
   },
   "cards": {
@@ -965,6 +965,90 @@
         "mode": "self"
       },
       "source": "measured in this course: musttail_rules.cpp (Apple clang 21)",
+      "concepts": []
+    },
+    "M6-PB26": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 2,
+      "minutes": 20,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "sendmmsg(2), recvmmsg(2), recv(2) (man7.org); measured in this course: udp_batch.cpp (Linux only)",
+      "concepts": []
+    },
+    "M6-PB27": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 2,
+      "minutes": 15,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "recv(2), getrusage(2) (man7.org); measured in this course: recv_wakeups.cpp (Linux only)",
+      "concepts": []
+    },
+    "M6-PB28": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "clocks",
+      "objective": 3,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "vdso(7) (man7.org); measured in this course: clock_ids.cpp, clock_vs_getppid.cpp (Linux only)",
+      "concepts": []
+    },
+    "M6-PB29": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "prefetching",
+      "objective": 4,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Intel 64 and IA-32 Architectures Software Developer's Manual, PREFETCHW; GCC manual, Other Builtins, __builtin_prefetch (https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html); measured in this course: prefetch_six.cpp (x86-64 gcc 13.3 and clang 18.1 on Compiler Explorer)",
+      "concepts": []
+    },
+    "M6-PB30": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "cpu-dispatch",
+      "objective": 4,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "GCC manual, x86 Built-in Functions, __builtin_cpu_supports (https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html); measured in this course: avx2_macro.cpp (x86-64 gcc 13.3 on Compiler Explorer)",
+      "concepts": []
+    },
+    "M6-PB31": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "recall",
+      "topic": "research",
+      "objective": 2,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "Intel 64 and IA-32 Architectures Software Developer's Manual: Table 21-40 (CPUID leaf 10H) and section 20.20.3, Tables 20-22 and 20-23 with the text that follows them; AMD64 Architecture Programmer's Manual Vol. 2 (24593 r3.46), Table 19-1 and section 19.4.2; https://docs.kernel.org/filesystems/resctrl.html; measured in this course: rdt_probe.sh (arm64 Linux container)",
       "concepts": []
     }
   },
