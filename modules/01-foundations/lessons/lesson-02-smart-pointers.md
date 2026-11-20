@@ -398,6 +398,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Cards M1-PB10 and M1-PB11 in lesson-06-practice-bank.
+
+---
+
 ## Remember
 
 - `unique_ptr` is the default: one owner, moved along, null afterwards (and

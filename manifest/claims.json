@@ -3806,5 +3806,40 @@
     "claim": "an LD_PRELOAD hook replaces the plugin's internal adjust() call only in the GCC -O2 default build (101); -Bsymbolic-functions, -fno-semantic-interposition and Clang give 12; GCC -O0 gives 101; both names stay exported",
     "source_urls": [],
     "verification": "run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): interpose_check.sh: GCC loose 12/101, bound 12/12, nsi 12/12, -O0 preload 101; clang 18 cl_loose and cl_bound 12 in all four runs; nm adjust, answer T in every .so; objdump GCC loose answer bl adjust@plt, nsi and cl_loose mov w0, #0xc; g++ -Q --help=optimizers -fsemantic-interposition [enabled]"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB10",
+    "claim": "two aliasing shared_ptr<int> views of one Tile have different pointers but one owner group; the Tile is destroyed once, when the last alias is reset",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: modules/01-foundations/lab/practice/alias_lifetime.cpp: same_pointer=0 same_owner=1 owners=3, after owner reset destroyed=0 owners=2 values=12,34, after left reset destroyed=0 owners=1 value=34, after right reset destroyed=1; re-run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [util.smartptr.shared.const] p14-17, [util.smartptr.shared.dest] p1, [util.smartptr.shared.obs] p12, p18 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M1/L6",
+    "where": "M1-PB11",
+    "claim": "shared_ptr's bool is get() != nullptr: an alias with no owner is true with 0 owners; an owning alias of nullptr is false with 1 owner",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: modules/01-foundations/lab/practice/alias_truth.cpp: borrowed bool=1 owners=0 value=23, keeper bool=0 owners=1; re-run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [util.smartptr.shared.const] p14-17, [util.smartptr.shared.obs] p12, p17 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB5",
+    "claim": "to_chars of 0xbeef into four bytes succeeds with length 4 and adds no terminator: a bounded view shows beef, a C-string read shows beef!",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: modules/04-stl-modern/lab/practice/hex_buffer.cpp: length=4 ptr_at_end=1 next=!, bounded=beef c_string=beef!; re-run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [charconv.to.chars] p1, p4-6 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB6",
+    "claim": "to_chars of 0xbeef: capacities 0 and 3 give value_too_large with ptr==last, capacity 4 succeeds with ptr==last, capacity 5 succeeds at offset 4; ec decides success",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: modules/04-stl-modern/lab/practice/hex_capacity.cpp: capacity 0 too_small offset 0 ptr_at_end 1, capacity 3 too_small 3 1, capacity 4 ok 4 1 beef, capacity 5 ok 4 0 beef, guards=1 in all four; re-run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [charconv.to.chars] p1 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB34",
+    "claim": "three fixed affine steps compose to (-24,1) for 4 multiplications and 2 additions of setup; over three inputs the direct route counts 9 of each, the prepared route 3",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/affine_schedule.cpp: folded a=-24 b=1 setup_mul=4 setup_add=2, outputs 73/1/-167, direct_mul=9 direct_add=9 prepared_mul=3 prepared_add=3 mismatches=0; re-run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [expr.pre] p4, [expr.mul] p3, [expr.add] p3 in C++20 draft N4861"
   }
 ]

@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Reading the Draft, Closed Sets of Types
 
-**Time: about 22 minutes** for 4 cards (4 + 6 + 7 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 32 minutes** for 6 cards (4 + 6 + 7 + 5 + 5 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: add one type to a variant and the compiler finds every place you forgot; add a catch-all and a triangle's area prints as 0.
 
@@ -74,6 +74,37 @@ Key:
   - `transactional` returns false and leaves the value at 77. It parses into a temporary and assigns to the caller only after all checks pass.
   - Testing only the returned bool misses the broken failure contract. Assert both the rejection and the unchanged state.
   - Holds for / re-check: Apple clang 21 with libc++, C++20; the inputs come from string literals. Any extra policy checks must come before committing the temporary; rerun the rejection tests when the wrapper changes.
+</details>
+
+### Card M4-PB5 · Apply
+Q: A diagnostic panel writes a hexadecimal device code into the first four bytes of `char out[6] = {'?','?','?','?','!','\0'}` with `to_chars(out, out+4, 0xbeefu, 16)`. Predict success, the returned length and the fifth byte. Then predict what a length-bounded view displays, and what a C-string consumer (one that reads until a zero byte) displays. Build your own check, then compare with `hex_buffer.cpp`. All six bytes are initialized, so the C-string read itself is safe:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/hex_buffer.cpp -o "${TMPDIR:-/tmp}/hex_buffer" && "${TMPDIR:-/tmp}/hex_buffer"
+   ```
+   Answer format: success, length, fifth byte; then what each consumer displays and why.
+<details><summary>Answer</summary>
+Key:
+
+  - Success; length `4`; `ptr == out+4`; the fifth byte stays `!`.
+  - The bounded view displays `beef`; the C-string consumer displays `beef!`. `to_chars` writes the digits and adds no null terminator.
+  - Carry the returned length into the consumer. If a C-string interface is required, reserve a separate byte and terminate explicitly after checking success. An exact-fit digit range does not give you that spare byte.
+  - Holds for / re-check: C++20 integer `to_chars`, base 16, `-O2 -Wall -Wextra`, Apple clang 21 with libc++ (macOS arm64) and GCC 13.3 with libstdc++ (Ubuntu 24.04 aarch64); [charconv.to.chars] p1, p4-6. The buffer has a deliberate terminator at index 5; that does not license C-string reads from an arbitrary output buffer. Re-check capacity and termination when the consumer changes.
+</details>
+
+### Card M4-PB6 · Spot the trap
+Q: A helper treats `to_chars(...).ptr == last` as proof that conversion failed. Write `0xbeefu` in base 16 into ranges of capacity `0, 3, 4, 5`, each inside a larger initialized array. Predict the error category, the returned offset and `ptr == last` for each. Which field actually decides success? For a too-small range, may a portable test require the bytes inside it to stay unchanged? Run `hex_capacity.cpp`, which checks guard bytes outside the offered range and deliberately does not inspect the bytes inside a failed range:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/hex_capacity.cpp -o "${TMPDIR:-/tmp}/hex_capacity" && "${TMPDIR:-/tmp}/hex_capacity"
+   ```
+   Answer format: one line per capacity (category, offset, at end), then the deciding field, then yes or no for the interior bytes.
+<details><summary>Answer</summary>
+Key:
+
+  - Capacity `0`: `value_too_large`, offset `0`, at end `1`. Capacity `3`: `value_too_large`, offset `3`, at end `1`. (The program prints `too_small` for `errc::value_too_large`.)
+  - Capacity `4`: success, offset `4`, at end `1`. Capacity `5`: success, offset `4`, at end `0`. Both successful results spell `beef`.
+  - The exact-fit success disproves the helper. Use `ec == std::errc{}` to decide success, then use `ptr` for the length.
+  - No. On failure the standard leaves the contents of the offered range unspecified. Do not grade those bytes or treat them as a usable partial result. The guard bytes next to the range stay unchanged in all four cases; outside guards check a different property.
+  - Holds for / re-check: the same two toolchains and flags as card M4-PB5; [charconv.to.chars] p1. All ranges, including the empty one, are valid and point into a live array. The error and offset contract is standard; the bytes left inside a failed range may differ by library version. Re-check the wrapper's error test when its conversion API changes.
 </details>
 
 ---

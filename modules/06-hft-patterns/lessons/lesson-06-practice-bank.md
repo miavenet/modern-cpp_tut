@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Pages, Clocks, Percentiles and Manuals
 
-**Time: about 278 minutes** for 31 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 + 20 + 15 + 10 + 12 + 6 + 10 + 6 + 6 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 285 minutes** for 32 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 + 20 + 15 + 10 + 12 + 6 + 10 + 6 + 6 + 7 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a guard page at `base + 4096` that `mprotect` refuses, because this Mac's page is 16384 bytes.
 
@@ -521,6 +521,23 @@ Key:
   - For this toy collector, use the full pair as identity. In a hashed design, compare full keys when hashes match; a wider hash alone is not an exact-identity check.
   - A forced collision belongs in the collector's tests, along with a check of total events.
   - Holds for / re-check: Apple clang 21, C++20; a deterministic two-function trace model, no production profiler, no timing. Re-check on longer paths and recursion. The toy sum is deliberately poor and says nothing about any real profiler's collision rate.
+</details>
+
+### Card M6-PB34 · Apply
+Q: A drawing tool receives a coordinate `x` after three calibration steps are already known. The steps, in order, are `3*x+2`, then `-2*x+5`, then `4*x-3`, each applied to the previous result. An affine transformation has the form `a*x+b`. Derive one affine transformation that does all three before you open the program. Implement the composition rule in your own small program, then compare with `affine_schedule.cpp`. Predict the outputs for `x = -3, 0, 7`, the setup multiplication and addition counts when composing the three pairs, and the counts over those three inputs with and without preparation. Count calls to the source-level arithmetic helpers, not CPU instructions:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/affine_schedule.cpp -o "${TMPDIR:-/tmp}/affine_schedule" && "${TMPDIR:-/tmp}/affine_schedule"
+   ```
+   Answer format: the composition rule, the prepared pair, the three outputs, then setup counts and the per-route counts.
+<details><summary>Answer</summary>
+Key:
+
+  - Applying `(a,b)` and then `(c,d)` gives `(c*a, c*b+d)`. Keep the order: the second transformation acts on the first one's result.
+  - The prepared pair is `(-24,1)`. The outputs are `73, 1, -167`, with zero mismatches.
+  - Composing two pairs takes two multiplications and one addition, so the two compositions cost four multiplications and two additions during setup.
+  - Across three inputs, the direct route records nine multiplications and nine additions; the prepared route records three of each, setup excluded. The work left after each input arrives is one multiplication and one addition.
+  - The counts describe the instrumented algorithm. They show neither an instruction count nor a speedup. Benchmark the compiled code before claiming a latency improvement.
+  - Holds for / re-check: Apple clang 21 (macOS arm64) and GCC 13.3 (Ubuntu 24.04 aarch64), C++20, `-O2 -Wall -Wextra`. The small signed values and all intermediates fit `int64_t`; a result outside the type's range is undefined ([expr.pre] p4). Preparation holds while the coefficients and their order stay fixed. Rebuild the pair when either changes; re-check range and numerical equivalence before using larger or floating-point inputs.
 </details>
 
 ---

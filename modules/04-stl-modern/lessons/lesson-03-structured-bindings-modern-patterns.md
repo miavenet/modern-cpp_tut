@@ -322,6 +322,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Cards M4-PB5 and M4-PB6 in lesson-06-practice-bank.
+
+---
+
 ## Closing
 
 Remember: `auto [a, b]` creates a hidden object from its initializer: a named

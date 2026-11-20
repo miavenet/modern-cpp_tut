@@ -17,7 +17,7 @@
       "minutes": 26
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 70
+      "minutes": 80
     }
   },
   "cards": {
@@ -875,6 +875,34 @@
         "mode": "self"
       },
       "source": "[vector.modifiers] p1, [vector.capacity] p4 and p7 (C++20 draft N4861); measured in this course: vector_grow.cpp",
+      "concepts": []
+    },
+    "M1-PB10": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[util.smartptr.shared.const] p14-17, [util.smartptr.shared.dest] p1, [util.smartptr.shared.obs] p12, p18 (C++20 draft N4861); measured in this course: alias_lifetime.cpp",
+      "concepts": []
+    },
+    "M1-PB11": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "smart-pointers",
+      "objective": 2,
+      "minutes": 4,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[util.smartptr.shared.const] p14-17, [util.smartptr.shared.obs] p12, p17 (C++20 draft N4861); measured in this course: alias_truth.cpp",
       "concepts": []
     }
   },

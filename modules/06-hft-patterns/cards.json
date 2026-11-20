@@ -17,7 +17,7 @@
       "minutes": 30
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 278
+      "minutes": 285
     }
   },
   "cards": {
@@ -1077,6 +1077,20 @@
         "mode": "self"
       },
       "source": "measured in this course: path_identity.cpp",
+      "concepts": []
+    },
+    "M6-PB34": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "hot-path",
+      "objective": 2,
+      "minutes": 7,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[expr.pre] p4, [expr.mul] p3, [expr.add] p3 (C++20 draft N4861); measured in this course: affine_schedule.cpp",
       "concepts": []
     }
   },

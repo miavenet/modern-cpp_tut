@@ -17,7 +17,7 @@
       "minutes": 22
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 22
+      "minutes": 32
     }
   },
   "cards": {
@@ -782,6 +782,34 @@
         "mode": "self"
       },
       "source": "[charconv.from.chars] p1-3 (C++23 draft N4950); measured in this course: parse_boundary.cpp",
+      "concepts": []
+    },
+    "M4-PB5": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "to-chars",
+      "objective": 6,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[charconv.to.chars] p1, p4-6 (C++20 draft N4861); measured in this course: hex_buffer.cpp",
+      "concepts": []
+    },
+    "M4-PB6": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "to-chars",
+      "objective": 7,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[charconv.to.chars] p1 (C++20 draft N4861); measured in this course: hex_capacity.cpp",
       "concepts": []
     }
   },
