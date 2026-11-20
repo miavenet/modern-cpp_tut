@@ -1,6 +1,6 @@
 # Lesson 05 — Practice Bank (optional): What Moves to Build Time, and What a Conversion Costs
 
-**Time: about 75 minutes** for 10 cards (4 + 6 + 5 + 8 + 12 + 12 + 4 + 6 + 8 + 10 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 88 minutes** for 12 cards (4 + 6 + 5 + 8 + 12 + 12 + 4 + 6 + 8 + 10 + 6 + 7 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a table built by the compiler that gives 30 wrong answers the moment its limits change, and a `float` column that turns row 16777217 into row 16777216.
 
@@ -197,6 +197,37 @@ Key:
   - `ask_forced`: returns 21 with no divide on all five toolchains. The initializer of a `constexpr` variable is required to be a constant expression ([dcl.constexpr] p10). Returning 21 without a divide is the observed code generation on these toolchains, not an ISO guarantee about instruction selection.
   - What would make a "the compiler folds it" claim wrong: a different compiler, -O level or version, or a loop the optimizer gives up on. If you need the value at compile time, force it (`constexpr` variable, `consteval`, template argument) instead of hoping.
   - Holds for / re-check: Apple clang 21 (arm64), GCC 13.3 and clang 18.1.3 (aarch64 Linux), gcc 14.3 and clang 19.1 (x86-64, Compiler Explorer) at -O2; -O3 checked on the three Arm toolchains. Optimizer folding limits change between releases; the requirement that a `constexpr` initializer be a constant expression does not. Re-check with `-S` and a grep for the divide (`udiv` on arm64, `div` on x86-64).
+</details>
+
+### Card M2-PB11 · Spot the trap
+Q: A geometry check squares `std::uint64_t x = (std::uint64_t{1} << 40) + 3` and stores the result in `unsigned __int128` (a 128-bit compiler-extension type, here called `Wide`). Compare `static_cast<Wide>(x*x)` with `static_cast<Wide>(x)*x`. Predict each one's high and low 64-bit halves, then run. Which matches the exact square?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/02-type-system/lab/practice/widen_product.cpp -o "${TMPDIR:-/tmp}/widen_product" && "${TMPDIR:-/tmp}/widen_product"
+   ```
+   Answer format: high and low for each cast, which one matches, then the rule.
+<details><summary>Answer</summary>
+Key:
+
+  - Late cast: high=0, low=6597069766665. Early cast: high=65536, low=6597069766665.
+  - Only the early cast matches the exact square, 2^80 + 6*2^40 + 9. Comparing the low halves alone would miss the error.
+  - Widen an operand before multiplying: the `uint64_t` product wraps modulo 2^64, and casting the already-narrow result cannot recover the discarded high bits. This example uses unsigned arithmetic and does not rely on signed overflow.
+  - Holds for / re-check: Apple clang 21, C++20 with the `unsigned __int128` extension. No division, timing or x86 instruction claim. Re-check that the extension exists on another compiler, and test both halves at operand boundaries.
+</details>
+
+### Card M2-PB12 · Spot the trap
+Q: A record contains bytes {A,B,C,D} and a pointer selecting its own B. A second record receives a `memcpy` of the first while both stay alive. The source's B is then changed to Z. Predict: is the pointer-bearing type trivially copyable and standard-layout? What are the destination's local byte and selected byte? Repeat with the selection stored as the integer offset 1, bounds-checked before indexing:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/02-type-system/lab/practice/relocate_record.cpp -o "${TMPDIR:-/tmp}/relocate_record" && "${TMPDIR:-/tmp}/relocate_record"
+   ```
+   Answer format: the two trait values, local and selected byte for each version, then what the traits do not certify.
+<details><summary>Answer</summary>
+Key:
+
+  - Both traits print 1 for the pointer-bearing record. Yet the copied pointer still selects the source byte: destination local=B, selected=Z, points_to_source=1.
+  - The offset version selects B from its own copied bytes after the source becomes Z.
+  - Trivial copying preserves this pointer value; it does not rebase an internal address. These traits alone do not certify a relocatable record format.
+  - For this bounded byte-array design, use a validated offset resolved against the destination. That does not by itself establish a portable file format or an inter-process synchronization protocol.
+  - Holds for / re-check: Apple clang 21, C++20. Both records stay alive, so no dangling pointer is dereferenced; this is a single-process relocation test, not a shared-memory concurrency test. Re-check offset units, bounds and format compatibility when the record changes.
 </details>
 
 ---

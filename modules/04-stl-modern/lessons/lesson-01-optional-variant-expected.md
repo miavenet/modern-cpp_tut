@@ -417,6 +417,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Card M4-PB4 in lesson-06-practice-bank.
+
+---
+
 ## Closing
 
 Remember: `optional` says "maybe", but `*` still needs a check. `variant` +

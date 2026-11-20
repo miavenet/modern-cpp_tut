@@ -13,6 +13,7 @@ is the human's answers.
 Usage:
     ./drive.py lessons/ --progress progress.json --today YYYY-MM-DD
     ./drive.py lessons/ --progress progress.json --today YYYY-MM-DD --auto answers.txt   # for eval/CI
+    ./drive.py modules/ --today YYYY-MM-DD --diagnose [--set N]   # read-only: what to read next
 
 Card grading: constrained executable checks are automatic. Open-ended answers,
 including legacy regex and keyword checks, show the Key and require honest
@@ -675,7 +676,8 @@ if __name__ == '__main__':
 
     ap = OneLineParser(description='Short, resumable Modern C++ study sessions.',
                        epilog='Example: python3 drive.py modules/01-foundations/lessons --today $(date +%F)')
-    ap.add_argument('lessons_dir', help='Directory containing lesson Markdown files.')
+    ap.add_argument('lessons_dir', help='Directory containing lesson Markdown files '
+                    '(with --diagnose, also a module directory or modules/ for the whole course).')
     ap.add_argument('--progress', default='progress.json', help='Path for saved progress (default: progress.json).')
     ap.add_argument('--today', required=True, help='YYYY-MM-DD (explicit for determinism)')
     ap.add_argument('--auto', help='Scripted prompt responses, one per line: answer, confidence, then self-grade when requested; pretests consume only an answer.')
@@ -683,9 +685,15 @@ if __name__ == '__main__':
     ap.add_argument('--max-minutes', type=float, default=20, help='Maximum sitting minutes (default: 20).')
     ap.add_argument('--reviews', type=int, default=4, help='Maximum due reviews before new cards (default: 4).')
     ap.add_argument('--new-cards', type=int, default=6, help='Maximum new recurring cards this sitting (default: 6).')
-    resets = ap.add_mutually_exclusive_group()
-    resets.add_argument('--reset', action='store_true', help='archive and clear all progress')
-    resets.add_argument('--reset-lesson', metavar='LESSON', help='archive and restart one lesson')
+    ap.add_argument('--set', type=int, default=10, metavar='N', dest='set_size',
+                    help='Questions in a --diagnose set (default: 10).')
+    modes = ap.add_mutually_exclusive_group()
+    modes.add_argument('--reset', action='store_true', help='archive and clear all progress')
+    modes.add_argument('--reset-lesson', metavar='LESSON', help='archive and restart one lesson')
+    modes.add_argument('--diagnose', action='store_true',
+                       help='answer a mixed set (same set for the same --today), then get a ranked '
+                            'list of lesson sections to read; read-only: never writes or changes '
+                            'any progress file')
     a = ap.parse_args()
     try:
         datetime.date.fromisoformat(a.today)
@@ -695,6 +703,11 @@ if __name__ == '__main__':
                 print(f'No progress file at {a.progress}; nothing archived or reset.')
             else:
                 print(f'Archived {a.progress} to {archive}; reset {label}.')
+        elif a.diagnose:
+            if a.set_size < 1:
+                raise ValueError('--set must be at least 1')
+            from driver_lib import diagnose
+            diagnose.run(a.lessons_dir, a.today, a.set_size, a.auto)
         else:
             if min(a.max_cards, a.max_minutes, a.reviews, a.new_cards) < 0 or a.max_cards == 0 or a.max_minutes == 0:
                 raise ValueError('sitting budgets must be positive (reviews may be zero)')

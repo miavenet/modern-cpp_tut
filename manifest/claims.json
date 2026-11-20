@@ -3715,5 +3715,96 @@
     "claim": "int rolling hash overflows for abcdefghijkl (92599395 * 31), found only by UBSan; no compile-time warning",
     "source_urls": [],
     "verification": "compiled and run here, 2026-11-18, Apple clang 21, macOS arm64: rolling_hash.cpp under -fsanitize=undefined: abc 96354/96354 no report; abcdefghijkl 'signed integer overflow: 92599395 * 31 cannot be represented in type 'int'', then 306089158/306089158; re-run here, 2026-11-18, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same text with GCC 13.3 and clang 18.1.3; [expr.pre] p4, [basic.fundamental] p2 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB11",
+    "claim": "casting a uint64_t product to unsigned __int128 keeps only the wrapped low half; widening an operand first gives the exact square",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: widen_product.cpp: late high=0 low=6597069766665, early high=65536 low=6597069766665, early_matches=1 late_matches=0; [basic.fundamental] p2, [expr.mul] p2 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M2/L5",
+    "where": "M2-PB12",
+    "claim": "a trivially copyable, standard-layout record copied with memcpy keeps a pointer to the source byte; an offset selects the copy's own byte",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: relocate_record.cpp: pointer_record trivial=1 layout=1 points_to_source=1 local=B selected=Z; offset_record selected=B source=Z; [basic.types.general] p3 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB3",
+    "claim": "integer from_chars rejects a leading + or space without touching the value; on overflow it reports out of range, consumes all 10 digits and leaves the value",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: parse_boundary.cpp: [37] ok 2 37, [37ms] ok 2 37 complete=0, [ 37]/[+37]/[] invalid 0 99, [4294967296] range 10 99; parse_rules.cpp: signed_plus invalid=1 consumed=0 value=99, strtol_space value=37 consumed=3; [charconv.from.chars] p1-3 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB4",
+    "claim": "a helper that parses straight into the caller's variable returns false for \"37ms\" but has already written 37; parsing into a temporary keeps 77",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: parse_boundary.cpp: direct accepted=0 out=37; transactional accepted=0 out=77; [charconv.from.chars] p1-3 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M5/L7",
+    "where": "M5-PB27",
+    "claim": "with only a sized class-specific operator delete it is called with 24 bytes; adding the unsized overload makes delete select the unsized one",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: delete_selection.cpp: sizes=24,24, only: sized bytes=24, both: unsized; [expr.delete] p10-11 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB32",
+    "claim": "an opcode chosen on training input (7 of 8 hits) gets 2 of 8 hits on held-out input; the alternative gets 6; 0 result errors",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: heldout_routes.cpp: chosen=2 training_hits=7 heldout_hits=2 alternative_heldout_hits=6, heldout_result_errors=0"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB33",
+    "claim": "a sum-of-IDs path key merges (2,5) and (5,2) into 1 record of 5 events; the full-pair key gives 2 records of 3 and 2",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: path_identity.cpp: hash_records=1 full_path_records=2, merged=5 path_2_5=3 path_5_2=2"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB30",
+    "claim": "six writes with {1,3,1,2,4,2} attempts: 13 attempts, 6 completed, 7 failed; both ledger identities hold",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: retry_ledger.cpp: drop=0 logical=6 attempts=13 completed=6 failed=7, attempt_partition=1 logical_completion=1"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB31",
+    "claim": "one permanently failed write keeps attempts=completed+failed (13=5+8) but breaks completed=logical (5 vs 6)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: retry_ledger.cpp: drop=1 logical=6 attempts=13 completed=5 failed=8, attempt_partition=1 logical_completion=0"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB32",
+    "claim": "a recursive lambda with this auto self copies its closure 4 times for depth 3 (initial lvalue call included); this const auto& self copies 0 times; both return 8",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: recursive_self.cpp (-std=c++23): value result=8 copies=4, reference result=8 copies=0; [expr.prim.lambda.closure] p4, p14 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB33",
+    "claim": "comparing merged worker rows by position finds 4 mismatches; keyed by (variant,size) finds the 1 stale cell (blue,8: 15 vs 16)",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: report_join.cpp: mismatch blue size=8 merged=15 raw=16, positional_mismatches=4 keyed_mismatches=1, exit 0"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB34",
+    "claim": "dlsym finds both functions with default visibility, none with -fvisibility=hidden, only the attributed one with hidden + explicit export; nm agrees",
+    "source_urls": [],
+    "verification": "run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): export_check.sh: plain.so public=1 internal=1, hidden.so 0/0, api.so 1/0; nm -D --defined-only 2 names / none / public_value; exit 0"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB35",
+    "claim": "an LD_PRELOAD hook replaces the plugin's internal adjust() call only in the GCC -O2 default build (101); -Bsymbolic-functions, -fno-semantic-interposition and Clang give 12; GCC -O0 gives 101; both names stay exported",
+    "source_urls": [],
+    "verification": "run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): interpose_check.sh: GCC loose 12/101, bound 12/12, nsi 12/12, -O0 preload 101; clang 18 cl_loose and cl_bound 12 in all four runs; nm adjust, answer T in every .so; objdump GCC loose answer bl adjust@plt, nsi and cl_loose mov w0, #0xc; g++ -Q --help=optimizers -fsemantic-interposition [enabled]"
   }
 ]

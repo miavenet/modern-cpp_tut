@@ -209,6 +209,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Cards M7-PB30, M7-PB31 and M7-PB33 in lesson-06-practice-bank.
+
+---
+
 ### CONCEPT C6  `std::flat_map` (C++23): a sorted map in two vectors
 
 **Why another map?** A table built once but queried on every tick pays for
@@ -354,6 +358,10 @@ Key:
     realistic load. A micro-benchmark does not show behaviour under the real
     system's load.
 </details>
+
+---
+
+> Extra practice (optional): Card M7-PB32 in lesson-06-practice-bank.
 
 ---
 

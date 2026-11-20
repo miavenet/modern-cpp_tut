@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Reading the Draft, Closed Sets of Types
 
-**Time: about 10 minutes** for 2 cards (4 + 6 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 22 minutes** for 4 cards (4 + 6 + 7 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: add one type to a variant and the compiler finds every place you forgot; add a catch-all and a triangle's area prints as 0.
 
@@ -42,6 +42,38 @@ Key:
   - That error is a feature: the compiler lists every place you forgot to handle the new type.
   - With the catch-all it compiles again, and `area()` silently returns 0.0 for a `Triangle`: the run prints `area(Rect{3,4})=12` and `area(Triangle{3,4})=0`. A catch-all turns a compile error into a wrong answer. Use one on purpose only.
   - Holds for / re-check: every conforming library rejects the non-exhaustive visit ([variant.visit], Mandates); the message text is libc++-specific. Re-check by compiling on your library.
+</details>
+
+### Card M4-PB3 · Apply
+Q: An unsigned configuration field must contain exactly one decimal integer with no surrounding text. `parse_boundary.cpp` calls `from_chars` into a `uint32_t` (initially 99) for "37", "37ms", " 37", "+37", "4294967296" and "". Predict the error category, characters consumed and output value for each. Which inputs leave the output untouched, and where does `ptr` stop on overflow? Then run `parse_rules.cpp`, which tries "+37" with a signed `int` and " 37" with `strtol`:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/parse_boundary.cpp -o "${TMPDIR:-/tmp}/parse_boundary" && "${TMPDIR:-/tmp}/parse_boundary"
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/parse_rules.cpp -o "${TMPDIR:-/tmp}/parse_rules" && "${TMPDIR:-/tmp}/parse_rules"
+   ```
+   Answer format: one line per input (category, consumed, value), then where `ptr` stops on overflow.
+<details><summary>Answer</summary>
+Key:
+
+  - Integer `from_chars` accepts no '+' sign for any integer type and skips no leading whitespace (unlike `strtol`). Here "+37" and " 37" are invalid, consume 0 characters and leave the value at 99.
+  - "4294967296": `result_out_of_range`, consumed 10, value stays 99. `ptr` advances past all ten digits even though the value cannot be represented.
+  - "37": ok, consumed 2, value 37. Empty input: invalid, consumed 0, value stays 99.
+  - "37ms": ok, consumed 2, value 37; apply the `ec`/`ptr` whole-field check from lesson 01 (CONCEPT C3, `parseQty`).
+  - Holds for / re-check: Apple clang 21 with libc++, C++20, the decimal `uint32_t` overload ([charconv.from.chars]). This policy deliberately rejects signs, whitespace and trailing text; change the policy explicitly before comparing a different parser. Re-check the boundary and overflow cases after library changes.
+</details>
+
+### Card M4-PB4 · Spot the trap
+Q: A parse helper promises "return false and leave the old setting untouched on failure." It parses directly into the caller's `uint32_t`, then checks both the error and full consumption. With old value 77 and input "37ms", predict the returned bool and the final value. Write a fix using a temporary, then compare the `direct` and `transactional` helpers in the same probe (last line of its output):
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/parse_boundary.cpp -o "${TMPDIR:-/tmp}/parse_boundary" && "${TMPDIR:-/tmp}/parse_boundary"
+   ```
+   Answer format: bool and value for each helper, then what a test must assert.
+<details><summary>Answer</summary>
+Key:
+
+  - `direct` returns false but leaves the value at 37: the numeric-prefix parse succeeded before the wrapper rejected the suffix.
+  - `transactional` returns false and leaves the value at 77. It parses into a temporary and assigns to the caller only after all checks pass.
+  - Testing only the returned bool misses the broken failure contract. Assert both the rejection and the unchanged state.
+  - Holds for / re-check: Apple clang 21 with libc++, C++20; the inputs come from string literals. Any extra policy checks must come before committing the temporary; rerun the rejection tests when the wrapper changes.
 </details>
 
 ---

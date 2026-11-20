@@ -17,7 +17,7 @@
       "minutes": 22
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 10
+      "minutes": 22
     }
   },
   "cards": {
@@ -754,6 +754,34 @@
         "mode": "self"
       },
       "source": "C++ working draft N5054 [variant.visit] p5 (Mandates); measured in this course: variant_new_type.cpp",
+      "concepts": []
+    },
+    "M4-PB3": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "from-chars",
+      "objective": 6,
+      "minutes": 7,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[charconv.from.chars] p1-3 (C++23 draft N4950); measured in this course: parse_boundary.cpp, parse_rules.cpp",
+      "concepts": []
+    },
+    "M4-PB4": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "from-chars",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[charconv.from.chars] p1-3 (C++23 draft N4950); measured in this course: parse_boundary.cpp",
       "concepts": []
     }
   },

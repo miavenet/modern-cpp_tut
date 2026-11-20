@@ -25,8 +25,8 @@ it was tested with Apple clang 21 and libc++ on macOS arm64.
   pretest, 1.5 per completion card, 2 per question and 4 per synthesis card,
   plus about 1 minute per lab program you build. 44 cards: 7 pretests,
   7 completions (M4-LPA3 is a fill-in completion), 15 questions, 9 gotchas, 4 judgement cards, 2 synthesis.
-- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 10 minutes,
-  2 self-graded cards on measurement, research and C++ techniques and on how
+- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 22 minutes,
+  4 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.
 - **Reviews:** the driver schedules misses for the next day and uninterrupted hits about

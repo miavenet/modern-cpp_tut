@@ -17,7 +17,7 @@
       "minutes": 30
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 266
+      "minutes": 278
     }
   },
   "cards": {
@@ -1049,6 +1049,34 @@
         "mode": "self"
       },
       "source": "Intel 64 and IA-32 Architectures Software Developer's Manual: Table 21-40 (CPUID leaf 10H) and section 20.20.3, Tables 20-22 and 20-23 with the text that follows them; AMD64 Architecture Programmer's Manual Vol. 2 (24593 r3.46), Table 19-1 and section 19.4.2; https://docs.kernel.org/filesystems/resctrl.html; measured in this course: rdt_probe.sh (arm64 Linux container)",
+      "concepts": []
+    },
+    "M6-PB32": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "branches",
+      "objective": 3,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: heldout_routes.cpp",
+      "concepts": []
+    },
+    "M6-PB33": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: path_identity.cpp",
       "concepts": []
     }
   },

@@ -228,6 +228,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Card M4-PB3 in lesson-06-practice-bank.
+
+---
+
 ## std::span and std::byte
 
 ### CONCEPT C12  std::span (C++20) and std::byte (C++17)

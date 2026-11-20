@@ -165,6 +165,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Card M6-PB33 in lesson-06-practice-bank.
+
+---
+
 ### CONCEPT C11  Measuring tails on a Mac: the course histogram
 
 The course's measured labs (module 01 lesson 05, 03 lesson 05, 04 lesson 05,
@@ -421,6 +425,10 @@ Key:
     `-fprofile-instr-use` (and re-profile when traffic changes). GCC
     spells them `-fprofile-generate` / `-fprofile-use`.
 </details>
+
+---
+
+> Extra practice (optional): Card M6-PB32 in lesson-06-practice-bank.
 
 ---
 

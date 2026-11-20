@@ -318,6 +318,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Card M5-PB27 in lesson-07-practice-bank.
+
+---
+
 ## Close
 
 **Remember:** an arena reuses space after `release()`, not after individual deallocations; a buffer is a plan, so reserve and use `null_memory_resource()` to forbid upstream fallback; keep placement new's pointer. **Tomorrow:** missed cards come back. **Next:** lesson 02, cache lines and data layout.

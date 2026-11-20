@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Fair Benchmarks and What the Build Really Did
 
-**Time: about 248 minutes** for 29 cards (12 + 10 + 3 + 5 + 12 + 15 + 5 + 15 + 12 + 8 + 10 + 10 + 10 + 10 + 5 + 5 + 8 + 6 + 5 + 3 + 15 + 15 + 6 + 4 + 8 + 3 + 10 + 12 + 6 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 286 minutes** for 35 cards (12 + 10 + 3 + 5 + 12 + 15 + 5 + 15 + 12 + 8 + 10 + 10 + 10 + 10 + 5 + 5 + 8 + 6 + 5 + 3 + 15 + 15 + 6 + 4 + 8 + 3 + 10 + 12 + 6 + 6 + 3 + 6 + 7 + 8 + 8 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a hash table over 30x slower at lookup because its hash has only 787 distinct values; the bucket counts show it before any timer does.
 
@@ -483,6 +483,101 @@ Key:
   - Rule: a result outside the range of the type is undefined behaviour for signed integers ([expr.pre] p4); unsigned arithmetic is defined modulo 2^N ([basic.fundamental] p2). Once UB is possible the optimizer may assume it never happens, so the timed code may not be the code you wrote.
   - Fix: for a hash that is meant to wrap, use `uint32_t` or `uint64_t` (defined modulo 2^N). A counter that must detect overflow is a different problem: check its range before the add, do not rely on wrapping. Run benchmarks once under UBSan with realistic input, because the overflow appears only for some inputs.
   - Holds for / re-check: the rule is in the language (C++20 draft; C++20 still leaves signed overflow undefined). Sanitizer wording checked on Apple clang 21, GCC 13.3 and clang 18.1.3. Re-check: rerun `rolling_hash.cpp` under `-fsanitize=undefined` on your compiler.
+</details>
+
+### Card M7-PB30 · Apply
+Q: A storage test retries six logical writes. Their attempt counts are {1,3,1,2,4,2}; only each final attempt succeeds. Before opening `retry_ledger.cpp`, predict logical writes, attempts, completions and retries. Run it and read the `drop=0` lines, then check both attempts = completed + failed and completed = logical writes. What does each identity establish?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/07-architecture/lab/practice/retry_ledger.cpp -o "${TMPDIR:-/tmp}/retry_ledger" && "${TMPDIR:-/tmp}/retry_ledger"
+   ```
+   Answer format: the four counts, then one line per identity.
+<details><summary>Answer</summary>
+Key:
+
+  - Logical writes=6, attempts=13, completed=6, failed attempts=7. Here every failed attempt is retried, so retries=7.
+  - attempts = completed + failed checks that every attempt has an outcome: 13=6+7. completed = logical writes checks that all six logical writes completed. Record both before interpreting a throughput result.
+  - Holds for / re-check: a counted simulation (Apple clang 21, C++20); no I/O or timing is measured. Re-check the ledger when you introduce dropped requests or partial completions.
+</details>
+
+### Card M7-PB31 · Spot the trap
+Q: The same ledger: six planned writes with attempt counts {1,3,1,2,4,2}, and at first each final attempt succeeds. A deadline change lets the last attempt of the four-attempt write fail permanently. An engineer treats a passing attempt-partition check (attempts = completed + failed) as proof that all writes completed. Recompute the counters on paper by turning that one completion into a failure, then check the `drop=1` lines of `retry_ledger.cpp`:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/07-architecture/lab/practice/retry_ledger.cpp -o "${TMPDIR:-/tmp}/retry_ledger" && "${TMPDIR:-/tmp}/retry_ledger"
+   ```
+   Which identity catches the change?
+   Answer format: attempts, completions and failed attempts, then which identity holds and which fails, then what to report.
+<details><summary>Answer</summary>
+Key:
+
+  - Attempts stay 13; completions become 5; failed attempts become 8.
+  - attempts = completed + failed still holds (13=5+8), but completed = logical writes no longer holds (5 versus 6).
+  - Report the dropped logical write separately. A partition check alone cannot certify delivery.
+  - Holds for / re-check: both cases compiled and run with Apple clang 21, C++20, -O2 -Wall -Wextra. A failure here means an unsuccessful attempt; a drop means a logical write with no successful attempt. Re-check these definitions when retries can partially commit.
+</details>
+
+### Card M7-PB32 · Apply
+Q: `recursive_self.cpp` captures a `Cargo` by value in each of two recursive lambdas. `Cargo`'s copy constructor increments a counter. Each call adds `cargo.unit` (2), recursing from depth 3 to 0. One lambda takes `this auto self`, the other `this const auto& self` (explicit object parameters, lesson 03 CONCEPT C7). Predict both sums and both copy counts, including the initial call from an lvalue closure, then run:
+   ```sh
+   clang++ -std=c++23 -O2 -Wall -Wextra modules/07-architecture/lab/practice/recursive_self.cpp -o "${TMPDIR:-/tmp}/recursive_self" && "${TMPDIR:-/tmp}/recursive_self"
+   ```
+   Answer format: sum and copies for each lambda, then one line on where the copies come from.
+<details><summary>Answer</summary>
+Key:
+
+  - Both return 8. The value-self lambda records 4 copies; the reference-self lambda records 0.
+  - The four value-self invocations are depths 3, 2, 1, 0. The initial lvalue call copies too; counting only recursive edges would wrongly predict 3.
+  - For this read-only captured state, reference self keeps the result and avoids the observed closure copies. This is a copy-count result, not a timing claim.
+  - Holds for / re-check: Apple clang 21, C++23, -O2; the counter is reset after each closure is built. Moving the initial closure, changing its capture types or changing the self parameter changes what must be checked; rerun the probe.
+</details>
+
+### Card M7-PB33 · Apply
+Q: Two benchmark workers emit synthetic operation-count rows in completion order. The current reference rows (variant,size,count) are (red,4,12), (blue,4,8), (red,8,24), (blue,8,16). Worker A emits (red,8,24), then (red,4,12); worker B emits (blue,8,15), then (blue,4,8). Worker B has one stale cell from an earlier run. The merger alternates A then B, keeping each worker's order. Predict how many count mismatches a positional comparison finds, versus a comparison keyed by (variant,size). Run the checker. Which cell is stale?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/07-architecture/lab/practice/report_join.cpp -o "${TMPDIR:-/tmp}/report_join" && "${TMPDIR:-/tmp}/report_join"
+   ```
+   Answer format: both mismatch counts and the stale cell, then the rule for comparing merged results.
+<details><summary>Answer</summary>
+Key:
+
+  - Positional comparison reports 4 count mismatches. Keyed comparison reports exactly 1: blue, size=8, merged=15, raw=16.
+  - A row's position reflects worker completion and merge order, not experimental identity. Join on every dimension that identifies a cell before comparing values.
+  - When you extend this checker, test duplicate keys and missing or unknown cells explicitly; this fixture does not exercise those guard branches. Its exit 0 means the deliberately bad fixture produced the expected one mismatch; it does not approve the merged worker output.
+  - In a real worker pipeline, reject the merged output when keyed_mismatches is nonzero.
+  - Holds for / re-check: an invented integer-count fixture (Apple clang 21, C++20); no timings. In a real experiment add compiler, target, input seed and the other varying dimensions to the key; rerun when the worker-output schema changes.
+</details>
+
+### Card M7-PB34 · Apply
+Q: (Linux only: run it on Linux or in a Linux container.) A plugin defines two C-linkage functions, `public_value` and `internal_value`. The script builds the same source three ways: default visibility, hidden visibility for everything (`-fvisibility=hidden`), and hidden visibility with a default-visibility attribute only on `public_value`. Before running, predict which names a loader can find with `dlsym` in each build:
+   ```sh
+   bash modules/07-architecture/lab/practice/export_check.sh
+   ```
+   Answer format: public and internal found (1/0) for each build, what `nm` lists, then the habit.
+<details><summary>Answer</summary>
+Key:
+
+  - Default: public=1, internal=1. All hidden: public=0, internal=0. Explicit API export: public=1, internal=0.
+  - `nm`'s dynamic defined-symbol listing agrees: two names, no names, then only `public_value`. All three libraries load successfully.
+  - A successful library build and `dlopen` do not certify that a required entry point is still discoverable. Test the exported API as part of a visibility change.
+  - Keep the intended API explicitly exported. Export counts do not measure call overhead or justify disabling executable hardening.
+  - Holds for / re-check: Ubuntu 24.04 aarch64 container, GCC 13.3, ELF shared libraries, -O2 -fPIC (exact flags in `export_check.sh`). No x86 run or timing. Mach-O and Windows export rules are outside this probe; rerun with the deployed loader and inspect its actual export table.
+</details>
+
+### Card M7-PB35 · Apply
+Q: (Linux only: run it on Linux or in a Linux container.) A plugin exports `adjust(){return 11;}` and `answer(){return adjust()+1;}`. A preload library exports an alternative `adjust` returning 100. The script builds the plugin normally and with `-Wl,-Bsymbolic-functions`, which requests local binding of function references. Predict `answer` with and without the preload (`LD_PRELOAD`) for both builds under GCC and Clang at -O2 -fPIC, then check with `nm` whether both plugin functions stay exported. The script also tests GCC with `-fno-semantic-interposition` and GCC at -O0:
+   ```sh
+   bash modules/07-architecture/lab/practice/interpose_check.sh
+   ```
+   Answer format: `answer` per compiler, build and preload, what `nm` shows, then the habit.
+<details><summary>Answer</summary>
+Key:
+
+  - With GCC 13.3 at -O2 -fPIC, both builds return 12 without the preload; with the preload the normal build returns 101 and the locally bound build returns 12.
+  - Clang 18.1.3 at -O2 -fPIC returns 12 in both builds, with or without the preload. GCC with `-fno-semantic-interposition` also returns 12 with or without the preload; GCC's -O0 build returns 101 with the preload.
+  - GCC's default `-fsemantic-interposition` keeps the call interposable here. Clang (and GCC with `-fno-semantic-interposition`) may inline it: this probe's `answer` reduces to returning 12, so optimization alone bypasses the hook.
+  - Both builds still export `adjust` and `answer`, as `nm` confirms. Export visibility alone does not establish which definition an internal call selects.
+  - Interposition means replacing a reference's selected definition with another definition. A binding change can disable that replacement even while the exported names remain.
+  - Keep a replacement-hook test when changing compiler or linker settings. Matching outputs without the hook miss this behaviour change; no speed claim follows from it.
+  - Holds for / re-check: Ubuntu 24.04 aarch64 container, GCC 13.3, Clang 18.1.3 and GNU ELF linking, ordinary non-privileged processes; these are observed compiler- and flag-dependent results. `LD_PRELOAD` is set only for each child command. Different loaders and linkers need new tests; no x86 timing, ASLR or security claim.
 </details>
 
 ---

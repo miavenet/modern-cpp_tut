@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Pages, Clocks, Percentiles and Manuals
 
-**Time: about 266 minutes** for 29 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 + 20 + 15 + 10 + 12 + 6 + 10 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 278 minutes** for 31 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 + 20 + 15 + 10 + 12 + 6 + 10 + 6 + 6 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a guard page at `base + 4096` that `mprotect` refuses, because this Mac's page is 16384 bytes.
 
@@ -488,6 +488,39 @@ Key:
   - Container result: 0 RDT flags, no resctrl filesystem, no `/sys/fs/resctrl`. This container exposes no listed RDT flags or resctrl interface; the probe alone cannot distinguish absent hardware, unavailable kernel support/modules, or hidden/unmounted/inaccessible interfaces. It is an exposure probe, not proof of CPU incapability, and a mounted resctrl is not proof of an exclusive reservation. It shows nothing about any x86 server.
   - Report each layer separately, and run it in the environment you deploy on: a VM or container may hide what the host CPU has.
   - Holds for / re-check: the x86 parts (Intel CPUID, AMD, kernel resctrl) are citations from the Intel SDM, the AMD APM and kernel.org, not results: nothing was run on x86. The only run is the arm64 Linux container (Ubuntu 24.04, linuxkit kernel 7.0.12), as an exposure result. The asymmetric enumeration shows the CPUID recipe itself changes over time. Arm has its own partitioning architecture (not covered by these sources, not checked). Re-check: rerun `rdt_probe.sh` on the target and reread the current SDM CPUID tables.
+</details>
+
+### Card M6-PB32 · Apply
+Q: A decoder precomputes the result for its most common opcode. `heldout_routes.cpp` chooses between opcodes 2 and 9 using training input {2,2,2,2,2,2,2,9}, then counts special-path hits on a separate input {2,9,9,9,9,9,2,9}. Other opcodes use the correct fallback. Predict the chosen opcode, both hit counts and the result mismatches. Run it before deciding whether the training hit count justifies deploying that specialization:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/heldout_routes.cpp -o "${TMPDIR:-/tmp}/heldout_routes" && "${TMPDIR:-/tmp}/heldout_routes"
+   ```
+   Answer format: chosen opcode, the hit counts and mismatches, then one line on what the held-out input shows.
+<details><summary>Answer</summary>
+Key:
+
+  - It chooses 2: training hits=7 of 8, held-out hits=2 of 8. Specializing 9 instead would give 6 held-out hits.
+  - The 7-to-2 drop comes from the different input distributions. The held-out input stands in for the deployed feed; holding it out is what lets the shift show, it does not cause it.
+  - The result mismatch count is 0: passing correctness does not imply the specialized path stays common.
+  - Keep the evaluation input out of the selection step. If you use its six-hit result to retune the candidate to 9, it has become training data and you need another held-out evaluation.
+  - These are source-level route counts, not instruction counts or a speed ranking; the compiler can simplify this toy calculation.
+  - Holds for / re-check: a deterministic toy decoder (Apple clang 21, C++20). Held-out means input not used to select the candidate. Counts change with the input distribution; after a feed change, check correctness and path frequency separately.
+</details>
+
+### Card M6-PB33 · Spot the trap
+Q: A toy trace collector uses the sum of two function IDs as its path key. Its event sequence is {(2,5),(2,5),(5,2),(2,5),(5,2)}. A second collector keys on the full ordered pair. Predict the record counts and event counts of each. Run `path_identity.cpp`, then explain why a correct grand total cannot validate path attribution:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/path_identity.cpp -o "${TMPDIR:-/tmp}/path_identity" && "${TMPDIR:-/tmp}/path_identity"
+   ```
+   Answer format: records and events for each collector, then the trap, then the fix.
+<details><summary>Answer</summary>
+Key:
+
+  - Sum-key collector: 1 record with 5 events. Full-pair collector: 2 records, (2,5) with 3 and (5,2) with 2.
+  - Both account for all five events, yet one merges distinct routes. A total-count check misses this attribution failure.
+  - For this toy collector, use the full pair as identity. In a hashed design, compare full keys when hashes match; a wider hash alone is not an exact-identity check.
+  - A forced collision belongs in the collector's tests, along with a check of total events.
+  - Holds for / re-check: Apple clang 21, C++20; a deterministic two-function trace model, no production profiler, no timing. Re-check on longer paths and recursion. The toy sum is deliberately poor and says nothing about any real profiler's collision rate.
 </details>
 
 ---

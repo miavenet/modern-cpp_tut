@@ -20,7 +20,7 @@
       "minutes": 28
     },
     "lesson-07-practice-bank.md": {
-      "minutes": 219
+      "minutes": 225
     }
   },
   "cards": {
@@ -1174,6 +1174,20 @@
         "mode": "self"
       },
       "source": "[hardware.interference] p1 (C++20 draft N4861); measured in this course: interference_macro.cpp, sysctl hw.cachelinesize (macOS), getconf LEVEL1_DCACHE_LINESIZE (Linux)",
+      "concepts": []
+    },
+    "M5-PB27": {
+      "lesson": "lesson-07-practice-bank.md",
+      "type": "apply",
+      "topic": "allocators",
+      "objective": 2,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[expr.delete] p10-11 (C++23 draft N4950); measured in this course: delete_selection.cpp",
       "concepts": []
     }
   },

@@ -1,6 +1,6 @@
 # Lesson 07 — Practice Bank (optional): What Memory Really Costs, What the Compiler Assumes
 
-**Time: about 219 minutes** for 26 cards (6 + 6 + 10 + 10 + 10 + 3 + 5 + 8 + 8 + 8 + 6 + 6 + 12 + 8 + 6 + 4 + 12 + 10 + 10 + 12 + 5 + 8 + 12 + 12 + 12 + 10 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 225 minutes** for 27 cards (6 + 6 + 10 + 10 + 10 + 3 + 5 + 8 + 8 + 8 + 6 + 6 + 12 + 8 + 6 + 4 + 12 + 10 + 10 + 12 + 5 + 8 + 12 + 12 + 12 + 10 + 6 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: an 8-byte value that takes a 32-byte block in a `std::list`, and a range mask the compiler deleted because you promised it was not needed.
 
@@ -459,6 +459,21 @@ Key:
   - Lesson: a reported line size (what the OS or guest says the cache uses) and a recommended interference spacing (what the implementation suggests for avoiding sharing) are different quantities that need not be equal. A report should print each with its source and say which are unavailable. Reading one does not invalidate the other.
   - Limit: a compile-time constant describes the compiled target and says nothing about the CPU the program later runs on; the probe above does not decide which number a program should use.
   - Holds for / re-check: one M1 Max (macOS host and a Linux VM on it), Apple clang 21, GCC 13.3, clang 18.1.3, and x86-64 gcc 13.3 / clang 18.1 on Compiler Explorer, re-run 2026-11-18. Values differ per CPU, OS, VM and library version; a newer clang may define the constant (not checked here). Re-check: run the probes on each target.
+</details>
+
+### Card M5-PB27 · Apply
+Q: Two classes each contain three `uint64_t` words and define class-specific allocation and deallocation functions. `SizedOnly` defines only `operator delete(void*, std::size_t)`. `Both` defines that overload and `operator delete(void*)`. Predict which overload `delete new T` calls for each class. Run the probe: does adding a sized overload mean it is selected?
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/05-memory-perf/lab/practice/delete_selection.cpp -o "${TMPDIR:-/tmp}/delete_selection" && "${TMPDIR:-/tmp}/delete_selection"
+   ```
+   Answer format: the overload called for each class, then the rule and the habit.
+<details><summary>Answer</summary>
+Key:
+
+  - Both object sizes are 24 here. `SizedOnly` prints `only: sized bytes=24`; `Both` prints `both: unsized`.
+  - Adding the unsized class-specific overload changes the selection: in class scope, the one without a `std::size_t` parameter is chosen. Merely providing a sized overload does not show that the allocator receives the size.
+  - Instrument the selected deallocation function before reasoning about saved allocator work. This test measures selection and bytes, not allocator speed.
+  - Holds for / re-check: Apple clang 21, C++20, ordinary scalar new/delete on these classes. Arrays, over-alignment, inheritance and destroying delete are outside this probe; re-check the selection before extending it to those cases.
 </details>
 
 ---

@@ -17,7 +17,7 @@
       "minutes": 25
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 248
+      "minutes": 286
     }
   },
   "cards": {
@@ -1035,6 +1035,90 @@
         "mode": "self"
       },
       "source": "[expr.pre] p4 and [basic.fundamental] p2 (C++20 draft N4861); measured in this course: rolling_hash.cpp",
+      "concepts": []
+    },
+    "M7-PB30": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: retry_ledger.cpp",
+      "concepts": []
+    },
+    "M7-PB31": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "expiry",
+      "objective": 3,
+      "minutes": 3,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: retry_ledger.cpp",
+      "concepts": []
+    },
+    "M7-PB32": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "cpp23",
+      "objective": 3,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[expr.prim.lambda.closure] p4 and p14 (C++23 draft N4950); measured in this course: recursive_self.cpp",
+      "concepts": []
+    },
+    "M7-PB33": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "benchmarking",
+      "objective": 3,
+      "minutes": 7,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: report_join.cpp",
+      "concepts": []
+    },
+    "M7-PB34": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "visibility",
+      "objective": 3,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: export_check.sh, export_plugin.cpp, export_loader.cpp (Ubuntu 24.04 aarch64 container, GCC 13.3)",
+      "concepts": []
+    },
+    "M7-PB35": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "expiry",
+      "objective": 3,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: interpose_check.sh, interpose_lib.cpp, interpose_hook.cpp, interpose_driver.cpp (Ubuntu 24.04 aarch64 container, GCC 13.3, clang 18.1.3)",
       "concepts": []
     }
   },
