@@ -3841,5 +3841,54 @@
     "claim": "three fixed affine steps compose to (-24,1) for 4 multiplications and 2 additions of setup; over three inputs the direct route counts 9 of each, the prepared route 3",
     "source_urls": [],
     "verification": "compiled and run here, 2026-11-19, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/affine_schedule.cpp: folded a=-24 b=1 setup_mul=4 setup_add=2, outputs 73/1/-167, direct_mul=9 direct_add=9 prepared_mul=3 prepared_add=3 mismatches=0; re-run here, 2026-11-19, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [expr.pre] p4, [expr.mul] p3, [expr.add] p3 in C++20 draft N4861"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB36",
+    "claim": "a side effect inside assert() disappears under -DNDEBUG: the embedded commit() counter is 1 without NDEBUG and 0 with it; a call made before the assert counts 1 in both builds",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-22, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/assert_effect.cpp: embedded=1 separate=1; with -DNDEBUG: embedded=0 separate=1; re-run here, 2026-11-22, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [assertions.general] p1, [cassert.syn] p1, [assertions.assert] p1 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M7/L6",
+    "where": "M7-PB37",
+    "claim": "for 900/100 raw bytes stored as 100/100 (A) and 300/10 (B), the mean of file ratios is 5 for A and 6.5 for B, but the pooled archive ratio is 5 for A and 1000/310 = 3.225806 for B",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-22, Apple clang 21, macOS arm64: modules/07-architecture/lab/practice/ratio_totals.cpp: mean_ratio=5.0 pooled_ratio=5.0; mean_ratio=6.5 pooled_ratio=3.225806 raw=1000 stored=310; re-run here, 2026-11-22, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; invented byte counts, arithmetic"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB7",
+    "claim": "unordered_set::find(int) with transparent hash and equality builds 0 temporary keys for probes 4, 8, 12; without is_transparent it builds 3; both find 2",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-22, Apple clang 21, macOS arm64: modules/04-stl-modern/lab/practice/lookup_materialization.cpp: found=2 lookup_key_constructions=0; with -DOPAQUE: found=2 lookup_key_constructions=3; re-run here, 2026-11-22, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [unord.req.general] p242 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB8",
+    "claim": "to_chars general precision 6 maps 1.0 and nextafter(1.0, 2.0) to 1 string with 1 exact round trip of 2; the shortest-form overload gives 2 strings and 2 exact round trips",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-22, Apple clang 21, macOS arm64: modules/04-stl-modern/lab/practice/decimal_roundtrip.cpp: precision6 distinct_texts=1 exact_roundtrips=1, shortest distinct_texts=2 exact_roundtrips=2; re-run here, 2026-11-22, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [charconv.to.chars] p2, p7, p13 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M4/L6",
+    "where": "M4-PB9",
+    "claim": "a helper that inserts std::hex leaves the caller's stream in hex (15 f f); a fresh stream stays decimal (15); restoring flags() gives 15 f 15",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-22, Apple clang 21, macOS arm64: modules/04-stl-modern/lab/practice/stream_state.cpp: bad=15 f f, good=15 f 15, independent=15, exit 0; re-run here, 2026-11-22, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; [fmtflags.state] p1-3, [basefield.manip] p4 in C++23 draft N4950"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB35",
+    "claim": "datasets {1,2,3,4,19} and {1,2,3,4,10} give the same half-open bin counts {4,1,0} but nearest-rank p90 of 19 and 10, so counts alone cannot recover exact p90",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-22, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/histogram_contract.cpp: A=4,1,0 B=4,1,0 equal=1 p90A=19 p90B=10; re-run here, 2026-11-22, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output; nearest-rank arithmetic"
+  },
+  {
+    "lesson": "M6/L6",
+    "where": "M6-PB36",
+    "claim": "adding counts from bins {0,10,20,40} and {0,5,20,40} by position gives {1,1,0} for two samples of 7, while pooling under the first edges gives {2,0,0}; a guard rejects unequal edges and accepts equal ones",
+    "source_urls": [],
+    "verification": "compiled and run here, 2026-11-22, Apple clang 21, macOS arm64: modules/06-hft-patterns/lab/practice/histogram_contract.cpp: naive=1,1,0 pooled=2,0,0 rejected=1; matching_edges_accepted=1 counts=2,0,0; re-run here, 2026-11-22, in an Ubuntu 24.04 aarch64 container (GCC 13.3, clang 18.1.3): same output"
   }
 ]

@@ -270,6 +270,10 @@ Key:
 
 ---
 
+> Extra practice (optional): Cards M6-PB35 and M6-PB36 in lesson-06-practice-bank.
+
+---
+
 ### CONCEPT C7  Kernel bypass and polling (Linux, untested here)
 
 **Why poll at all?** Interrupts and a kernel wake-up do useful work, but they

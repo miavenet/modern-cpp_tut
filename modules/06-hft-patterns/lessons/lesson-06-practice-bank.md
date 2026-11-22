@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Pages, Clocks, Percentiles and Manuals
 
-**Time: about 285 minutes** for 32 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 + 20 + 15 + 10 + 12 + 6 + 10 + 6 + 6 + 7 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 297 minutes** for 34 cards (4 + 12 + 10 + 8 + 5 + 6 + 5 + 10 + 8 + 8 + 10 + 8 + 12 + 5 + 10 + 12 + 15 + 5 + 10 + 4 + 15 + 6 + 5 + 20 + 15 + 10 + 12 + 6 + 10 + 6 + 6 + 7 + 6 + 6 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a guard page at `base + 4096` that `mprotect` refuses, because this Mac's page is 16384 bytes.
 
@@ -538,6 +538,37 @@ Key:
   - Across three inputs, the direct route records nine multiplications and nine additions; the prepared route records three of each, setup excluded. The work left after each input arrives is one multiplication and one addition.
   - The counts describe the instrumented algorithm. They show neither an instruction count nor a speedup. Benchmark the compiled code before claiming a latency improvement.
   - Holds for / re-check: Apple clang 21 (macOS arm64) and GCC 13.3 (Ubuntu 24.04 aarch64), C++20, `-O2 -Wall -Wextra`. The small signed values and all intermediates fit `int64_t`; a result outside the type's range is undefined ([expr.pre] p4). Preparation holds while the coefficients and their order stay fixed. Rebuild the pair when either changes; re-check range and numerical equivalence before using larger or floating-point inputs.
+</details>
+
+### Card M6-PB35 · Spot the trap
+Q: A histogram stores counts in half-open bins `[0,10)`, `[10,20)`, `[20,40)`; a half-open bin includes its lower bound and excludes its upper bound. Dataset A is `{1,2,3,4,19}`; dataset B is `{1,2,3,4,10}`. Predict both count arrays and exact p90 values, using nearest rank `ceil(0.9*N)` in sorted order. Can a report recover exact p90 from these counts alone? Implement the counts before checking the first output line of:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/histogram_contract.cpp -o "${TMPDIR:-/tmp}/histogram_contract" && "${TMPDIR:-/tmp}/histogram_contract"
+   ```
+   Answer format: both count arrays, both exact p90 values, yes or no, then what a report should state.
+<details><summary>Answer</summary>
+Key:
+
+  - Both histograms are `{4,1,0}`. Rank 5 gives exact p90 = 19 for A and 10 for B.
+  - The stored summaries are identical although the exact answers differ. So counts alone cannot tell these p90 values apart.
+  - Report p90's containing interval `[10,20)` (integer values 10 through 19 here), or label a representative point as an estimate. The midpoint or upper edge is not the recovered observation.
+  - Holds for / re-check: invented bounded integer samples, fixed half-open bins, nearest-rank percentile; no measured latencies. Apple clang 21 with libc++ (macOS arm64) and GCC 13.3 with libstdc++ (Ubuntu 24.04 aarch64), C++20, `-O2 -Wall -Wextra`. Re-check interval conventions and rank definitions when changing histogram libraries. Exact quantiles require keeping more information.
+</details>
+
+### Card M6-PB36 · Spot the trap
+Q: Worker X bins at `{0,10,20,40}`; worker Y bins at `{0,5,20,40}`, both using half-open intervals in the same units. Each records one sample, 7. A collector adds their count arrays by position and labels the result with X's edges. Predict that result and compare it with binning both raw samples using X's edges. Write a merge guard that refuses unequal edges; also test a same-edge merge so a guard that rejects everything cannot pass. Then check the last two output lines of:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/06-hft-patterns/lab/practice/histogram_contract.cpp -o "${TMPDIR:-/tmp}/histogram_contract" && "${TMPDIR:-/tmp}/histogram_contract"
+   ```
+   Answer format: the naive and pooled counts, both totals, then what the merge guard compares.
+<details><summary>Answer</summary>
+Key:
+
+  - Naive addition gives `{1,1,0}`. Pooling the two raw samples under X's edges gives `{2,0,0}`.
+  - Both totals are 2. A correct grand total does not validate the bucket meanings.
+  - The program rejects X+Y and accepts X+X, producing `{2,0,0}` for the latter. Compare the edge arrays before summing corresponding counters.
+  - This fixture fixes units and interval convention. A real merge contract must fix those too, along with how out-of-range samples are treated.
+  - Holds for / re-check: the same two toolchains and flags as card M6-PB35, bounded fixture counts with no overflow. This exercise rejects incompatible summaries; it does not redistribute counts between bins. Re-check compatibility when precision, units, edges or boundary conventions change.
 </details>
 
 ---

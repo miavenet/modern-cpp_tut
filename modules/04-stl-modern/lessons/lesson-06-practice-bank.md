@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Reading the Draft, Closed Sets of Types
 
-**Time: about 32 minutes** for 6 cards (4 + 6 + 7 + 5 + 5 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 50 minutes** for 9 cards (4 + 6 + 7 + 5 + 5 + 5 + 7 + 6 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: add one type to a variant and the compiler finds every place you forgot; add a catch-all and a triangle's area prints as 0.
 
@@ -105,6 +105,54 @@ Key:
   - The exact-fit success disproves the helper. Use `ec == std::errc{}` to decide success, then use `ptr` for the length.
   - No. On failure the standard leaves the contents of the offered range unspecified. Do not grade those bytes or treat them as a usable partial result. The guard bytes next to the range stay unchanged in all four cases; outside guards check a different property.
   - Holds for / re-check: the same two toolchains and flags as card M4-PB5; [charconv.to.chars] p1. All ranges, including the empty one, are valid and point into a live array. The error and offset contract is standard; the bytes left inside a failed range may differ by library version. Re-check the wrapper's error test when its conversion API changes.
+</details>
+
+### Card M4-PB7 · Apply
+Q: A set stores `Key{int value}` objects. `Key(int)` is an implicit conversion and increments a construction counter. The hash and equality objects accept both `Key` and `int`, with consistent results for equal values. The set contains 4 and 12; after resetting the counter, it probes with integers 4, 8 and 12. "Heterogeneous lookup" means searching with a different type from the stored key. Predict matches and key constructions when both function objects declare `using is_transparent = void`, and when neither does. Implement the probe, then compare with both builds:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/lookup_materialization.cpp -o "${TMPDIR:-/tmp}/lookup_materialization" && "${TMPDIR:-/tmp}/lookup_materialization"
+   clang++ -std=c++20 -O2 -Wall -Wextra -DOPAQUE modules/04-stl-modern/lab/practice/lookup_materialization.cpp -o "${TMPDIR:-/tmp}/lookup_opaque" && "${TMPDIR:-/tmp}/lookup_opaque"
+   ```
+   Answer format: matches and key constructions for each build, then what enables the heterogeneous `find`.
+<details><summary>Answer</summary>
+Key:
+
+  - Both builds find 2 keys. Transparent lookup constructs 0 temporary keys; the opaque build constructs 3, including one for the unsuccessful probe.
+  - Merely providing overloads for integers does not enable the heterogeneous `find` overload. The hash and equality transparency markers enable it; their operations must also support the probe type correctly.
+  - Count work at the lookup boundary separately from set construction. A matching hit count would not reveal these extra conversions, and a construction count is not a speed measurement.
+  - Holds for / re-check: C++20 unordered lookup ([unord.req.general] p242, C++23 draft N4950), Apple clang 21 with libc++ (macOS arm64) and GCC 13.3 with libstdc++ (Ubuntu 24.04 aarch64), `-O2 -Wall -Wextra`. The counter starts after insertion. An explicit constructor would make the opaque form fail instead of converting implicitly; re-check when the key, hash, equality or library changes.
+</details>
+
+### Card M4-PB8 · Spot the trap
+Q: A checkpoint writer serializes the two doubles `1.0` and `std::nextafter(1.0, 2.0)` (the next representable double toward 2). It uses `to_chars` with general format and precision 6. A replacement uses the overload with no format or precision argument. Predict the number of distinct strings and exact numeric round trips for each writer. Build a test that checks both conversion errors and full consumption when reading back; compare with:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/decimal_roundtrip.cpp -o "${TMPDIR:-/tmp}/decimal_roundtrip" && "${TMPDIR:-/tmp}/decimal_roundtrip"
+   ```
+   Answer format: distinct strings and exact round trips for each writer, then what to validate first.
+<details><summary>Answer</summary>
+Key:
+
+  - Precision 6: 1 distinct string and 1 exact round trip out of 2. Shortest form: 2 distinct strings and 2 exact round trips.
+  - The precision-limited text merges these neighbouring values. A readable display is not necessarily a lossless checkpoint.
+  - The no-format `to_chars` overload picks a shortest representation that recovers the value through the matching `from_chars` on the same implementation. Validate the round trip before comparing formatter costs.
+  - This test uses two finite positive values. It does not show that NaN payloads or signed-zero bits survive, or that every parser reads the text back.
+  - Holds for / re-check: IEEE-754 double with 53 significand bits (checked at compile time), Apple clang 21 with libc++ (macOS arm64) and GCC 13.3 with libstdc++ (Ubuntu 24.04 aarch64), C++20, `-O2 -Wall -Wextra`; [charconv.to.chars] p2, p7, p13 (C++23 draft N4950). Each writer and reader uses the same library. Re-check when changing precision, format, parser or the checkpoint's equality requirements.
+</details>
+
+### Card M4-PB9 · Spot the trap
+Q: A diagnostic helper writes `out << std::hex << x` to a caller-supplied stream. An initially decimal `ostringstream` writes 15, calls the helper with 15, then writes 15 again, with spaces between values. Predict the resulting text. Does a separate fresh stream also change? Write a helper that restores the old flags and compare:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/04-stl-modern/lab/practice/stream_state.cpp -o "${TMPDIR:-/tmp}/stream_state" && "${TMPDIR:-/tmp}/stream_state"
+   ```
+   Answer format: the text of the unguarded, fresh and restoring streams, then how to test such a helper.
+<details><summary>Answer</summary>
+Key:
+
+  - The unguarded stream contains `15 f f`. The helper leaves hexadecimal formatting active for the next insertion.
+  - The independent stream contains `15`. This state belongs to the particular stream, not every stream in the process.
+  - Saving `out.flags()` and restoring it after this helper's insertion gives `15 f 15`. This helper changes only flags.
+  - Test a helper by observing its caller's next operation, not just the helper's own output.
+  - Holds for / re-check: single-threaded string streams without enabled stream exceptions; Apple clang 21 with libc++ (macOS arm64) and GCC 13.3 with libstdc++ (Ubuntu 24.04 aarch64), C++20, `-O2 -Wall -Wextra`; [fmtflags.state] p1-3, [basefield.manip] p4 (C++23 draft N4950). The simple restoration is tested on normal return only. If a helper changes precision, fill, locale or exception behaviour, widen the restoration contract and its tests; this program does not certify those cases.
 </details>
 
 ---

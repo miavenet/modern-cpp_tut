@@ -17,7 +17,7 @@
       "minutes": 25
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 286
+      "minutes": 296
     }
   },
   "cards": {
@@ -1119,6 +1119,34 @@
         "mode": "self"
       },
       "source": "measured in this course: interpose_check.sh, interpose_lib.cpp, interpose_hook.cpp, interpose_driver.cpp (Ubuntu 24.04 aarch64 container, GCC 13.3, clang 18.1.3)",
+      "concepts": []
+    },
+    "M7-PB36": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "assertions",
+      "objective": 4,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[assertions.general] p1, [cassert.syn] p1, [assertions.assert] p1 (C++23 draft N4950); measured in this course: assert_effect.cpp",
+      "concepts": []
+    },
+    "M7-PB37": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "measurement",
+      "objective": 3,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: ratio_totals.cpp (invented byte counts; arithmetic)",
       "concepts": []
     }
   },

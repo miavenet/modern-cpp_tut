@@ -30,8 +30,8 @@ so next to it and gives the arm64/macOS counterpart where one exists.
   including the SPSC lab check, and the capstone lab).
   That includes the SPSC lab (about 10 minutes) and running the measurement
   programs (about 10 minutes in total).
-- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 285 minutes,
-  32 self-graded cards on measurement, research and C++ techniques and on how
+- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 297 minutes,
+  34 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.
 - **Reviews:** cards come back on the driver's schedule (see the README); a

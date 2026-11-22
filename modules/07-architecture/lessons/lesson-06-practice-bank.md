@@ -1,6 +1,6 @@
 # Lesson 06 — Practice Bank (optional): Fair Benchmarks and What the Build Really Did
 
-**Time: about 286 minutes** for 35 cards (12 + 10 + 3 + 5 + 12 + 15 + 5 + 15 + 12 + 8 + 10 + 10 + 10 + 10 + 5 + 5 + 8 + 6 + 5 + 3 + 15 + 15 + 6 + 4 + 8 + 3 + 10 + 12 + 6 + 6 + 3 + 6 + 7 + 8 + 8 minutes). Each card stands alone: stop after any card and the driver resumes there.
+**Time: about 296 minutes** for 37 cards (12 + 10 + 3 + 5 + 12 + 15 + 5 + 15 + 12 + 8 + 10 + 10 + 10 + 10 + 5 + 5 + 8 + 6 + 5 + 3 + 15 + 15 + 6 + 4 + 8 + 3 + 10 + 12 + 6 + 6 + 3 + 6 + 7 + 8 + 8 + 5 + 5 minutes). Each card stands alone: stop after any card and the driver resumes there.
 
 Hook: a hash table over 30x slower at lookup because its hash has only 787 distinct values; the bucket counts show it before any timer does.
 
@@ -578,6 +578,38 @@ Key:
   - Interposition means replacing a reference's selected definition with another definition. A binding change can disable that replacement even while the exported names remain.
   - Keep a replacement-hook test when changing compiler or linker settings. Matching outputs without the hook miss this behaviour change; no speed claim follows from it.
   - Holds for / re-check: Ubuntu 24.04 aarch64 container, GCC 13.3, Clang 18.1.3 and GNU ELF linking, ordinary non-privileged processes; these are observed compiler- and flag-dependent results. `LD_PRELOAD` is set only for each child command. Different loaders and linkers need new tests; no x86 timing, ASLR or security claim.
+</details>
+
+### Card M7-PB36 · Spot the trap
+Q: A configuration loader calls `assert(commit());`. `commit()` increments a counter and returns true. Predict the counter with and without `-DNDEBUG`. Then move the call before the assertion: `const bool ok = commit(); assert(ok); (void)ok;`. Predict again. Write both versions before opening the answer, then run both builds:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/07-architecture/lab/practice/assert_effect.cpp -o "${TMPDIR:-/tmp}/assert_effect" && "${TMPDIR:-/tmp}/assert_effect"
+   clang++ -std=c++20 -O2 -Wall -Wextra -DNDEBUG modules/07-architecture/lab/practice/assert_effect.cpp -o "${TMPDIR:-/tmp}/assert_effect_release" && "${TMPDIR:-/tmp}/assert_effect_release"
+   ```
+   Answer format: the counter for each version in each build, then where required work belongs.
+<details><summary>Answer</summary>
+Key:
+
+  - Embedded call: counter 1 without `NDEBUG`, 0 with it. Separate call: counter 1 in both builds.
+  - In these builds, disabling assertions also removes the expression's side effect. A passing debug test therefore misses a release-build functional change.
+  - Perform required work outside `assert`. An assertion can check the result; if failure needs handling in release builds, implement that handling explicitly as well.
+  - Holds for / re-check: Apple clang 21 with libc++ (macOS arm64) and GCC 13.3 with libstdc++ (Ubuntu 24.04 aarch64), C++20, `-O2 -Wall -Wextra`, with and without `-DNDEBUG`. The assertion facility permits disabling checks ([assertions.general], [cassert.syn], [assertions.assert]). This is an assertion macro test, not a statement about C++ contracts or every library hardening mode. Re-run both builds when replacing the check mechanism.
+</details>
+
+### Card M7-PB37 · Spot the trap
+Q: Two synthetic files contain 900 and 100 raw bytes. Codec A stores them in 100 and 100 bytes; codec B stores them in 300 and 10 bytes. No timing is involved. Define compression ratio as raw bytes divided by stored bytes. Predict which codec wins if you average the two file ratios, and which wins for the combined archive. Write a calculator that prints both summaries, then compare with:
+   ```sh
+   clang++ -std=c++20 -O2 -Wall -Wextra modules/07-architecture/lab/practice/ratio_totals.cpp -o "${TMPDIR:-/tmp}/ratio_totals" && "${TMPDIR:-/tmp}/ratio_totals"
+   ```
+   Answer format: both summaries for each codec, the winner for the archive, then how to aggregate.
+<details><summary>Answer</summary>
+Key:
+
+  - Arithmetic mean: A = (9+1)/2 = 5; B = (3+10)/2 = 6.5, apparently favouring B.
+  - Pooled ratio: A = 1000/200 = 5; B = 1000/310 ≈ 3.225806. A stores this archive in fewer bytes.
+  - For the archive question, sum raw bytes and stored bytes separately, then divide. Equivalently, weight each file's ratio by its stored bytes, not equally.
+  - An unweighted mean answers a different question. Keep the underlying counts so readers can rebuild the summary that fits their workload.
+  - Holds for / re-check: an invented byte-count fixture; no compressor was run and no codec speed or real compression ranking is claimed. Counts and arithmetic checked with Apple clang 21 with libc++ (macOS arm64) and GCC 13.3 with libstdc++ (Ubuntu 24.04 aarch64), C++20, `-O2 -Wall -Wextra`. Recompute when file weights change; include any required archive metadata in the stored-byte total.
 </details>
 
 ---

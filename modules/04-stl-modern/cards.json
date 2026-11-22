@@ -17,7 +17,7 @@
       "minutes": 22
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 32
+      "minutes": 50
     }
   },
   "cards": {
@@ -810,6 +810,48 @@
         "mode": "self"
       },
       "source": "[charconv.to.chars] p1 (C++20 draft N4861); measured in this course: hex_capacity.cpp",
+      "concepts": []
+    },
+    "M4-PB7": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "apply",
+      "topic": "unordered-lookup",
+      "objective": 6,
+      "minutes": 7,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[unord.req.general] p242 (C++23 draft N4950); measured in this course: lookup_materialization.cpp",
+      "concepts": []
+    },
+    "M4-PB8": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "to-chars",
+      "objective": 7,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[charconv.to.chars] p2, p7, p13 (C++23 draft N4950); measured in this course: decimal_roundtrip.cpp",
+      "concepts": []
+    },
+    "M4-PB9": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "iostream",
+      "objective": 7,
+      "minutes": 5,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[fmtflags.state] p1-3, [basefield.manip] p4 (C++23 draft N4950); measured in this course: stream_state.cpp",
       "concepts": []
     }
   },

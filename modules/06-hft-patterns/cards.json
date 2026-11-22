@@ -17,7 +17,7 @@
       "minutes": 30
     },
     "lesson-06-practice-bank.md": {
-      "minutes": 285
+      "minutes": 297
     }
   },
   "cards": {
@@ -1091,6 +1091,34 @@
         "mode": "self"
       },
       "source": "[expr.pre] p4, [expr.mul] p3, [expr.add] p3 (C++20 draft N4861); measured in this course: affine_schedule.cpp",
+      "concepts": []
+    },
+    "M6-PB35": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "measurement",
+      "objective": 5,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: histogram_contract.cpp (nearest-rank arithmetic)",
+      "concepts": []
+    },
+    "M6-PB36": {
+      "lesson": "lesson-06-practice-bank.md",
+      "type": "gotcha",
+      "topic": "measurement",
+      "objective": 5,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "measured in this course: histogram_contract.cpp",
       "concepts": []
     }
   },
