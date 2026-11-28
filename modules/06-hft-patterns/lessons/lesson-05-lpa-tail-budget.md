@@ -59,7 +59,7 @@ Per stage, open loop (medians of 7 runs, ns):
 
 **Read it.** Service's own p99.99 is 167 ns: only 10 of a million messages took a snapshot (0.001%), too few for even p99.99 to see. Its *max* (300 µs, in every run) is the owner's fingerprint. Queue wait carries the echo: 1,500 messages queued behind those 10. Send lateness stays under the budget at p99.9: the feed was on time.
 
-**An honest surprise from building it.** In a first version, all three runs shared one process. Whichever open-loop run came *second* was far worse (the sliced run's p99.9 was 655 µs that way (median of 7 runs, `m6-tail-budget-20261114-223306.txt`), against 11 µs when it ran first (median of 5 runs with the order swapped, `m6-tail-budget-swapped-20261114-223431.txt`), both in `ingest/lpa/evidence/`). The likely cause is the scheduler deprioritising threads that have been busy for seconds; we did not confirm it. The fix was a fresh process per run. Run order is part of a benchmark.
+**An honest surprise from building it.** In a first version, all three runs shared one process. Whichever open-loop run came *second* was far worse (the sliced run's p99.9 was 655 µs that way (median of 7 runs), against 11 µs when it ran first (median of 5 runs with the order swapped)). The likely cause is the scheduler deprioritising threads that have been busy for seconds; we did not confirm it. The fix was a fresh process per run. Run order is part of a benchmark.
 
 **Rule:** decide each message's due time in advance, measure from it, histogram every stage, and look for the owner at the stage whose *max* explains the others. Fine print: after you fix the owner, the next one appears; on a shared Mac it is often the OS.
 

@@ -25,8 +25,13 @@ Apple clang 21 on macOS arm64.
   pretest, 1.5 per completion card, 2 per question and 4 per synthesis card,
   plus about 1 minute per lab program you build. 40 cards: 6 pretests,
   6 completions, 12 questions, 10 gotchas, 4 judgement cards, 2 synthesis.
-- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 143 minutes,
-  15 self-graded cards on measurement, research and C++ techniques and on how
+- **Optional practice bank:** lesson 06, about 188 minutes in all, split into eight themed parts of
+  at most 30 minutes each: `lesson-06-practice-bank-01-compare-exchange.md` (26 min),
+  `lesson-06-practice-bank-02-exchange-locks.md` (30 min), `lesson-06-practice-bank-03-wait-wake.md`
+  (30 min), `lesson-06-practice-bank-04-visibility.md` (28 min),
+  `lesson-06-practice-bank-05-threads-cores.md` (29 min), `lesson-06-practice-bank-06-fences.md`
+  (27 min), `lesson-06-practice-bank-07-cas-equality.md` (8 min),
+  `lesson-06-practice-bank-08-wait-address.md` (10 min); 19 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.
 - **Reviews:** the driver schedules misses for the next day and uninterrupted hits about

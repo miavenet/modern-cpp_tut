@@ -67,7 +67,7 @@ lab; their lessons are core here.
 | 06 | 01–02: about 70 min | 03 measurement, 04 prefetch, 05 tail-budget capstone: about 113 min |
 | 07 | 02 and 04: about 70 min | 01 modules, 03 benchmarking, 05 benchmarks as distributions: about 105 min |
 
-Optional practice banks, not counted above, are the last lesson of modules 01 to 07 (about 80, 88, 143, 50, 225, 297 and 296 min); the driver offers their cards after the module's other lessons. `:skip` on a card records “don't know”, so it returns the next day; `:quit` when a bank card appears to leave the bank for later.
+Optional practice banks, not counted above, are the last lessons of modules 01 to 07 (about 95, 88, 188, 50, 230, 293 and 296 min in all), split into themed parts of at most 30 min each (4, 4, 8, 2, 9, 12 and 11 parts, named `lesson-NN-practice-bank-KK-<theme>.md`); the driver offers their cards after the module's other lessons. Bank minutes are authors' estimates for a learner with the tools ready, not measured first-attempt times. The driver does not record durations, so recalibrate them yourself: note the clock time when you start and finish a part, count tool setup separately from card work, and if a part runs well over its estimate, stop after any card and finish it in a later sitting. `:skip` on a card records “don't know”, so it returns the next day; `:quit` when a bank card appears to leave the bank for later.
 
 ## Other ways to use it
 

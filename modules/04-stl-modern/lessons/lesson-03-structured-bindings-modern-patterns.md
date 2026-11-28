@@ -322,7 +322,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Cards M4-PB5 and M4-PB6 in lesson-06-practice-bank.
+> Extra practice (optional): Cards M4-PB5 and M4-PB6 in lesson-06-practice-bank-02-charconv.
 
 ---
 

@@ -228,7 +228,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Card M4-PB3 in lesson-06-practice-bank.
+> Extra practice (optional): Card M4-PB3 in lesson-06-practice-bank-02-charconv.
 
 ---
 

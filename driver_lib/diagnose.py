@@ -35,27 +35,52 @@ def _rank(today, text):
     return hashlib.sha256(f'{today}:{text}'.encode('utf-8')).hexdigest()
 
 
+def is_bank(path):
+    """An optional practice-bank lesson, whole or one part of a split bank
+    (`lesson-NN-practice-bank.md` or `lesson-NN-practice-bank-KK-<theme>.md`)."""
+    return '-practice-bank' in Path(path).name
+
+
+def units(groups):
+    """[(doc, cards)] -> [[(doc, card)]]: one unit per lesson, except that the
+    parts of one module's practice bank form a single unit, so a bank split into
+    short parts weighs no more in a set than the bank did as one lesson."""
+    out, bank_of = [], {}
+    for doc, cards in groups:
+        pairs = [(doc, card) for card in cards]
+        if not pairs:
+            continue
+        if is_bank(doc['path']):
+            key = doc['path'].parent
+            if key in bank_of:
+                bank_of[key].extend(pairs)
+                continue
+            bank_of[key] = pairs
+        out.append(pairs)
+    return out
+
+
 def select(groups, today, size):
     """Spread `size` cards evenly over lessons; consecutive cards differ in lesson.
 
-    `groups` is [(doc, cards)] in course order. The day rotates the start lesson
+    `groups` is [(doc, cards)] in course order; a module's practice-bank parts
+    count as one lesson here (see `units`). The day rotates the start lesson
     and the card picked within each lesson, so another day gives another set.
     """
-    groups = [(doc, sorted(cards, key=lambda c: _rank(today, c['id'])))
-              for doc, cards in groups if cards]
+    groups = [sorted(pairs, key=lambda dc: _rank(today, dc[1]['id']))
+              for pairs in units(groups)]
     if not groups:
         return []
     shift = int(_rank(today, 'start'), 16) % len(groups)
     groups = groups[shift:] + groups[:shift]
     chosen, depth = [], 0
     while len(chosen) < size:
-        live = [g for g in groups if depth < len(g[1])]
+        live = [g for g in groups if depth < len(g)]
         if not live:
             break
         want = min(size - len(chosen), len(live))
         for k in range(want):
-            doc, cards = live[k * len(live) // want]
-            chosen.append((doc, cards[depth]))
+            chosen.append(live[k * len(live) // want][depth])
         depth += 1
     return chosen
 
@@ -63,7 +88,7 @@ def select(groups, today, size):
 def section(doc, card):
     """Where the card is taught: its first listed concept in this lesson, else the
     nearest `## ` or CONCEPT heading above it; a practice-bank card is its own text."""
-    if doc['path'].name.endswith('practice-bank.md'):
+    if is_bank(doc['path']):
         return f"Card {card['id']}"
     titles = {c['identity']: f"CONCEPT {c['id']} {c['title']}".strip() for c in doc['concepts']}
     for ref in tutorial_format.concept_refs(doc, card):

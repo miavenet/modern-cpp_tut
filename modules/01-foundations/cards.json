@@ -16,8 +16,17 @@
     "lesson-05-lpa-push-back-tail.md": {
       "minutes": 26
     },
-    "lesson-06-practice-bank.md": {
-      "minutes": 80
+    "lesson-06-practice-bank-01-clocks-abi.md": {
+      "minutes": 30
+    },
+    "lesson-06-practice-bank-02-function-lambdas.md": {
+      "minutes": 28
+    },
+    "lesson-06-practice-bank-03-growth-sharing.md": {
+      "minutes": 28
+    },
+    "lesson-06-practice-bank-04-rehash-handles.md": {
+      "minutes": 9
     }
   },
   "cards": {
@@ -682,7 +691,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "lab/solution/push_tail.cpp output, 7 runs (ingest/lpa/evidence/m1-push-tail-*.txt)",
+      "source": "lab/solution/push_tail.cpp output, 7 runs",
       "concepts": []
     },
     "M1-LPA2": {
@@ -752,7 +761,7 @@
       ]
     },
     "M1-PB1": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-clocks-abi.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 6,
@@ -766,7 +775,7 @@
       "concepts": []
     },
     "M1-PB2": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-clocks-abi.md",
       "type": "apply",
       "topic": "abi-pass-by-value",
       "objective": 1,
@@ -780,7 +789,7 @@
       "concepts": []
     },
     "M1-PB3": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-clocks-abi.md",
       "type": "apply",
       "topic": "trivial-abi",
       "objective": 2,
@@ -794,7 +803,7 @@
       "concepts": []
     },
     "M1-PB4": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-clocks-abi.md",
       "type": "recall",
       "topic": "expiry",
       "objective": 5,
@@ -808,7 +817,7 @@
       "concepts": []
     },
     "M1-PB5": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-function-lambdas.md",
       "type": "apply",
       "topic": "lambdas-function",
       "objective": 4,
@@ -822,7 +831,7 @@
       "concepts": []
     },
     "M1-PB6": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-function-lambdas.md",
       "type": "gotcha",
       "topic": "lambdas-function",
       "objective": 1,
@@ -836,7 +845,7 @@
       "concepts": []
     },
     "M1-PB7": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-function-lambdas.md",
       "type": "recall",
       "topic": "research",
       "objective": 4,
@@ -850,7 +859,7 @@
       "concepts": []
     },
     "M1-PB8": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-function-lambdas.md",
       "type": "apply",
       "topic": "lambdas-function",
       "objective": 4,
@@ -864,7 +873,7 @@
       "concepts": []
     },
     "M1-PB9": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-growth-sharing.md",
       "type": "apply",
       "topic": "move-semantics",
       "objective": 1,
@@ -878,7 +887,7 @@
       "concepts": []
     },
     "M1-PB10": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-growth-sharing.md",
       "type": "apply",
       "topic": "smart-pointers",
       "objective": 2,
@@ -892,7 +901,7 @@
       "concepts": []
     },
     "M1-PB11": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-growth-sharing.md",
       "type": "gotcha",
       "topic": "smart-pointers",
       "objective": 2,
@@ -903,6 +912,34 @@
         "mode": "self"
       },
       "source": "[util.smartptr.shared.const] p14-17, [util.smartptr.shared.obs] p12, p17 (C++20 draft N4861); measured in this course: alias_truth.cpp",
+      "concepts": []
+    },
+    "M1-PB12": {
+      "lesson": "lesson-06-practice-bank-03-growth-sharing.md",
+      "type": "gotcha",
+      "topic": "move-semantics",
+      "objective": 1,
+      "minutes": 6,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[thread.lock.unique.cons] p2-3, p17, p22 and [forward] p9 (C++23 draft N4950); measured in this course: lock_transfer.cpp",
+      "concepts": []
+    },
+    "M1-PB13": {
+      "lesson": "lesson-06-practice-bank-04-rehash-handles.md",
+      "type": "apply",
+      "topic": "unordered-rehash",
+      "objective": 1,
+      "minutes": 9,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[unord.req.general] p9 (C++23 draft N4950); measured in this course: rehash_handles.cpp",
       "concepts": []
     }
   },
@@ -956,7 +993,7 @@
       "source": "https://en.cppreference.com/w/cpp/language/storage_duration"
     },
     "lesson-05-lpa-push-back-tail.md#C17": {
-      "source": "lab/solution/push_tail.cpp runs, 7 (ingest/lpa/evidence/m1-push-tail-*.txt); https://eel.is/c++draft/vector.modifiers; https://en.cppreference.com/w/cpp/container/vector/reserve"
+      "source": "lab/solution/push_tail.cpp runs, 7; https://eel.is/c++draft/vector.modifiers; https://en.cppreference.com/w/cpp/container/vector/reserve"
     }
   }
 }

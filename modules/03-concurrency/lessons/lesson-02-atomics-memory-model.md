@@ -313,6 +313,10 @@ you still need.
 **Rule:** start with the default, weaken to release/acquire for
 publication, and use relaxed only for values nothing else depends on.
 
+---
+
+> Extra practice (optional): Cards M3-PB16 and M3-PB17 in lesson-06-practice-bank-06-fences.
+
 
 ---
 

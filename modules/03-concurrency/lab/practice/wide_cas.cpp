@@ -2,7 +2,7 @@
 // Build and run from the tutorial root; the program goes to your temp directory:
 //   clang++ -std=c++20 -O2 -Wall -Wextra -DMAIN modules/03-concurrency/lab/practice/wide_cas.cpp -o "${TMPDIR:-/tmp}/wide_cas" && "${TMPDIR:-/tmp}/wide_cas"
 //   clang++ -std=c++20 -O2 -S modules/03-concurrency/lab/practice/wide_cas.cpp -o -   (add --target=x86_64-apple-macos13, then also -march=x86-64, then also -mcx16)
-//   GCC on Linux needs -latomic: g++ -std=c++20 -O2 -DMAIN modules/03-concurrency/lab/practice/wide_cas.cpp -o "${TMPDIR:-/tmp}/wide_cas" -latomic && "${TMPDIR:-/tmp}/wide_cas"
+//   On Linux/libstdc++ both GCC and Clang need -latomic (not on the Mac): clang++ (or g++) -std=c++20 -O2 -Wall -Wextra -DMAIN modules/03-concurrency/lab/practice/wide_cas.cpp -latomic -o "${TMPDIR:-/tmp}/wide_cas" && "${TMPDIR:-/tmp}/wide_cas"
 #include <atomic>
 #include <cstdint>
 #include <cstdio>

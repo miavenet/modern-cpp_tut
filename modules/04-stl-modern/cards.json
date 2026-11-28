@@ -16,8 +16,11 @@
     "lesson-05-lpa-expected-tail.md": {
       "minutes": 22
     },
-    "lesson-06-practice-bank.md": {
-      "minutes": 50
+    "lesson-06-practice-bank-01-types-streams.md": {
+      "minutes": 22
+    },
+    "lesson-06-practice-bank-02-charconv.md": {
+      "minutes": 28
     }
   },
   "cards": {
@@ -659,7 +662,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "lab/expected_tail.cpp output, 7 runs (ingest/lpa/evidence/m4-expected-tail-*.txt)",
+      "source": "lab/expected_tail.cpp output, 7 runs",
       "concepts": []
     },
     "M4-LPA2": {
@@ -729,7 +732,7 @@
       ]
     },
     "M4-PB1": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-types-streams.md",
       "type": "recall",
       "topic": "research",
       "objective": 5,
@@ -743,7 +746,7 @@
       "concepts": []
     },
     "M4-PB2": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-types-streams.md",
       "type": "gotcha",
       "topic": "variant",
       "objective": 2,
@@ -757,7 +760,7 @@
       "concepts": []
     },
     "M4-PB3": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-charconv.md",
       "type": "apply",
       "topic": "from-chars",
       "objective": 6,
@@ -771,7 +774,7 @@
       "concepts": []
     },
     "M4-PB4": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-charconv.md",
       "type": "gotcha",
       "topic": "from-chars",
       "objective": 3,
@@ -785,7 +788,7 @@
       "concepts": []
     },
     "M4-PB5": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-charconv.md",
       "type": "apply",
       "topic": "to-chars",
       "objective": 6,
@@ -799,7 +802,7 @@
       "concepts": []
     },
     "M4-PB6": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-charconv.md",
       "type": "gotcha",
       "topic": "to-chars",
       "objective": 7,
@@ -813,7 +816,7 @@
       "concepts": []
     },
     "M4-PB7": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-types-streams.md",
       "type": "apply",
       "topic": "unordered-lookup",
       "objective": 6,
@@ -827,7 +830,7 @@
       "concepts": []
     },
     "M4-PB8": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-charconv.md",
       "type": "gotcha",
       "topic": "to-chars",
       "objective": 7,
@@ -841,7 +844,7 @@
       "concepts": []
     },
     "M4-PB9": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-types-streams.md",
       "type": "gotcha",
       "topic": "iostream",
       "objective": 7,
@@ -899,7 +902,7 @@
       "source": "https://en.cppreference.com/w/cpp/language/attributes/nodiscard"
     },
     "lesson-05-lpa-expected-tail.md#C15": {
-      "source": "lab/expected_tail.cpp runs, 7 (ingest/lpa/evidence/m4-expected-tail-*.txt); https://en.cppreference.com/w/cpp/utility/expected"
+      "source": "lab/expected_tail.cpp runs, 7; https://en.cppreference.com/w/cpp/utility/expected"
     }
   }
 }

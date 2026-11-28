@@ -398,7 +398,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Cards M1-PB10 and M1-PB11 in lesson-06-practice-bank.
+> Extra practice (optional): Cards M1-PB10 and M1-PB11 in lesson-06-practice-bank-03-growth-sharing.
 
 ---
 

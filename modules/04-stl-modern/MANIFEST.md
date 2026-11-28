@@ -25,7 +25,9 @@ it was tested with Apple clang 21 and libc++ on macOS arm64.
   pretest, 1.5 per completion card, 2 per question and 4 per synthesis card,
   plus about 1 minute per lab program you build. 44 cards: 7 pretests,
   7 completions (M4-LPA3 is a fill-in completion), 15 questions, 9 gotchas, 4 judgement cards, 2 synthesis.
-- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 50 minutes,
+- **Optional practice bank:** lesson 06, about 50 minutes in all, split into two themed parts of at
+  most 30 minutes each: `lesson-06-practice-bank-01-types-streams.md` (22 min),
+  `lesson-06-practice-bank-02-charconv.md` (28 min);
   9 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.

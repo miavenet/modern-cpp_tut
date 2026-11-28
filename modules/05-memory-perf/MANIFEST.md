@@ -30,7 +30,15 @@ algorithms need `-fexperimental-library` there.
   49 cards (7 pretests, 7 completions, 33 recall/apply/gotcha/synthesis, two labs). The
   lesson 05 lab is about 20 minutes of that and the lesson 06 lab about 10. Running the lesson
   samples is optional and not counted.
-- **Optional practice bank:** lesson 07 (`lesson-07-practice-bank.md`), about 225 minutes,
+- **Optional practice bank:** lesson 07, about 230 minutes in all, split into nine themed parts of
+  at most 30 minutes each: `lesson-07-practice-bank-01-allocation-bytes.md` (26 min),
+  `lesson-07-practice-bank-02-layout-alignment.md` (24 min),
+  `lesson-07-practice-bank-03-false-sharing.md` (29 min), `lesson-07-practice-bank-04-cache-line.md`
+  (27 min), `lesson-07-practice-bank-05-memory-traffic.md` (27 min),
+  `lesson-07-practice-bank-06-vectorization.md` (22 min),
+  `lesson-07-practice-bank-07-cheaper-arithmetic.md` (20 min),
+  `lesson-07-practice-bank-08-float-sums.md` (29 min),
+  `lesson-07-practice-bank-09-compiler-assumptions.md` (26 min);
   27 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.

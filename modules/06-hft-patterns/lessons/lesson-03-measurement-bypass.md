@@ -165,7 +165,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Card M6-PB33 in lesson-06-practice-bank.
+> Extra practice (optional): Card M6-PB33 in lesson-06-practice-bank-04-percentiles-bins.
 
 ---
 
@@ -270,7 +270,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Cards M6-PB35 and M6-PB36 in lesson-06-practice-bank.
+> Extra practice (optional): Cards M6-PB35 and M6-PB36 in lesson-06-practice-bank-04-percentiles-bins.
 
 ---
 
@@ -432,7 +432,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Card M6-PB32 in lesson-06-practice-bank.
+> Extra practice (optional): Card M6-PB32 in lesson-06-practice-bank-08-branch-data.
 
 ---
 

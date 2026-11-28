@@ -54,9 +54,21 @@ class DiagnoseTests(unittest.TestCase):
         self.assertEqual(len(everything), sum(len(cards) for _, cards in groups))
         self.assertTrue(all(not c['once'] and not (c.get('AcceptIf') or '').startswith('check(')
                             for _, c in everything))
-        self.assertTrue(any(doc['path'].name.endswith('practice-bank.md') for doc, _ in everything))
+        self.assertTrue(any(diagnose.is_bank(doc['path']) for doc, _ in everything))
         pairs = list(zip(everything, everything[1:]))
-        self.assertTrue(all(a[0] is not b[0] for a, b in pairs[:len(groups) - 1]))
+        self.assertTrue(all(a[0] is not b[0] for a, b in pairs[:len(diagnose.units(groups)) - 1]))
+
+    def test_bank_parts_fit_a_sitting_and_weigh_as_one_lesson(self):
+        groups = course_groups()
+        banks = [doc for doc, _ in groups if diagnose.is_bank(doc['path'])]
+        self.assertGreater(len(banks), 7)  # banks over 30 min are split into parts
+        for doc in banks:
+            self.assertLessEqual(diagnose.lesson_minutes(doc), 30, doc['path'].name)
+            self.assertRegex(doc['path'].name, r'^lesson-\d\d-practice-bank-\d\d-[a-z0-9-]+\.md$')
+        bank_units = [u for u in diagnose.units(groups) if diagnose.is_bank(u[0][0]['path'])]
+        self.assertEqual(len(bank_units), 7)  # one selection unit per module bank
+        self.assertEqual(sum(map(len, bank_units)),
+                         sum(len(cards) for doc, cards in groups if diagnose.is_bank(doc['path'])))
 
     def test_module_and_lessons_paths_are_accepted(self):
         one = MODULES / '01-foundations'
@@ -88,7 +100,7 @@ class DiagnoseTests(unittest.TestCase):
         for doc, cards in course_groups():
             for card in cards:
                 name = diagnose.section(doc, card)
-                if doc['path'].name.endswith('practice-bank.md'):
+                if diagnose.is_bank(doc['path']):
                     self.assertEqual(name, 'Card ' + card['id'])
                 else:
                     self.assertTrue(name.startswith('CONCEPT ') or name in doc['text'], name)

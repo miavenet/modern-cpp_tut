@@ -318,7 +318,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Card M5-PB27 in lesson-07-practice-bank.
+> Extra practice (optional): Card M5-PB27 in lesson-07-practice-bank-02-layout-alignment.
 
 ---
 

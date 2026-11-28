@@ -30,7 +30,17 @@ so next to it and gives the arm64/macOS counterpart where one exists.
   including the SPSC lab check, and the capstone lab).
   That includes the SPSC lab (about 10 minutes) and running the measurement
   programs (about 10 minutes in total).
-- **Optional practice bank:** lesson 06 (`lesson-06-practice-bank.md`), about 297 minutes,
+- **Optional practice bank:** lesson 06, about 293 minutes in all, split into twelve themed parts of
+  at most 30 minutes each: `lesson-06-practice-bank-01-pages.md` (28 min),
+  `lesson-06-practice-bank-02-clock-reads.md` (26 min),
+  `lesson-06-practice-bank-03-latency-spans.md` (21 min),
+  `lesson-06-practice-bank-04-percentiles-bins.md` (26 min), `lesson-06-practice-bank-05-wakeups.md`
+  (25 min), `lesson-06-practice-bank-06-linux-sockets.md` (25 min),
+  `lesson-06-practice-bank-07-branches.md` (22 min), `lesson-06-practice-bank-08-branch-data.md` (21
+  min), `lesson-06-practice-bank-09-prefetch-forms.md` (23 min),
+  `lesson-06-practice-bank-10-prefetch-manuals.md` (24 min),
+  `lesson-06-practice-bank-11-code-shape.md` (24 min), `lesson-06-practice-bank-12-os-reports.md`
+  (28 min);
   34 self-graded cards on measurement, research and C++ techniques and on how
   results expire. It is optional and not counted in the first pass above; its
   runnable programs are in `lab/practice/`.

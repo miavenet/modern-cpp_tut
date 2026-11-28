@@ -209,7 +209,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Cards M7-PB30, M7-PB31 and M7-PB33 in lesson-06-practice-bank.
+> Extra practice (optional): Cards M7-PB30, M7-PB31 and M7-PB33 in lesson-06-practice-bank-01-check-first.
 
 ---
 
@@ -361,7 +361,7 @@ Key:
 
 ---
 
-> Extra practice (optional): Card M7-PB32 in lesson-06-practice-bank.
+> Extra practice (optional): Card M7-PB32 in lesson-06-practice-bank-04-call-costs.
 
 ---
 

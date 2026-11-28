@@ -19,8 +19,32 @@
     "lesson-06-lpa-pool-tail.md": {
       "minutes": 28
     },
-    "lesson-07-practice-bank.md": {
-      "minutes": 225
+    "lesson-07-practice-bank-01-allocation-bytes.md": {
+      "minutes": 26
+    },
+    "lesson-07-practice-bank-02-layout-alignment.md": {
+      "minutes": 24
+    },
+    "lesson-07-practice-bank-03-false-sharing.md": {
+      "minutes": 29
+    },
+    "lesson-07-practice-bank-04-cache-line.md": {
+      "minutes": 27
+    },
+    "lesson-07-practice-bank-05-memory-traffic.md": {
+      "minutes": 27
+    },
+    "lesson-07-practice-bank-06-vectorization.md": {
+      "minutes": 22
+    },
+    "lesson-07-practice-bank-07-cheaper-arithmetic.md": {
+      "minutes": 20
+    },
+    "lesson-07-practice-bank-08-float-sums.md": {
+      "minutes": 29
+    },
+    "lesson-07-practice-bank-09-compiler-assumptions.md": {
+      "minutes": 26
     }
   },
   "cards": {
@@ -724,7 +748,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "lab/solution/pool_tail.cpp output, 7 runs (ingest/lpa/evidence/m5-pool-tail-*.txt); checks/pool_tail.check.sh",
+      "source": "lab/solution/pool_tail.cpp output, 7 runs; checks/pool_tail.check.sh",
       "concepts": []
     },
     "M5-LPA2": {
@@ -813,7 +837,7 @@
       ]
     },
     "M5-PB1": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-09-compiler-assumptions.md",
       "type": "gotcha",
       "topic": "assume-ub",
       "objective": 5,
@@ -827,7 +851,7 @@
       "concepts": []
     },
     "M5-PB2": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-01-allocation-bytes.md",
       "type": "gotcha",
       "topic": "allocators",
       "objective": 1,
@@ -841,7 +865,7 @@
       "concepts": []
     },
     "M5-PB3": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-07-cheaper-arithmetic.md",
       "type": "apply",
       "topic": "research",
       "objective": 5,
@@ -855,7 +879,7 @@
       "concepts": []
     },
     "M5-PB4": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-01-allocation-bytes.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -869,7 +893,7 @@
       "concepts": []
     },
     "M5-PB5": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-01-allocation-bytes.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 1,
@@ -883,7 +907,7 @@
       "concepts": []
     },
     "M5-PB6": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-05-memory-traffic.md",
       "type": "recall",
       "topic": "research",
       "objective": 4,
@@ -897,7 +921,7 @@
       "concepts": []
     },
     "M5-PB7": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-03-false-sharing.md",
       "type": "gotcha",
       "topic": "interference-size",
       "objective": 4,
@@ -911,7 +935,7 @@
       "concepts": []
     },
     "M5-PB8": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-03-false-sharing.md",
       "type": "apply",
       "topic": "false-sharing",
       "objective": 4,
@@ -925,7 +949,7 @@
       "concepts": []
     },
     "M5-PB9": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-03-false-sharing.md",
       "type": "apply",
       "topic": "false-sharing",
       "objective": 4,
@@ -939,7 +963,7 @@
       "concepts": []
     },
     "M5-PB10": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-03-false-sharing.md",
       "type": "apply",
       "topic": "interference-size",
       "objective": 4,
@@ -953,7 +977,7 @@
       "concepts": []
     },
     "M5-PB11": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-04-cache-line.md",
       "type": "recall",
       "topic": "interference-size",
       "objective": 4,
@@ -967,7 +991,7 @@
       "concepts": []
     },
     "M5-PB12": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-04-cache-line.md",
       "type": "gotcha",
       "topic": "expiry",
       "objective": 4,
@@ -981,7 +1005,7 @@
       "concepts": []
     },
     "M5-PB13": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-05-memory-traffic.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -995,7 +1019,7 @@
       "concepts": []
     },
     "M5-PB14": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-02-layout-alignment.md",
       "type": "apply",
       "topic": "aos-soa",
       "objective": 3,
@@ -1009,7 +1033,7 @@
       "concepts": []
     },
     "M5-PB15": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-02-layout-alignment.md",
       "type": "gotcha",
       "topic": "alignment",
       "objective": 4,
@@ -1023,7 +1047,7 @@
       "concepts": []
     },
     "M5-PB16": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-02-layout-alignment.md",
       "type": "gotcha",
       "topic": "alignment",
       "objective": 2,
@@ -1037,7 +1061,7 @@
       "concepts": []
     },
     "M5-PB17": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-06-vectorization.md",
       "type": "apply",
       "topic": "vectorization",
       "objective": 6,
@@ -1051,7 +1075,7 @@
       "concepts": []
     },
     "M5-PB18": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-06-vectorization.md",
       "type": "gotcha",
       "topic": "vectorization",
       "objective": 6,
@@ -1065,7 +1089,7 @@
       "concepts": []
     },
     "M5-PB19": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-07-cheaper-arithmetic.md",
       "type": "gotcha",
       "topic": "branch-free",
       "objective": 5,
@@ -1079,7 +1103,7 @@
       "concepts": []
     },
     "M5-PB20": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-08-float-sums.md",
       "type": "apply",
       "topic": "parallel-algorithms",
       "objective": 6,
@@ -1093,7 +1117,7 @@
       "concepts": []
     },
     "M5-PB21": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-08-float-sums.md",
       "type": "recall",
       "topic": "parallel-algorithms",
       "objective": 6,
@@ -1107,7 +1131,7 @@
       "concepts": []
     },
     "M5-PB22": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-09-compiler-assumptions.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 5,
@@ -1121,7 +1145,7 @@
       "concepts": []
     },
     "M5-PB23": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-08-float-sums.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -1135,7 +1159,7 @@
       "concepts": []
     },
     "M5-PB24": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-09-compiler-assumptions.md",
       "type": "apply",
       "topic": "optimizer-assumptions",
       "objective": 5,
@@ -1149,7 +1173,7 @@
       "concepts": []
     },
     "M5-PB25": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-05-memory-traffic.md",
       "type": "gotcha",
       "topic": "cache-lines",
       "objective": 4,
@@ -1163,21 +1187,21 @@
       "concepts": []
     },
     "M5-PB26": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-04-cache-line.md",
       "type": "apply",
       "topic": "interference-size",
       "objective": 4,
-      "minutes": 10,
+      "minutes": 15,
       "box": 1,
       "once": false,
       "grading": {
         "mode": "self"
       },
-      "source": "[hardware.interference] p1 (C++20 draft N4861); measured in this course: interference_macro.cpp, sysctl hw.cachelinesize (macOS), getconf LEVEL1_DCACHE_LINESIZE (Linux)",
+      "source": "measured in this course: line_report.cpp fixtures and checks (draft fails the negative tests, fixed render passes); [hardware.interference] p1 (C++20 draft N4861) for what the recommendation is",
       "concepts": []
     },
     "M5-PB27": {
-      "lesson": "lesson-07-practice-bank.md",
+      "lesson": "lesson-07-practice-bank-02-layout-alignment.md",
       "type": "apply",
       "topic": "allocators",
       "objective": 2,
@@ -1238,7 +1262,7 @@
       "source": "cppreference.com/w/cpp/memory/unsynchronized_pool_resource; course runs described above"
     },
     "lesson-06-lpa-pool-tail.md#C16": {
-      "source": "lab/solution/pool_tail.cpp runs (ingest/lpa/evidence/); modules/06-hft-patterns/lab/measure/lat_hist.hpp; course runs described above"
+      "source": "lab/solution/pool_tail.cpp runs, 7; modules/06-hft-patterns/lab/measure/lat_hist.hpp; course runs described above"
     },
     "lesson-06-lpa-pool-tail.md#C17": {
       "source": "cppreference.com/w/cpp/memory/null_memory_resource; checks/m5-lpa5.check.sh runs"

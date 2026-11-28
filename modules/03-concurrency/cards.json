@@ -16,8 +16,29 @@
     "lesson-05-lpa-handoff-tail.md": {
       "minutes": 27
     },
-    "lesson-06-practice-bank.md": {
-      "minutes": 143
+    "lesson-06-practice-bank-01-compare-exchange.md": {
+      "minutes": 26
+    },
+    "lesson-06-practice-bank-02-exchange-locks.md": {
+      "minutes": 30
+    },
+    "lesson-06-practice-bank-03-wait-wake.md": {
+      "minutes": 30
+    },
+    "lesson-06-practice-bank-04-visibility.md": {
+      "minutes": 28
+    },
+    "lesson-06-practice-bank-05-threads-cores.md": {
+      "minutes": 29
+    },
+    "lesson-06-practice-bank-06-fences.md": {
+      "minutes": 27
+    },
+    "lesson-06-practice-bank-07-cas-equality.md": {
+      "minutes": 8
+    },
+    "lesson-06-practice-bank-08-wait-address.md": {
+      "minutes": 10
     }
   },
   "cards": {
@@ -578,7 +599,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "lab/handoff_tail.cpp output, 7 runs (ingest/lpa/evidence/m3-handoff-tail-*.txt)",
+      "source": "lab/handoff_tail.cpp output, 7 runs",
       "concepts": []
     },
     "M3-LPA2": {
@@ -664,7 +685,7 @@
       ]
     },
     "M3-PB1": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-compare-exchange.md",
       "type": "apply",
       "topic": "research",
       "objective": 3,
@@ -678,7 +699,7 @@
       "concepts": []
     },
     "M3-PB2": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-compare-exchange.md",
       "type": "recall",
       "topic": "research",
       "objective": 3,
@@ -692,7 +713,7 @@
       "concepts": []
     },
     "M3-PB3": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-wait-wake.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 6,
@@ -706,7 +727,7 @@
       "concepts": []
     },
     "M3-PB4": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-05-threads-cores.md",
       "type": "gotcha",
       "topic": "atomic-wait",
       "objective": 4,
@@ -720,7 +741,7 @@
       "concepts": []
     },
     "M3-PB5": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-wait-wake.md",
       "type": "recall",
       "topic": "research",
       "objective": 6,
@@ -734,7 +755,7 @@
       "concepts": []
     },
     "M3-PB6": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-exchange-locks.md",
       "type": "apply",
       "topic": "memory-order",
       "objective": 3,
@@ -748,7 +769,7 @@
       "concepts": []
     },
     "M3-PB7": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-exchange-locks.md",
       "type": "apply",
       "topic": "memory-order",
       "objective": 3,
@@ -762,7 +783,7 @@
       "concepts": []
     },
     "M3-PB8": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-compare-exchange.md",
       "type": "apply",
       "topic": "atomics",
       "objective": 3,
@@ -776,7 +797,7 @@
       "concepts": []
     },
     "M3-PB9": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-visibility.md",
       "type": "apply",
       "topic": "atomics",
       "objective": 2,
@@ -790,7 +811,7 @@
       "concepts": []
     },
     "M3-PB10": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-visibility.md",
       "type": "gotcha",
       "topic": "data-race",
       "objective": 2,
@@ -804,7 +825,7 @@
       "concepts": []
     },
     "M3-PB11": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-05-threads-cores.md",
       "type": "apply",
       "topic": "contention",
       "objective": 4,
@@ -818,7 +839,7 @@
       "concepts": []
     },
     "M3-PB12": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-exchange-locks.md",
       "type": "recall",
       "topic": "research",
       "objective": 4,
@@ -832,7 +853,7 @@
       "concepts": []
     },
     "M3-PB13": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-05-threads-cores.md",
       "type": "gotcha",
       "topic": "threads",
       "objective": 1,
@@ -846,7 +867,7 @@
       "concepts": []
     },
     "M3-PB14": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-wait-wake.md",
       "type": "recall",
       "topic": "expiry",
       "objective": 4,
@@ -860,7 +881,7 @@
       "concepts": []
     },
     "M3-PB15": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-visibility.md",
       "type": "gotcha",
       "topic": "atomics",
       "objective": 3,
@@ -871,6 +892,62 @@
         "mode": "self"
       },
       "source": "[intro.abstract]/6.1, [dcl.type.cv]/5, [intro.races]/22 (C++20 draft N4861); WG21 P0062R1 (open-std.org); measured in this course: stage_stores.cpp",
+      "concepts": []
+    },
+    "M3-PB16": {
+      "lesson": "lesson-06-practice-bank-06-fences.md",
+      "type": "apply",
+      "topic": "atomics",
+      "objective": 3,
+      "minutes": 15,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[intro.races] p21 (C++23 draft N4950); measured in this course: fence_orders.cpp; x86-64 GCC 13.3 and clang 18.1, POWER GCC 13.2 and RISC-V GCC 13.3 on Compiler Explorer",
+      "concepts": []
+    },
+    "M3-PB17": {
+      "lesson": "lesson-06-practice-bank-06-fences.md",
+      "type": "gotcha",
+      "topic": "atomics",
+      "objective": 3,
+      "minutes": 12,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[atomics.fences] p2, [intro.races] p18 (C++23 draft N4950); measured in this course: fence_witness.cpp; x86-64 clang 20.1.0 on Compiler Explorer",
+      "concepts": []
+    },
+    "M3-PB18": {
+      "lesson": "lesson-06-practice-bank-07-cas-equality.md",
+      "type": "gotcha",
+      "topic": "atomics",
+      "objective": 3,
+      "minutes": 8,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "[atomics.types.operations] p23-28 (C++23 draft N4950); WG21 P4221R0 (open-std.org); measured in this course: cas_equality.cpp",
+      "concepts": []
+    },
+    "M3-PB19": {
+      "lesson": "lesson-06-practice-bank-08-wait-address.md",
+      "type": "apply",
+      "topic": "atomic-wait",
+      "objective": 6,
+      "minutes": 10,
+      "box": 1,
+      "once": false,
+      "grading": {
+        "mode": "self"
+      },
+      "source": "libstdc++ bits/atomic_wait.h (GCC 13.3); futex traced with strace on Linux; measured in this course: wait_address.cpp",
       "concepts": []
     }
   },
@@ -915,7 +992,7 @@
       "source": "https://en.cppreference.com/w/cpp/language/coroutines"
     },
     "lesson-05-lpa-handoff-tail.md#C14": {
-      "source": "lab/handoff_tail.cpp runs, 7 (ingest/lpa/evidence/m3-handoff-*.txt); https://eel.is/c++draft/atomics.order"
+      "source": "lab/handoff_tail.cpp runs, 7; https://eel.is/c++draft/atomics.order"
     }
   }
 }

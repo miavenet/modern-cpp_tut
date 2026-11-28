@@ -16,8 +16,38 @@
     "lesson-05-lpa-map-tail.md": {
       "minutes": 25
     },
-    "lesson-06-practice-bank.md": {
-      "minutes": 296
+    "lesson-06-practice-bank-01-check-first.md": {
+      "minutes": 29
+    },
+    "lesson-06-practice-bank-02-reading-timings.md": {
+      "minutes": 30
+    },
+    "lesson-06-practice-bank-03-fair-setup.md": {
+      "minutes": 30
+    },
+    "lesson-06-practice-bank-04-call-costs.md": {
+      "minutes": 24
+    },
+    "lesson-06-practice-bank-05-build-output.md": {
+      "minutes": 27
+    },
+    "lesson-06-practice-bank-06-build-config.md": {
+      "minutes": 26
+    },
+    "lesson-06-practice-bank-07-vectorize.md": {
+      "minutes": 28
+    },
+    "lesson-06-practice-bank-08-vector-reports.md": {
+      "minutes": 30
+    },
+    "lesson-06-practice-bank-09-counters-models.md": {
+      "minutes": 30
+    },
+    "lesson-06-practice-bank-10-sanitizers-ub.md": {
+      "minutes": 29
+    },
+    "lesson-06-practice-bank-11-concurrency-env.md": {
+      "minutes": 13
     }
   },
   "cards": {
@@ -544,7 +574,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "lab/bench/map_tail.cpp output, 7 runs (ingest/lpa/evidence/m7-map-tail-*.txt)",
+      "source": "lab/bench/map_tail.cpp output, 7 runs",
       "concepts": []
     },
     "M7-LPA2": {
@@ -632,7 +662,7 @@
       ]
     },
     "M7-PB1": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-05-build-output.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -646,7 +676,7 @@
       "concepts": []
     },
     "M7-PB2": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-check-first.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -660,7 +690,7 @@
       "concepts": []
     },
     "M7-PB3": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-check-first.md",
       "type": "recall",
       "topic": "measurement",
       "objective": 3,
@@ -674,7 +704,7 @@
       "concepts": []
     },
     "M7-PB4": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-06-build-config.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 3,
@@ -688,7 +718,7 @@
       "concepts": []
     },
     "M7-PB5": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-fair-setup.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -702,7 +732,7 @@
       "concepts": []
     },
     "M7-PB6": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-reading-timings.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -716,7 +746,7 @@
       "concepts": []
     },
     "M7-PB7": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-reading-timings.md",
       "type": "gotcha",
       "topic": "measurement",
       "objective": 3,
@@ -730,7 +760,7 @@
       "concepts": []
     },
     "M7-PB8": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-05-build-output.md",
       "type": "apply",
       "topic": "research",
       "objective": 3,
@@ -744,7 +774,7 @@
       "concepts": []
     },
     "M7-PB9": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-fair-setup.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 3,
@@ -758,7 +788,7 @@
       "concepts": []
     },
     "M7-PB10": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-07-vectorize.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 3,
@@ -772,7 +802,7 @@
       "concepts": []
     },
     "M7-PB11": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-07-vectorize.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 3,
@@ -786,7 +816,7 @@
       "concepts": []
     },
     "M7-PB12": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-07-vectorize.md",
       "type": "apply",
       "topic": "research",
       "objective": 3,
@@ -800,7 +830,7 @@
       "concepts": []
     },
     "M7-PB13": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-08-vector-reports.md",
       "type": "gotcha",
       "topic": "measurement",
       "objective": 3,
@@ -814,7 +844,7 @@
       "concepts": []
     },
     "M7-PB14": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-08-vector-reports.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 3,
@@ -828,7 +858,7 @@
       "concepts": []
     },
     "M7-PB15": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-08-vector-reports.md",
       "type": "recall",
       "topic": "research",
       "objective": 3,
@@ -842,7 +872,7 @@
       "concepts": []
     },
     "M7-PB16": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-08-vector-reports.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 3,
@@ -856,7 +886,7 @@
       "concepts": []
     },
     "M7-PB17": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-call-costs.md",
       "type": "gotcha",
       "topic": "benchmarking",
       "objective": 3,
@@ -870,7 +900,7 @@
       "concepts": []
     },
     "M7-PB18": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-fair-setup.md",
       "type": "gotcha",
       "topic": "benchmarking",
       "objective": 3,
@@ -884,7 +914,7 @@
       "concepts": []
     },
     "M7-PB19": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-reading-timings.md",
       "type": "recall",
       "topic": "measurement",
       "objective": 3,
@@ -898,7 +928,7 @@
       "concepts": []
     },
     "M7-PB20": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-11-concurrency-env.md",
       "type": "apply",
       "topic": "benchmarking",
       "objective": 3,
@@ -912,7 +942,7 @@
       "concepts": []
     },
     "M7-PB21": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-09-counters-models.md",
       "type": "recall",
       "topic": "research",
       "objective": 3,
@@ -926,7 +956,7 @@
       "concepts": []
     },
     "M7-PB22": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-09-counters-models.md",
       "type": "apply",
       "topic": "research",
       "objective": 3,
@@ -940,7 +970,7 @@
       "concepts": []
     },
     "M7-PB23": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-11-concurrency-env.md",
       "type": "recall",
       "topic": "measurement",
       "objective": 3,
@@ -954,7 +984,7 @@
       "concepts": []
     },
     "M7-PB24": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-11-concurrency-env.md",
       "type": "apply",
       "topic": "sanitizers",
       "objective": 2,
@@ -968,7 +998,7 @@
       "concepts": []
     },
     "M7-PB25": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-10-sanitizers-ub.md",
       "type": "gotcha",
       "topic": "sanitizers",
       "objective": 2,
@@ -982,7 +1012,7 @@
       "concepts": []
     },
     "M7-PB26": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-10-sanitizers-ub.md",
       "type": "recall",
       "topic": "sanitizers",
       "objective": 2,
@@ -996,7 +1026,7 @@
       "concepts": []
     },
     "M7-PB27": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-call-costs.md",
       "type": "apply",
       "topic": "benchmarking",
       "objective": 3,
@@ -1010,7 +1040,7 @@
       "concepts": []
     },
     "M7-PB28": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-10-sanitizers-ub.md",
       "type": "gotcha",
       "topic": "sanitizers",
       "objective": 2,
@@ -1024,7 +1054,7 @@
       "concepts": []
     },
     "M7-PB29": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-10-sanitizers-ub.md",
       "type": "gotcha",
       "topic": "sanitizers",
       "objective": 2,
@@ -1038,7 +1068,7 @@
       "concepts": []
     },
     "M7-PB30": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-check-first.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -1052,7 +1082,7 @@
       "concepts": []
     },
     "M7-PB31": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-check-first.md",
       "type": "gotcha",
       "topic": "expiry",
       "objective": 3,
@@ -1066,7 +1096,7 @@
       "concepts": []
     },
     "M7-PB32": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-call-costs.md",
       "type": "apply",
       "topic": "cpp23",
       "objective": 3,
@@ -1080,7 +1110,7 @@
       "concepts": []
     },
     "M7-PB33": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-check-first.md",
       "type": "apply",
       "topic": "benchmarking",
       "objective": 3,
@@ -1094,7 +1124,7 @@
       "concepts": []
     },
     "M7-PB34": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-06-build-config.md",
       "type": "apply",
       "topic": "visibility",
       "objective": 3,
@@ -1108,7 +1138,7 @@
       "concepts": []
     },
     "M7-PB35": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-06-build-config.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 3,
@@ -1122,7 +1152,7 @@
       "concepts": []
     },
     "M7-PB36": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-06-build-config.md",
       "type": "gotcha",
       "topic": "assertions",
       "objective": 4,
@@ -1136,7 +1166,7 @@
       "concepts": []
     },
     "M7-PB37": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-reading-timings.md",
       "type": "gotcha",
       "topic": "measurement",
       "objective": 3,
@@ -1179,7 +1209,7 @@
       "source": ""
     },
     "lesson-05-lpa-map-tail.md#C10": {
-      "source": "lab/bench/map_tail.cpp runs, 7 (ingest/lpa/evidence/m7-map-tail-*.txt); https://en.cppreference.com/w/cpp/container/flat_map"
+      "source": "lab/bench/map_tail.cpp runs, 7; https://en.cppreference.com/w/cpp/container/flat_map"
     }
   }
 }

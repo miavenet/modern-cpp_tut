@@ -16,8 +16,41 @@
     "lesson-05-lpa-tail-budget.md": {
       "minutes": 30
     },
-    "lesson-06-practice-bank.md": {
-      "minutes": 297
+    "lesson-06-practice-bank-01-pages.md": {
+      "minutes": 28
+    },
+    "lesson-06-practice-bank-02-clock-reads.md": {
+      "minutes": 26
+    },
+    "lesson-06-practice-bank-03-latency-spans.md": {
+      "minutes": 21
+    },
+    "lesson-06-practice-bank-04-percentiles-bins.md": {
+      "minutes": 26
+    },
+    "lesson-06-practice-bank-05-wakeups.md": {
+      "minutes": 25
+    },
+    "lesson-06-practice-bank-06-linux-sockets.md": {
+      "minutes": 25
+    },
+    "lesson-06-practice-bank-07-branches.md": {
+      "minutes": 22
+    },
+    "lesson-06-practice-bank-08-branch-data.md": {
+      "minutes": 21
+    },
+    "lesson-06-practice-bank-09-prefetch-forms.md": {
+      "minutes": 23
+    },
+    "lesson-06-practice-bank-10-prefetch-manuals.md": {
+      "minutes": 24
+    },
+    "lesson-06-practice-bank-11-code-shape.md": {
+      "minutes": 24
+    },
+    "lesson-06-practice-bank-12-os-reports.md": {
+      "minutes": 28
     }
   },
   "cards": {
@@ -576,7 +609,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "lab/budget/solution/tail_budget.cpp output, 7 runs (ingest/lpa/evidence/m6-tail-budget-forked-*.txt)",
+      "source": "lab/budget/solution/tail_budget.cpp output, 7 runs",
       "concepts": []
     },
     "M6-LPA5": {
@@ -608,7 +641,7 @@
         "mode": "regex",
         "accept": "regex(/\\A\\s*(?:the\\s+)?`?(?:service|strategy)`?\\s*\\.?\\s*\\Z/i)"
       },
-      "source": "Concept C12 of this lesson (per-stage table, ingest/lpa/evidence/m6-tail-budget-forked-*.txt)",
+      "source": "Concept C12 of this lesson (per-stage table from lab/budget/solution/tail_budget.cpp, 7 runs in fresh processes)",
       "concepts": [
         "C12"
       ]
@@ -640,13 +673,13 @@
       "grading": {
         "mode": "self"
       },
-      "source": "Concept C12 of this lesson (sliced runs, ingest/lpa/evidence/m6-tail-budget-forked-*.txt); module 03 lesson 05",
+      "source": "Concept C12 of this lesson (sliced runs of lab/budget/solution/tail_budget.cpp); module 03 lesson 05",
       "concepts": [
         "C12"
       ]
     },
     "M6-PB1": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-pages.md",
       "type": "recall",
       "topic": "expiry",
       "objective": 2,
@@ -660,7 +693,7 @@
       "concepts": []
     },
     "M6-PB4": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-pages.md",
       "type": "apply",
       "topic": "guard-page",
       "objective": 2,
@@ -674,7 +707,7 @@
       "concepts": []
     },
     "M6-PB5": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-clock-reads.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 5,
@@ -688,7 +721,7 @@
       "concepts": []
     },
     "M6-PB6": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-percentiles-bins.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 5,
@@ -702,7 +735,7 @@
       "concepts": []
     },
     "M6-PB7": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-10-prefetch-manuals.md",
       "type": "recall",
       "topic": "research",
       "objective": 3,
@@ -716,7 +749,7 @@
       "concepts": []
     },
     "M6-PB8": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-latency-spans.md",
       "type": "apply",
       "topic": "latency-spans",
       "objective": 3,
@@ -730,7 +763,7 @@
       "concepts": []
     },
     "M6-PB9": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-latency-spans.md",
       "type": "gotcha",
       "topic": "latency-spans",
       "objective": 6,
@@ -744,7 +777,7 @@
       "concepts": []
     },
     "M6-PB10": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-03-latency-spans.md",
       "type": "apply",
       "topic": "latency-spans",
       "objective": 3,
@@ -758,7 +791,7 @@
       "concepts": []
     },
     "M6-PB11": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-clock-reads.md",
       "type": "gotcha",
       "topic": "clocks",
       "objective": 5,
@@ -768,11 +801,11 @@
       "grading": {
         "mode": "self"
       },
-      "source": "measured in this course: clock_step.cpp (cntfrq_el0, mach_timebase_info)",
+      "source": "[time.clock.req] (C++23 draft N4950); measured in this course: clock_step.cpp (cntfrq_el0, mach_timebase_info) and the steady_clock::duration type on libc++ and libstdc++",
       "concepts": []
     },
     "M6-PB12": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-02-clock-reads.md",
       "type": "apply",
       "topic": "clocks",
       "objective": 5,
@@ -786,7 +819,7 @@
       "concepts": []
     },
     "M6-PB13": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-05-wakeups.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 3,
@@ -800,7 +833,7 @@
       "concepts": []
     },
     "M6-PB14": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-12-os-reports.md",
       "type": "recall",
       "topic": "placement",
       "objective": 3,
@@ -814,7 +847,7 @@
       "concepts": []
     },
     "M6-PB15": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-01-pages.md",
       "type": "apply",
       "topic": "page-faults",
       "objective": 2,
@@ -828,7 +861,7 @@
       "concepts": []
     },
     "M6-PB16": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-06-linux-sockets.md",
       "type": "recall",
       "topic": "expiry",
       "objective": 2,
@@ -842,7 +875,7 @@
       "concepts": []
     },
     "M6-PB17": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-07-branches.md",
       "type": "apply",
       "topic": "branches",
       "objective": 3,
@@ -856,7 +889,7 @@
       "concepts": []
     },
     "M6-PB18": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-07-branches.md",
       "type": "apply",
       "topic": "branches",
       "objective": 3,
@@ -870,7 +903,7 @@
       "concepts": []
     },
     "M6-PB19": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-08-branch-data.md",
       "type": "apply",
       "topic": "branches",
       "objective": 3,
@@ -884,7 +917,7 @@
       "concepts": []
     },
     "M6-PB20": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-09-prefetch-forms.md",
       "type": "apply",
       "topic": "prefetching",
       "objective": 4,
@@ -894,11 +927,11 @@
       "grading": {
         "mode": "self"
       },
-      "source": "gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html (__builtin_prefetch); measured in this course: prefetch_five.cpp, prefetch_var.cpp; GCC 13.3 and clang 20.1 on Compiler Explorer",
+      "source": "gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html (__builtin_prefetch); measured in this course: prefetch_var.cpp and a template/switch dispatch (Apple clang 21; GCC 13.3 and clang 18.1.3 on aarch64 Linux)",
       "concepts": []
     },
     "M6-PB21": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-09-prefetch-forms.md",
       "type": "apply",
       "topic": "prefetching",
       "objective": 4,
@@ -912,7 +945,7 @@
       "concepts": []
     },
     "M6-PB22": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-10-prefetch-manuals.md",
       "type": "recall",
       "topic": "prefetching",
       "objective": 4,
@@ -926,7 +959,7 @@
       "concepts": []
     },
     "M6-PB23": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-10-prefetch-manuals.md",
       "type": "apply",
       "topic": "prefetching",
       "objective": 4,
@@ -940,7 +973,7 @@
       "concepts": []
     },
     "M6-PB24": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-11-code-shape.md",
       "type": "apply",
       "topic": "tail-calls",
       "objective": 2,
@@ -954,7 +987,7 @@
       "concepts": []
     },
     "M6-PB25": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-11-code-shape.md",
       "type": "gotcha",
       "topic": "tail-calls",
       "objective": 2,
@@ -968,7 +1001,7 @@
       "concepts": []
     },
     "M6-PB26": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-06-linux-sockets.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 2,
@@ -982,7 +1015,7 @@
       "concepts": []
     },
     "M6-PB27": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-05-wakeups.md",
       "type": "apply",
       "topic": "measurement",
       "objective": 2,
@@ -996,7 +1029,7 @@
       "concepts": []
     },
     "M6-PB28": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-12-os-reports.md",
       "type": "apply",
       "topic": "clocks",
       "objective": 3,
@@ -1010,21 +1043,21 @@
       "concepts": []
     },
     "M6-PB29": {
-      "lesson": "lesson-06-practice-bank.md",
-      "type": "apply",
+      "lesson": "lesson-06-practice-bank-09-prefetch-forms.md",
+      "type": "gotcha",
       "topic": "prefetching",
       "objective": 4,
-      "minutes": 12,
+      "minutes": 8,
       "box": 1,
       "once": false,
       "grading": {
         "mode": "self"
       },
-      "source": "Intel 64 and IA-32 Architectures Software Developer's Manual, PREFETCHW; GCC manual, Other Builtins, __builtin_prefetch (https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html); measured in this course: prefetch_six.cpp (x86-64 gcc 13.3 and clang 18.1 on Compiler Explorer)",
+      "source": "Intel 64 and IA-32 Architectures Software Developer's Manual, PREFETCHW; GCC manual, Other Builtins, __builtin_prefetch (https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html); measured in this course: prefetch_six.cpp (Apple clang 21 targeting x86_64-linux-gnu, compile only; gcc 13.3 and clang 18.1 on Compiler Explorer)",
       "concepts": []
     },
     "M6-PB30": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-11-code-shape.md",
       "type": "gotcha",
       "topic": "cpu-dispatch",
       "objective": 4,
@@ -1038,7 +1071,7 @@
       "concepts": []
     },
     "M6-PB31": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-12-os-reports.md",
       "type": "recall",
       "topic": "research",
       "objective": 2,
@@ -1052,7 +1085,7 @@
       "concepts": []
     },
     "M6-PB32": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-08-branch-data.md",
       "type": "apply",
       "topic": "branches",
       "objective": 3,
@@ -1066,7 +1099,7 @@
       "concepts": []
     },
     "M6-PB33": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-percentiles-bins.md",
       "type": "gotcha",
       "topic": "measurement",
       "objective": 3,
@@ -1080,7 +1113,7 @@
       "concepts": []
     },
     "M6-PB34": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-11-code-shape.md",
       "type": "apply",
       "topic": "hot-path",
       "objective": 2,
@@ -1094,7 +1127,7 @@
       "concepts": []
     },
     "M6-PB35": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-percentiles-bins.md",
       "type": "gotcha",
       "topic": "measurement",
       "objective": 5,
@@ -1108,7 +1141,7 @@
       "concepts": []
     },
     "M6-PB36": {
-      "lesson": "lesson-06-practice-bank.md",
+      "lesson": "lesson-06-practice-bank-04-percentiles-bins.md",
       "type": "gotcha",
       "topic": "measurement",
       "objective": 5,
@@ -1154,10 +1187,10 @@
       "source": ""
     },
     "lesson-03-measurement-bypass.md#C11": {
-      "source": "lab/measure/lat_hist.hpp + test_lat_hist.cpp; lab/measure/clock_tail.cpp runs, 7 (ingest/lpa/evidence/clock-tail-*.txt)"
+      "source": "lab/measure/lat_hist.hpp + test_lat_hist.cpp; lab/measure/clock_tail.cpp runs, 7"
     },
     "lesson-05-lpa-tail-budget.md#C12": {
-      "source": "lab/budget/solution/tail_budget.cpp runs, 7 in fresh processes (ingest/lpa/evidence/m6-tail-budget-forked-*.txt); lesson 03 concept C6"
+      "source": "lab/budget/solution/tail_budget.cpp runs, 7 in fresh processes; lesson 03 concept C6"
     }
   }
 }

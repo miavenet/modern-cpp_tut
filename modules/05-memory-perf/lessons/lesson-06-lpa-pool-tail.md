@@ -38,7 +38,7 @@ Key:
 
 In this lab, 2,000,000 orders at 4,096 blocks per chunk need 489 refills, so they hit at most 489 of 125,000 samples, which is 0.39%. So p99 (the slowest 1%) cannot see them, but p99.9 (the slowest 0.1%) is made of them.
 
-**What these numbers are, honestly.** They come from the course Mac: an Apple M1 Max, macOS 27, Apple clang 21 with `-O2`. One thread, no core pinning (macOS offers only hints), on a shared machine, 125,000 samples per run. The values are median [lowest to highest] over 7 runs, in ns per batch of 16 `push_back`s (raw output: `ingest/lpa/evidence/m5-pool-tail-20261114-230017.txt` and its `.summary`).
+**What these numbers are, honestly.** They come from the course Mac: an Apple M1 Max, macOS 27, Apple clang 21 with `-O2`. One thread, no core pinning (macOS offers only hints), on a shared machine, 125,000 samples per run. The values are median [lowest to highest] over 7 runs, in ns per batch of 16 `push_back`s. Re-run `lab/solution/pool_tail.cpp` to get your own.
 
 | Run | p50 | p99 | p99.9 | p99.99 | heap calls while timed | page faults while timed |
 |---|---|---|---|---|---|---|
@@ -46,7 +46,7 @@ In this lab, 2,000,000 orders at 4,096 blocks per chunk need 489 refills, so the
 | pool, lazy | 83 [83–83] | 125 [125–211] | 16,895 [16,383–17,407] | 22,527 [20,479–27,647] | 499 | ~4,900 |
 | pool, prepared | 83 [83–83] | 167 [125–211] | 423 [375–463] | 591 [503–14,847] | 0 | 0 |
 
-The 499 heap calls are 489 chunk fetches plus 10 for the pool's own list of chunks, which grows 1, 2, 4, ... 512 entries (489 fits in 512), one heap call per growth. An earlier set of 7 runs (`m5-pool-tail-20261114-221049.txt`) gave the same p50s and counters, lazy and prepared p99.9 of 17,407 and 423, but p99.99 values of 33,791 (lazy) and 1,503 (prepared): 1.5x and 2.5x the table's. The far tail moves with whatever else the machine is doing. The counters did not move at all.
+The 499 heap calls are 489 chunk fetches plus 10 for the pool's own list of chunks, which grows 1, 2, 4, ... 512 entries (489 fits in 512), one heap call per growth. An earlier set of 7 runs gave the same p50s and counters, lazy and prepared p99.9 of 17,407 and 423, but p99.99 values of 33,791 (lazy) and 1,503 (prepared): 1.5x and 2.5x the table's. The far tail moves with whatever else the machine is doing. The counters did not move at all.
 
 Trust the ratios and the counters more than the exact nanoseconds. The steady clock here ticks in steps of about 42 ns, so 83 ns means "two ticks". That is why the lab times batches of 16 rather than one call at a time. Percentiles are bucketed and read at most about 3% high. The max swung by up to about 8x between runs (the OS preempting the thread, interrupts), so it is the least repeatable number on the page.
 

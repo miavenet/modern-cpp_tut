@@ -13,8 +13,17 @@
     "lesson-04-lpa-constinit.md": {
       "minutes": 14
     },
-    "lesson-05-practice-bank.md": {
-      "minutes": 88
+    "lesson-05-practice-bank-01-build-time.md": {
+      "minutes": 28
+    },
+    "lesson-05-practice-bank-02-tables.md": {
+      "minutes": 29
+    },
+    "lesson-05-practice-bank-03-conversions.md": {
+      "minutes": 20
+    },
+    "lesson-05-practice-bank-04-object-bytes.md": {
+      "minutes": 11
     }
   },
   "cards": {
@@ -526,7 +535,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "https://eel.is/c++draft/stmt.dcl (block-scope static initialisation); course assembly count, ingest/lpa/evidence/m2-constinit-guard-*.txt",
+      "source": "https://eel.is/c++draft/stmt.dcl (block-scope static initialisation); course assembly count (compile the run-time and constinit versions with -O2 -S and count the __cxa_guard_acquire calls)",
       "concepts": [
         "C8"
       ]
@@ -543,7 +552,7 @@
         "mode": "check",
         "accept": "check(checks/m2-lpa2.check.sh)"
       },
-      "source": "https://en.cppreference.com/w/cpp/language/constinit; checks/m2-lpa2.check.sh (compiles and runs two threads); course assembly, ingest/lpa/evidence/m2-constinit-guard-*.txt",
+      "source": "https://en.cppreference.com/w/cpp/language/constinit; checks/m2-lpa2.check.sh (compiles and runs two threads); course assembly count (compile the run-time and constinit versions with -O2 -S and count the __cxa_guard_acquire calls)",
       "concepts": [
         "C8"
       ]
@@ -559,7 +568,7 @@
       "grading": {
         "mode": "self"
       },
-      "source": "course assembly, ingest/lpa/evidence/m2-constinit-guard-*.txt; lab/starter and lab/solution constinit_guard.cpp",
+      "source": "course assembly count (compile the run-time and constinit versions with -O2 -S and count the __cxa_guard_acquire calls); lab/starter and lab/solution constinit_guard.cpp",
       "concepts": []
     },
     "M2-LPA4": {
@@ -580,7 +589,7 @@
       ]
     },
     "M2-PB1": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-01-build-time.md",
       "type": "gotcha",
       "topic": "constexpr",
       "objective": 4,
@@ -594,7 +603,7 @@
       "concepts": []
     },
     "M2-PB2": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-01-build-time.md",
       "type": "gotcha",
       "topic": "if-constexpr",
       "objective": 4,
@@ -608,7 +617,7 @@
       "concepts": []
     },
     "M2-PB3": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-02-tables.md",
       "type": "apply",
       "topic": "expiry",
       "objective": 6,
@@ -622,7 +631,7 @@
       "concepts": []
     },
     "M2-PB4": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-01-build-time.md",
       "type": "apply",
       "topic": "constexpr",
       "objective": 6,
@@ -636,7 +645,7 @@
       "concepts": []
     },
     "M2-PB5": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-02-tables.md",
       "type": "apply",
       "topic": "constexpr",
       "objective": 1,
@@ -650,7 +659,7 @@
       "concepts": []
     },
     "M2-PB6": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-02-tables.md",
       "type": "apply",
       "topic": "constexpr",
       "objective": 1,
@@ -664,7 +673,7 @@
       "concepts": []
     },
     "M2-PB7": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-04-object-bytes.md",
       "type": "recall",
       "topic": "research",
       "objective": 6,
@@ -678,7 +687,7 @@
       "concepts": []
     },
     "M2-PB8": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-03-conversions.md",
       "type": "apply",
       "topic": "conversions",
       "objective": 6,
@@ -692,7 +701,7 @@
       "concepts": []
     },
     "M2-PB9": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-03-conversions.md",
       "type": "apply",
       "topic": "conversions",
       "objective": 6,
@@ -706,7 +715,7 @@
       "concepts": []
     },
     "M2-PB10": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-01-build-time.md",
       "type": "apply",
       "topic": "constexpr",
       "objective": 1,
@@ -720,7 +729,7 @@
       "concepts": []
     },
     "M2-PB11": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-03-conversions.md",
       "type": "gotcha",
       "topic": "conversions",
       "objective": 6,
@@ -734,7 +743,7 @@
       "concepts": []
     },
     "M2-PB12": {
-      "lesson": "lesson-05-practice-bank.md",
+      "lesson": "lesson-05-practice-bank-04-object-bytes.md",
       "type": "gotcha",
       "topic": "type-traits",
       "objective": 6,
